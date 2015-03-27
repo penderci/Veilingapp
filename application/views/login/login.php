@@ -4,7 +4,7 @@ echo '<br>';
 echo $this->input->post('inputPassword');
 ?>
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-6" style="position: absolute;left: 25%;">
         <div class="well bs-component">
             <form class="form-horizontal" action="<?php echo base_url(). 'login/login_validation' ?>" method="post">
                 <fieldset>
@@ -25,7 +25,7 @@ echo $this->input->post('inputPassword');
                     </div>
                     <div class="form-group">
                         <div class="col-sm-2 col-sm-offset-2">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-default">Submit</button>
                         </div>
                     </div>
                 </fieldset>

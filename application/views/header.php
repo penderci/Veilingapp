@@ -11,6 +11,11 @@
 
 </head>
 <body>
+<script src="http://code.jquery.com/jquery-2.1.3.js"></script>
+<script src="/assets/js/bootstrap.js"></script>
+<script src="/angular/angular.js"></script>
+<script type="text/javascript" src="app.js"></script>
+
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">
     <h1 class="navbar-header" style="color:white">Veilingadministratie</h1>
 </div>

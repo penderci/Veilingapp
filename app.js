@@ -5,4 +5,8 @@
 
     var app = angular.module('veilingapp',[]);
 
+    app.controller("AankoopController",function(){
+        this.aankoop={};
+    });
+
 })();
