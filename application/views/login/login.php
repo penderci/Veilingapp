@@ -1,21 +1,26 @@
+<?php echo validation_errors();
+echo $this->input->post('inputEmail');
+echo '<br>';
+echo $this->input->post('inputPassword');
+?>
 <div class="row">
     <div class="col-sm-6">
         <div class="well bs-component">
-            <form class="form-horizontal" action="login/login_validation" method="post">
+            <form class="form-horizontal" action="<?php echo base_url(). 'login/login_validation' ?>" method="post">
                 <fieldset>
                     <legend>Log in</legend>
                     <div class="form-group">
                         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                         <div class="col-sm-6">
-                            <input class="form-control" id="inputEmail" placeholder="Email" type="text">
+                            <input class="form-control" id="inputEmail" name="inputEmail" placeholder="Email" type="text">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">Password</label>
 
                         <div class="col-sm-6">
-                            <input class="form-control" id="inputPassword" placeholder="Password" type="password">
+                            <input class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" type="password">
                         </div>
                     </div>
                     <div class="form-group">

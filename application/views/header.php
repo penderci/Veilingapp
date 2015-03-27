@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Veilingadministratie</title>
     <link href="./assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
 <!--    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">-->
     <!--//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/sandstone/bootstrap.min.css /bootstrap/css/bootstrap.min.css -->
 
@@ -13,3 +15,6 @@
     <h1 class="navbar-header" style="color:white">Veilingadministratie</h1>
 </div>
 <h1>Veilingadministratie</h1>
+<?php if ($this->session->userdata('is_logged_in')) { ?>
+<a href="<?php echo base_url();?>login/logout">Log Uit</a>
+<?php }?>
