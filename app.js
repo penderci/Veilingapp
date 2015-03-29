@@ -5,8 +5,14 @@
 
     var app = angular.module('veilingapp',[]);
 
-    app.controller("AankoopController",function(){
-        this.aankoop={};
+    app.controller('ArtikelController',function($scope,$http){
+
+        $http({url: 'artikels/get_list',
+            method: "POST"
+            }).success(function (data) {
+                $scope.artikels = data;
+            });
     });
+
 
 })();

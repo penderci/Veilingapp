@@ -6,7 +6,7 @@ class Login extends CI_Controller
     public function index()
     {
         //$this->load->view('welcome_message');
-
+//Hier nog controleren of je al ingelogd bent. Zo ja door gaan naar applicatie
         $data['middle'] = '/login/login';
         $this->load->view('template', $data);
 

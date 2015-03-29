@@ -25,7 +25,7 @@ echo $this->input->post('inputPassword');
                     </div>
                     <div class="form-group">
                         <div class="col-sm-2 col-sm-offset-2">
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="submit" class="btn btn-default">Log in</button>
                         </div>
                     </div>
                 </fieldset>

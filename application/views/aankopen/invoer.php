@@ -1,6 +1,6 @@
 <!--Dit scherm zal dienen voor offline invoer van de aankopen, op te slaan in de local storage, en met een knop te syncen met de database (temp tabel?)-->
 
-<form class="form-inline" role="form" ng-controller="AankoopController as aankoopCtrl">
+<form class="form-inline" role="form" ng-controller="AankoopController as aankoopCtrl" ng-submit="aankoopCtrl.addAankoop(aankooplijn)">
     <div class="col-sm-10" style="position: absolute;left: 10%;">
         <div class="well bs-component">
             <div class="container">
@@ -81,12 +81,12 @@
                                 <option value="<?php echo $row->id ?>"><?php echo $row->naam ?></option>
                             <?php } ?>
                         </select>
-                        <button type="submit" class="btn btn-default btn-xs">+</button>
+                        <button type="submit" class="btn btn-default btn-xs" name="addleeggoed">+</button>
                     </div>
 
                 </div>
                 </p>
-
+                <button type="submit" class="btn btn-default btn-xs" name="opslaan"">Opslaan</button>
             </div>
         </div>
     </div>
