@@ -9,4 +9,5 @@ class Aankoop_model extends CI_Model{
         $query = $this->db->query("SELECT * FROM artikels");
         return $query->result();
     }
+
 }

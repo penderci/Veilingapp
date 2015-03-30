@@ -16,4 +16,19 @@ class Artikels extends CI_Controller
         $data = $this->Artikel_model->get_artikels();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
+
+    public function insert_artikel()
+    {
+        $postdata = file_get_contents('php://input');
+        $request = json_decode($postdata);
+        $naam = $request->naam;
+        $id = $this->Artikel_model->insert($naam);
+
+        if ($id) {
+            echo $result = '{"status":"success"}';
+        } else {
+            echo $result = '{"status":"failure"}';
+        }
+
+    }
 }
