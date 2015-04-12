@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Artikels extends CI_Controller
 {
@@ -12,7 +12,8 @@ class Artikels extends CI_Controller
 
     }
 
-    public function get_list() {
+    public function get_list()
+    {
         $data = $this->Artikel_model->get_artikels();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
@@ -29,6 +30,11 @@ class Artikels extends CI_Controller
         } else {
             echo $result = '{"status":"failure"}';
         }
+
+    }
+
+    public function delete_artikel()
+    {
 
     }
 }

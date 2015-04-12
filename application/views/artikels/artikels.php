@@ -9,10 +9,20 @@
     Nieuw artikel :
     <p>
         <input type="text" ng-model="inputnaam"/>
-        <button ng-click="voegArtikelToe">Toevoegen</button>
+        <button type="submit" class="btn-sm btn-default">Toevoegen</button>
+<!--        <button ng-click="voegArtikelToe">Toevoegen</button>-->
+    </p>
+    <p>
+<!--        Sorteer op:
+        <select ng-model="orderBy">
+            <option value="naamaz">A-Z</option>
+            <option value="naamza">Z-A</option>
+        </select>-->
+        Zoek een artikel :
+        <input type="search" ng-model="q" placeholder="artikel" />
     </p>
     <ul>
-        <li ng-repeat="artikel in artikels">
+        <li ng-repeat="artikel in artikels | filter: q as results ">
             {{artikel.id}} - {{artikel.naam}}
         </li>
     </ul>
