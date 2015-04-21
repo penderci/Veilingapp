@@ -3,21 +3,31 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Veilingadministratie</title>
-    <link href="./assets/css/bootstrap.css" rel="stylesheet">
-<!--    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/bootstrap.css" rel="stylesheet">-->
-<!--    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">-->
-    <!--//maxcdn.bootstrapcdn.com/bootswatch/3.3.2/sandstone/bootstrap.min.css /bootstrap/css/bootstrap.min.css -->
+    <link href="<?php echo base_url();?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+
 
 </head>
 <body>
-<script src="http://code.jquery.com/jquery-2.1.3.js"></script>
-<script src="./assets/js/bootstrap.js"></script>
-<script src="./angular/angular.js"></script>
-<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>angular/angular.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>app.js"></script>
 
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">
     <h1 class="navbar-header" style="color:white">Veilingadministratie</h1>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="artikels">Artikels</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Gebruikers</a></li>
+            </ul>
+        </li>
+        <li>&nbsp &nbsp &nbsp &nbsp</li>
+    </ul>
+
 </div>
 <h1>Veilingadministratie</h1>
 <?php if ($this->session->userdata('is_logged_in')) { ?>

@@ -41,7 +41,7 @@
                     <label for="artikel" class="col-sm-2 control-label">Naam</label>
 
                     <div class="col-sm-2" ng-model="artikel">
-                        <select name="artikel" id="artikel" ng-model="aankoopCtrl.aankoop.artikel"> <!-- onchange = "calljavascriptfunction();">-->
+                        <select name="artikel" id="artikel" ng-model="aankoopCtrl.aankoop.artikel" > <!--ng-options="orderBy:naam"    onchange = "calljavascriptfunction();">-->
                             <?php foreach ($artikels as $row) { ?>
                                 <option value="<?php echo $row->id ?>"><?php echo $row->naam ?></option>
                             <?php } ?>

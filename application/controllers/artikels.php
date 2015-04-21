@@ -33,8 +33,70 @@ class Artikels extends CI_Controller
 
     }
 
-    public function delete_artikel()
+    public function delete()
     {
+        $this->Artikel_model->delete();
+        redirect(base_url().'artikels');
+    }
 
+    public function edit($update_id){
+       // $update_id = $this->uri->segment(3);
+        $data= $this->get_data_from_db($update_id);
+        $data['middle'] = '/artikels/edit';
+
+       //print_r($data);
+        //die();
+
+        $this->load->view('template', $data);
+
+       // $this->load->view('/artikels/edit',$data);
+    }
+
+    public function update($id){
+        $this->form_validation->set_rules("naam", "Naam", "required|xss_clean");
+
+        if ($this->form_validation->run() == FALSE) {
+            echo('valid false');
+            die();
+            $this->edit($id);
+            //$this->load->view('/users/users_view');
+        } else {
+            if ($this->input->post('naam') != null) {
+
+                $data = $this->get_data_from_post();
+                $data['id'] = $id;
+            } else {
+                $data['id'] = $id;
+                $data['naam'] = $this->input->post('naam',TRUE);
+            }
+
+            //print_r($data);
+            // die();
+            $this->Artikel_model->update_artikel($data);
+            redirect(base_url().'artikels');
+            /*$description = $this->input->post('description');
+
+            $this->Todo_model->insert($description);
+
+            redirect (base_url().'todo');*/
+            //$this->index();
+        }
+    }
+
+    public function get_data_from_db($artikel_id){
+        $query=$this->Artikel_model->get_where($artikel_id);
+        foreach($query ->result() as $row){
+            $data['id'] = $row->id;
+            $data['naam'] = $row->naam;
+        }
+        return($data);
+
+        //op 4:43 in video 2 over CRUD, hier verder werken
+
+    }
+
+    public function get_data_from_post(){
+        $data['naam'] = $this->input->post('naam',TRUE);
+        return($data);
     }
 }
