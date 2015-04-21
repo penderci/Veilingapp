@@ -94,7 +94,7 @@
 <script>
     $(function(){
         $("#bestemmeling").autocomplete({
-            source: "gebruikers/get_gebruikers_list" 
+            source: "gebruikers/get_gebruikers_list"
         });
     });
 </script>

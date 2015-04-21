@@ -65,6 +65,7 @@
             $scope.gekochtvoor = data;
         });
 
+        $scope.aankoopdatum = new Date() ;
         /*$http({url: 'gebruikers/get_gebruikers_list',
             method: "POST"
         }).success(function (data) {
