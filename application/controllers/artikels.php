@@ -5,24 +5,29 @@ class Artikels extends CI_Controller
 
     public function index()
     {
-        //$data['artikels'] = $this->Aankoop_model->get_artikels();
-
-        $data['middle'] = '/artikels/artikels';
-        $this->load->view('template', $data);
+        if ($this->session->userdata('is_logged_in')) {
+            $data['middle'] = '/artikels/artikels';
+            $this->load->view('template', $data);
+        } else {
+            redirect(base_url() . 'login');
+        }
 
     }
 
+    //haal alle artikels op en zet de data in Json formaat
     public function get_list()
     {
         $data = $this->Artikel_model->get_artikels();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
+    //voeg een artikel toe in de databanke
     public function insert_artikel()
     {
         $postdata = file_get_contents('php://input');
         $request = json_decode($postdata);
         $naam = $request->naam;
+        //doe de feitelijke insert in het model
         $id = $this->Artikel_model->insert($naam);
 
         if ($id) {
@@ -33,33 +38,36 @@ class Artikels extends CI_Controller
 
     }
 
+    //verwijder een artikel uit de databank
     public function delete()
     {
         $this->Artikel_model->delete();
-        redirect(base_url().'artikels');
+        redirect(base_url() . 'artikels');
     }
 
-    public function edit($update_id){
-       // $update_id = $this->uri->segment(3);
-        $data= $this->get_data_from_db($update_id);
+    //Open het scherm om een artikel aan te passen
+    public function edit($update_id)
+    {
+
+        $data = $this->get_data_from_db($update_id);
         $data['middle'] = '/artikels/edit';
 
-       //print_r($data);
-        //die();
 
         $this->load->view('template', $data);
 
-       // $this->load->view('/artikels/edit',$data);
+
     }
 
-    public function update($id){
+    //Schrijf de aanpassing uit het edit scherm weg in de databank
+    public function update($id)
+    {
         $this->form_validation->set_rules("naam", "Naam", "required|xss_clean");
 
         if ($this->form_validation->run() == FALSE) {
             echo('valid false');
             die();
             $this->edit($id);
-            //$this->load->view('/users/users_view');
+
         } else {
             if ($this->input->post('naam') != null) {
 
@@ -67,36 +75,33 @@ class Artikels extends CI_Controller
                 $data['id'] = $id;
             } else {
                 $data['id'] = $id;
-                $data['naam'] = $this->input->post('naam',TRUE);
+                $data['naam'] = $this->input->post('naam', TRUE);
             }
 
-            //print_r($data);
-            // die();
+
             $this->Artikel_model->update_artikel($data);
-            redirect(base_url().'artikels');
-            /*$description = $this->input->post('description');
+            redirect(base_url() . 'artikels');
 
-            $this->Todo_model->insert($description);
-
-            redirect (base_url().'todo');*/
-            //$this->index();
         }
     }
 
-    public function get_data_from_db($artikel_id){
-        $query=$this->Artikel_model->get_where($artikel_id);
-        foreach($query ->result() as $row){
+    //haal een artikelrecord op uit de databank
+    public function get_data_from_db($artikel_id)
+    {
+        $query = $this->Artikel_model->get_where($artikel_id);
+        foreach ($query->result() as $row) {
             $data['id'] = $row->id;
             $data['naam'] = $row->naam;
         }
-        return($data);
+        return ($data);
 
-        //op 4:43 in video 2 over CRUD, hier verder werken
 
     }
 
-    public function get_data_from_post(){
-        $data['naam'] = $this->input->post('naam',TRUE);
-        return($data);
+    //haal de artikelgegevens op die ingevuld werden in het scherm
+    public function get_data_from_post()
+    {
+        $data['naam'] = $this->input->post('naam', TRUE);
+        return ($data);
     }
 }

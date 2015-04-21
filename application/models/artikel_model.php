@@ -1,5 +1,8 @@
-<?php
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Artikel_model extends CI_Model{
+    function __construct() {
+        parent::__construct();
+    }
 
     function get_table() {
         $table = "artikels";
@@ -12,9 +15,6 @@ class Artikel_model extends CI_Model{
     }
 
     public function insert($artikel){
-        //$query_str = "INSERT INTO artikels (naam) VALUES (?)";
-
-        //$this->db->query($query_str, $artikel);
         $data=array('naam'=>$artikel);
         $this->db->insert('artikels',$data);
         $insert_id=$this->db->insert_id();

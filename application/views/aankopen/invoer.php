@@ -1,6 +1,6 @@
 <!--Dit scherm zal dienen voor offline invoer van de aankopen, op te slaan in de local storage, en met een knop te syncen met de database (temp tabel?)-->
 
-<form class="form-inline" role="form" ng-controller="AankoopController as aankoopCtrl" ng-submit="aankoopCtrl.addAankoop(aankooplijn)">
+<form class="form-inline" role="form" ng-controller="AankoopController" ng-submit="">
     <div class="col-sm-10" style="position: absolute;left: 10%;">
         <div class="well bs-component">
             <div class="container">
@@ -11,7 +11,7 @@
                                 <label for="aankoopdatum" class="col-sm-6 control-label">Aankoopdatum</label>
 
                                 <div class="col-sm-6">
-                                    <input type="date" class="form-control" id="aankoopdatum" ng-model="aankoopCtrl.aankoop.aankoopdatum">
+                                    <input type="date" class="form-control input-sm" id="aankoopdatum" ng-model="aankoopdatum">
                                 </div>
                             </div>
                         </td>
@@ -21,7 +21,7 @@
                                 <label for="bestemmeling" class="col-sm-6 control-label">Gekocht voor</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="bestemmeling" ng-model="aankoopCtrl.aankoop.gekochtvoor">
+                                    <input type="text" class="form-control input-sm" id="bestemmeling" ng-model="gekochtvoor">
                                 </div>
                             </div>
                         </td>
@@ -31,7 +31,7 @@
         </div>
     </div>
     <div></div>
-    <div class="col-sm-10" style="position: absolute;left: 10%;top: 25%">
+    <div class="col-sm-10" style="position: absolute;left: 10%;top: 30%">
         <div class="well bs-component">
             <div class="container">
 
@@ -41,7 +41,7 @@
                     <label for="artikel" class="col-sm-2 control-label">Naam</label>
 
                     <div class="col-sm-2" ng-model="artikel">
-                        <select name="artikel" id="artikel" ng-model="aankoopCtrl.aankoop.artikel" > <!--ng-options="orderBy:naam"    onchange = "calljavascriptfunction();">-->
+                        <select name="artikel" id="artikel" ng-model="artikel" > <!--ng-options="orderBy:naam"    onchange = "calljavascriptfunction();">-->
                             <?php foreach ($artikels as $row) { ?>
                                 <option value="<?php echo $row->id ?>"><?php echo $row->naam ?></option>
                             <?php } ?>
@@ -56,7 +56,7 @@
                     <label for="aantal" class="col-sm-2 control-label">Aantal</label>
 
                     <div class="col-sm-2" ng-model="aantal">
-                        <input type="number" class="form-control input-sm" id="aantal" ng-model="aankoopCtrl.aankoop.aantal">
+                        <input type="number" class="form-control input-sm" id="aantal" ng-model="aantal">
                     </div>
                 </div>
                 </p>
@@ -66,7 +66,7 @@
                     <label for="ehprijs" class="col-sm-2 control-label">Eenheidsprijs</label>
 
                     <div class="col-sm-2" ng-model="ehprijs">
-                        <input type="number" class="form-control input-sm" id="ehprijs" min="0" step="0.01" ng-model="aankoopCtrl.aankoop.ehprijs">
+                        <input type="number" class="form-control input-sm" id="ehprijs" min="0" step="0.01" ng-model="ehprijs">
                     </div>
                 </div>
                 </p>
@@ -76,7 +76,7 @@
                     <label for="leeggoed" class="col-sm-2 control-label">Leeggoed</label>
 
                     <div class="col-sm-2">
-                        <select name="leeggoed" id="leeggoed" ng-model="aankoopCtrl.aankoop.leeggoed"> <!-- onchange = "calljavascriptfunction();">-->
+                        <select name="leeggoed" id="leeggoed" ng-model="leeggoed"> <!-- onchange = "calljavascriptfunction();">-->
                             <?php foreach ($leeggoed as $row) { ?>
                                 <option value="<?php echo $row->id ?>"><?php echo $row->naam ?></option>
                             <?php } ?>
@@ -91,6 +91,13 @@
         </div>
     </div>
 </form>
+<script>
+    $(function(){
+        $("#bestemmeling").autocomplete({
+            source: "gebruikers/get_gebruikers_list" 
+        });
+    });
+</script>
 
 
 

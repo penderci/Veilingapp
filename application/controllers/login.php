@@ -34,7 +34,7 @@ class Login extends CI_Controller
     //funtie opgeroepen door login_validation om input te controleren in database en sessievariabelen in te stellen
     public function validate_credentials()
     {
-        if ($this->User_model->can_login()) {
+        if ($this->Gebruiker_model->can_login()) {
             $data = array(
                 'email' => $this->input->post('inputEmail'),
                 'is_logged_in' => 1

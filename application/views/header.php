@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Veilingadministratie</title>
     <link href="<?php echo base_url();?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url();?>assets/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
 
 
 </head>
@@ -11,12 +12,16 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>angular/angular.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>app.js"></script>
 
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">
     <h1 class="navbar-header" style="color:white">Veilingadministratie</h1>
 
     <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="<?php echo base_url();?>aankopen">Aankopen</a>
+        </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
