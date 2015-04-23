@@ -38,6 +38,8 @@ class Gebruiker_model extends CI_Model{
        // $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE email != '" . $this->session->userdata('email') . "' AND naam like '%$q%'");
         $this->db->select('voornaam');
         $this->db->like('voornaam', $q);
+        $this->db->order_by("voornaam", "asc");
+
         $query = $this->db->get('gebruikers');
 
         if($query->num_rows > 0){
