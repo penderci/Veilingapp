@@ -38,10 +38,11 @@
       <file leaf-file-name="invoer.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/views/aankopen/invoer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.38041958" vertical-offset="306" max-vertical-offset="2159">
-              <caret line="34" column="70" selection-start-line="34" selection-start-column="70" selection-end-line="34" selection-end-column="70" />
+            <state vertical-scroll-proportion="0.26293707" vertical-offset="1155" max-vertical-offset="2652">
+              <caret line="79" column="122" selection-start-line="79" selection-start-column="122" selection-end-line="79" selection-end-column="122" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -744,10 +745,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/aankopen/invoer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38041958" vertical-offset="306" max-vertical-offset="2159">
-          <caret line="34" column="70" selection-start-line="34" selection-start-column="70" selection-end-line="34" selection-end-column="70" />
+        <state vertical-scroll-proportion="0.26293707" vertical-offset="1155" max-vertical-offset="2652">
+          <caret line="79" column="122" selection-start-line="79" selection-start-column="122" selection-end-line="79" selection-end-column="122" />
           <folding>
             <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#form#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

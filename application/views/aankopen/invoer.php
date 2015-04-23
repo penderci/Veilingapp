@@ -36,14 +36,14 @@
         <div class="well bs-component">
             <div class="container">
 
-                <table border="1">
+                <table>
                     <tr>
                         <td class="col-sm-4">
 
                             <div class="form-group">
                                 <label for="artikel" class="col-sm-4 control-label">Naam</label>
 
-                                <div class="col-sm-6" ng-model="artikel">
+                                <div class="col-sm-6" >
                                     <input type="text" class="form-control input-sm" id="artikel"
                                            ng-model="artikel">
 
@@ -61,45 +61,74 @@
                             <div class="form-group">
                                 <label for="aantal" class="col-sm-4 control-label">Aantal</label>
 
-                                <div class="col-sm-4" ng-model="aantal">
+                                <div class="col-sm-4" >
                                     <input type="number" class="form-control input-sm" id="aantal" ng-model="aantal">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="ehprijs" class="col-sm-4 control-label">Eenheidsprijs</label>
 
-                                <div class="col-sm-4" ng-model="ehprijs">
+                                <div class="col-sm-4" >
                                     <input type="number" class="form-control input-sm" id="ehprijs" min="0" step="0.01"
                                            ng-model="ehprijs">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="leeggoed" class="col-sm-4 control-label">Leeggoed</label>
+                                <label for="bedag" class="col-sm-4 control-label">Totale prijs</label>
 
-                                <div class="col-sm-4">
-                                    <select name="leeggoed" id="leeggoed" ng-model="leeggoed">
-                                        <!-- onchange = "calljavascriptfunction();">-->
-                                        <?php foreach ($leeggoed as $row) { ?>
-                                            <option value="<?php echo $row->id ?>"><?php echo $row->naam ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <button type="submit" class="btn btn-default btn-xs" name="addleeggoed">+</button>
+                                <div class="col-sm-4" >
+                                    <input type="number" class="form-control input-sm" id="bedrag" readonly tabindex="-1" value="{{aantal * ehprijs}}">
                                 </div>
 
-                            </div>
+<!--                                <div class="col-sm-4">
+                                    <select name="leeggoed" id="leeggoed" ng-model="leeggoed">
+                                        <!-- onchange = "calljavascriptfunction();">-->
+                                        <?php /*foreach ($leeggoed as $row) { */?>
+<!--                                            <option value="--><?php ///*echo $row->id */?><!--">--><?php ///*echo $row->naam */?><!--</option>-->
+                                        <?php /*} */?>
+<!--                                    </select>-->
+<!--                                    <button type="submit" class="btn btn-default btn-xs" name="addleeggoed">+</button>-->
+                                <!--  </div>-->
 
-                            <button type="submit" class="btn btn-default btn-xs" name="opslaan"
-                            ">Opslaan</button>
+                            </div>
 
 
                         </td>
                         <td class="col-sm-4">
-
+                            <div class="form-group">
+                                <label for="container" class="col-sm-4 control-label">Container</label>
+                                <div class="col-sm-6" >
+                                    <input type="number" class="form-control input-sm" id="container"
+                                           ng-model="container">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="opzet" class="col-sm-4 control-label">Opzet</label>
+                                <div class="col-sm-6" >
+                                    <input type="number" class="form-control input-sm" id="opzet"
+                                           ng-model="opzet">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tray" class="col-sm-4 control-label">Bruine tray</label>
+                                <div class="col-sm-6" >
+                                    <input type="number" class="form-control input-sm" id="tray"
+                                           ng-model="tray">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="doos" class="col-sm-4 control-label">Chrysdoos</label>
+                                <div class="col-sm-6" >
+                                    <input type="number" class="form-control input-sm" id="doos"
+                                           ng-model="doos">
+                                </div>
+                            </div>
                         </td>
                     </tr>
 
 
                 </table>
+                <button type="submit" class="btn btn-default btn-xs" name="opslaan">Opslaan</button>
             </div>
         </div>
     </div>
