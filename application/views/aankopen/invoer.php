@@ -36,11 +36,11 @@
         <div class="well bs-component">
             <div class="container">
 
-                <table>
+                <table class="table">
                     <tr>
-                        <td class="col-sm-4">
+                        <td class="col-sm-3">
 
-                            <div class="form-group">
+                            <div class="form-group-sm">
                                 <label for="artikel" class="col-sm-4 control-label">Naam</label>
 
                                 <div class="col-sm-6">
@@ -50,7 +50,7 @@
                             </div>
                             <br>
 
-                            <div class="form-group">
+                            <div class="form-group-sm">
                                 <label for="aantal" class="col-sm-4 control-label">Aantal</label>
 
                                 <div class="col-sm-6">
@@ -59,7 +59,7 @@
                             </div>
                             <br>
 
-                            <div class="form-group">
+                            <div class="form-group-sm">
                                 <label for="ehprijs" class="col-sm-4 control-label">Eenheidsprijs</label>
 
                                 <div class="col-sm-6">
@@ -69,17 +69,17 @@
                             </div>
                             <br>
 
-                            <div class="form-group">
+                            <div class="form-group-sm">
                                 <label for="bedag" class="col-sm-4 control-label">Totale prijs</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="bedrag" readonly
+                                    <input type="number" class="form-control input-sm" id="bedrag" readonly min="0" step="0.01"
                                            tabindex="-1" value="{{aantal * ehprijs}}">
                                 </div>
                             </div>
                         </td>
-                        <td class="col-sm-4">
-                            <div class="form-group">
+                        <td class="col-sm-3">
+                            <div class="form-group-sm">
                                 <label for="container" class="col-sm-4 control-label">Container</label>
 
                                 <div class="col-sm-6">
@@ -89,7 +89,7 @@
                             </div>
                             <br>
 
-                            <div class="form-group">
+                            <div class="form-group-sm">
                                 <label for="opzet" class="col-sm-4 control-label">Opzet</label>
 
                                 <div class="col-sm-6">
@@ -99,7 +99,7 @@
                             </div>
                             <br>
 
-                            <div class="form-group">
+                            <div class="form-group-sm">
                                 <label for="tray" class="col-sm-4 control-label">Bruine tray</label>
 
                                 <div class="col-sm-6">
@@ -109,7 +109,7 @@
                             </div>
                             <br>
 
-                            <div class="form-group">
+                            <div class="form-group-sm">
                                 <label for="doos" class="col-sm-4 control-label">Chrysdoos</label>
 
                                 <div class="col-sm-6">
@@ -122,14 +122,15 @@
 
 
                 </table>
-                <button type="submit" class="btn btn-default btn-xs">Opslaan</button>
+                <button type="submit" class="btn btn-default btn-xs" style="float: right;">Opslaan</button>
             </div>
         </div>
     </div>
-    <div class="col-sm-10" style="position: absolute;left: 10%;top: 55%" bgcolor="red">
+    <div class="col-sm-10" style="position: absolute;left: 10%;top: 60%" >
 <!--        <div class="well bs-component">-->
 <!--            <div class="container">-->
-                <table class="table table-striped table-hover ">  <!--style="display: block;
+        <div style="height: 190px; overflow: auto;">
+                <table class="table table-striped table-hover" style="height: 50px; overflow: scroll">  <!--style="display: block;
   height: 200px;
   overflow-y: scroll;"-->
                     <tr>
@@ -142,6 +143,16 @@
                         <th>Bruine Tray</th>
                         <th>Chrysdoos</th>
                     </tr>
+                    <tr>
+                        <th>Totalen</th>
+                        <th></th>
+                        <th></th>
+                        <th>{{getTotalPrice()}}</th>
+                        <th>{{getTotalContainer()}}</th>
+                        <th>{{getTotalOpzet()}}</th>
+                        <th>{{getTotalTray()}}</th>
+                        <th>{{getTotalDoos()}}</th>
+                    </tr>
                     <tr ng-repeat="aankoop in aankopen">
                         <td>{{aankoop.artikel}}</td>
                         <td>{{aankoop.aantal}}</td>
@@ -153,6 +164,7 @@
                         <td>{{aankoop.aantal_doos}}</td>
                     </tr>
                 </table>
+        </div>
 <!--            </div>-->
 <!--        </div>-->
     </div>
