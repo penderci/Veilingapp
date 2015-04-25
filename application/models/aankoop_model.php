@@ -14,4 +14,20 @@ class Aankoop_model extends CI_Model{
         return $query->result();
     }
 
+    public function insert_aankoop_temp($data){
+
+        echo('in model');
+        print_r($data);
+       // die();
+
+        $this->db->insert('aankopen_temp', $data);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+    }
+
+    public function get_aankopen_temp(){
+        $query = $this->db->query("SELECT * FROM aankopen_temp");
+        return $query->result();
+    }
+
 }

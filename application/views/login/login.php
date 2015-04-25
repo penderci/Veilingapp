@@ -13,14 +13,14 @@ echo $this->input->post('inputPassword');
                         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                         <div class="col-sm-6">
-                            <input class="form-control" id="inputEmail" name="inputEmail" placeholder="Email" type="text">
+                            <input class="form-control" id="inputEmail" name="inputEmail" placeholder="Email" type="text" value="erwin@hotmail.com">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">Password</label>
 
                         <div class="col-sm-6">
-                            <input class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" type="password">
+                            <input class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" type="password" value="cindy">
                         </div>
                     </div>
                     <div class="form-group">
