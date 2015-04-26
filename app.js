@@ -3,10 +3,16 @@
  */
 (function () {
 
-    var app = angular.module('veilingapp', []);
+    var app = angular.module('veilingapp', ['LocalStorageModule']);
+
+    app.config(function (localStorageServiceProvider) {
+        localStorageServiceProvider
+            .setPrefix('veilingapp');
+    });
 
     /*ARTIKEL CONTROLLER*/
     app.controller('ArtikelController', function ($scope, $http) {
+
 
         $http({
             url: 'artikels/get_list',

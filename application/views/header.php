@@ -5,6 +5,8 @@
     <title>Veilingadministratie</title>
     <link href="<?php echo base_url();?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url();?>assets/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo base_url();?>assets/checknet/css/checknet.css" media="all">
+
 
 
 </head>
@@ -12,7 +14,9 @@
 <script type="text/javascript" src="<?php echo base_url();?>assets/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>angular/angular.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>angular/angular-local-storage.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/jquery-ui/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/checknet/js/jquery.checknet-1.6.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>app.js"></script>
 
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">

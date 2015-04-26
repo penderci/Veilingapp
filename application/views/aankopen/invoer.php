@@ -129,7 +129,7 @@
     <div class="col-sm-10" style="position: absolute;left: 10%;top: 60%" >
 <!--        <div class="well bs-component">-->
 <!--            <div class="container">-->
-        <div style="height: 190px; overflow: auto;">
+        <div style="height: 215px; overflow: auto;">
                 <table class="table table-striped table-hover" style="height: 50px; overflow: scroll">  <!--style="display: block;
   height: 200px;
   overflow-y: scroll;"-->
@@ -142,6 +142,7 @@
                         <th>Opzet</th>
                         <th>Bruine Tray</th>
                         <th>Chrysdoos</th>
+                        <th></th>
                     </tr>
                     <tr>
                         <th>Totalen</th>
@@ -152,6 +153,7 @@
                         <th>{{getTotalOpzet()}}</th>
                         <th>{{getTotalTray()}}</th>
                         <th>{{getTotalDoos()}}</th>
+                        <th></th>
                     </tr>
                     <tr ng-repeat="aankoop in aankopen">
                         <td>{{aankoop.artikel}}</td>
@@ -162,15 +164,23 @@
                         <td>{{aankoop.aantal_opzet}}</td>
                         <td>{{aankoop.aantal_tray}}</td>
                         <td>{{aankoop.aantal_doos}}</td>
+                        <td>
+                            <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
+                            <a href="#" class="btn-sm glyphicon glyphicon-trash"></a>
+                        </td>
                     </tr>
                 </table>
+
         </div>
+        <!--Knop disablen als er geen internetconnectie is -->
+        <button type="submit" class="btn btn-default btn-xs" style="float: right;">Sychroniseer</button>
 <!--            </div>-->
 <!--        </div>-->
     </div>
 </form>
 <script>
-    $(function () {
+    $( document ).ready(function(){
+    //$(function () {
         $("#bestemmeling").autocomplete({
             source: "gebruikers/get_gebruikers_list"
         });
@@ -178,6 +188,42 @@
         $("#artikel").autocomplete({
             source: "artikels/get_list_autofill"
         });
+
+        /*function checkNetConnection(){
+            jQuery.ajaxSetup({async:false});
+            re="";
+            r=Math.round(Math.random() * 10000);
+            $.get("http://ad.doubleclick.net/dot.png",{subins:r},function(d){
+                re=true;
+            }).error(function(){
+                re=false;
+            });
+            return re;
+        }
+
+        if (checkNetConnection()){
+            alert('online');
+        } else {
+            alert('Offline');
+        }*/
+
+        //$.fn.checknet();
+
+
+        //********** Onderstaaande code werkt****************************/
+        /*$.ajax({
+            url: "artikels/get_list",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                console.log('succes');
+                console.log(data);
+                localStorage.setItem('artikellijst',JSON.stringify(data));
+            }});
+
+            $arts = JSON.parse(localStorage.getItem('artikellijst'));
+            console.log($arts);*/
+        //**************************************************************/
     });
 </script>
 
