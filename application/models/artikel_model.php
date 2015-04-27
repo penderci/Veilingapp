@@ -34,8 +34,7 @@ class Artikel_model extends CI_Model
         }
     }
 
-    public
-    function insert($artikel)
+    public function insert($artikel)
     {
         $data = array('naam' => $artikel);
         $this->db->insert('artikels', $data);

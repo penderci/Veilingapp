@@ -7,6 +7,7 @@
     <link href="<?php echo base_url();?>assets/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url();?>assets/checknet/css/checknet.css" media="all">
 
+    <!--Credits for the checknet plugin : http://tomriley.net/blog/archives/tomriley.net-->
 
 
 </head>

@@ -22,9 +22,12 @@ class Gebruikers extends CI_Controller
 
     public function get_gebruikers_list()
     {
-        if (isset($_GET['term'])){
+
+        $data = $this->Gebruiker_model->get_gebruikers();
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+        /*if (isset($_GET['term'])){
             $q = strtolower($_GET['term']);
             $this->Gebruiker_model->get_gebruikers($q);
-        }
+        }*/
     }
 }

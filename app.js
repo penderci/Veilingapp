@@ -107,6 +107,7 @@
             method: "POST"
         }).success(function (data) {
             $scope.gekochtvoor = data;
+            console.log($scope.gekochtvoor)
         });
 
         $scope.aankoopdatum = new Date();

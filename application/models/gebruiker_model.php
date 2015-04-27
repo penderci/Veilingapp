@@ -26,15 +26,19 @@ class Gebruiker_model extends CI_Model{
         $result = $query->result();
         $priamary_user_id = $result[0]->koopt_voor_gebruiker_id;
 
-        //$query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE id = " . $priamary_user_id);
-        $query = $this->db->query("SELECT voornaam FROM gebruikers WHERE id = " . $priamary_user_id);
+        $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) newnaam FROM gebruikers WHERE id = " . $priamary_user_id);
         $result = $query->result();
-        //return  $result[0]->naam;
-        return  $result[0]->voornaam;
+
+        return  $result[0]->newnaam;
 
     }
 
-    public function get_gebruikers($q){
+    public function get_gebruikers(){
+        $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE email != '" . $this->session->userdata('email') ."'");
+        return $query->result();
+    }
+
+    /*public function get_gebruikers($q){
        // $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE email != '" . $this->session->userdata('email') . "' AND naam like '%$q%'");
         $this->db->select('voornaam');
         $this->db->like('voornaam', $q);
@@ -50,7 +54,7 @@ class Gebruiker_model extends CI_Model{
         }
 
 
-    }
+    }*/
 
 
 }

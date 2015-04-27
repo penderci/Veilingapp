@@ -40,7 +40,7 @@
                     <tr>
                         <td class="col-sm-3">
 
-                            <div class="form-group-sm">
+                            <div class="form-group-sm ui-widget">
                                 <label for="artikel" class="col-sm-4 control-label">Naam</label>
 
                                 <div class="col-sm-6">
@@ -173,7 +173,8 @@
 
         </div>
         <!--Knop disablen als er geen internetconnectie is -->
-        <button type="submit" class="btn btn-default btn-xs" style="float: right;">Sychroniseer</button>
+        <button type="submit" id="sync" class="btn btn-default btn-xs" style="float: right;">Sychroniseer</button>
+
 <!--            </div>-->
 <!--        </div>-->
     </div>
@@ -181,33 +182,64 @@
 <script>
     $( document ).ready(function(){
     //$(function () {
+        $.fn.checknet(); /*standard check interval is 5 sec, to set it to 10 : checknet.config.checkInterval = 1000;*/
+        checknet.config.warnMsg = "";
+
+        /*test of bij het laden van het scherm de internetconnectie actief is, zo ja, vul local storage items op met database gegevens*/
+        if(window.checknet.conIsActive){
+            console.log('actief');
+
+            /*laad de artikellijst in de localstorage*/
+            $.ajax({
+                url: "artikels/get_list",
+                type: "GET",
+                async: false,
+                success: function (data) {
+                    console.log('succes');
+                    //  console.log(data);
+                    localStorage.setItem('artikellijst',JSON.stringify(data));
+                }});
+
+            /*laad de gebruikers in die gekoppeld zijn aan de ingelogde gebruiker*/
+            $.ajax({
+                url: "gebruikers/get_gebruikers_list",
+                type: "GET",
+                async: false,
+                success: function (data) {
+                    console.log('succes');
+                    //  console.log(data);
+                    localStorage.setItem('gebruikerslijst',JSON.stringify(data));
+                }});
+
+
+        } else {
+            console.log('niet actief');
+        }
+
+        var artikelsJson = JSON.parse(localStorage.getItem('artikellijst'));
+        var artikellijst = [];
+
+        for(var i = 0; i < artikelsJson.length; i++) {
+            var obj = artikelsJson[i];
+            artikellijst.push(obj.naam);
+        }
+
+        var gebruikersJson = JSON.parse(localStorage.getItem('gebruikerslijst'));
+        var gebruikerslijst = [];
+
+        for(var i = 0; i < gebruikersJson.length; i++) {
+            var obj = gebruikersJson[i];
+            gebruikerslijst.push(obj.naam);
+        }
+
+
         $("#bestemmeling").autocomplete({
-            source: "gebruikers/get_gebruikers_list"
+            source: gebruikerslijst //"gebruikers/get_gebruikers_list"
         });
 
         $("#artikel").autocomplete({
-            source: "artikels/get_list_autofill"
+            source: artikellijst /*"artikels/get_list_autofill"*/
         });
-
-        /*function checkNetConnection(){
-            jQuery.ajaxSetup({async:false});
-            re="";
-            r=Math.round(Math.random() * 10000);
-            $.get("http://ad.doubleclick.net/dot.png",{subins:r},function(d){
-                re=true;
-            }).error(function(){
-                re=false;
-            });
-            return re;
-        }
-
-        if (checkNetConnection()){
-            alert('online');
-        } else {
-            alert('Offline');
-        }*/
-
-        //$.fn.checknet();
 
 
         //********** Onderstaaande code werkt****************************/
