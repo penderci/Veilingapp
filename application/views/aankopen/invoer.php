@@ -135,35 +135,35 @@
   overflow-y: scroll;"-->
                     <tr>
                         <th>Artikel</th>
-                        <th>Aantal</th>
-                        <th>Eh prijs</th>
-                        <th>Totaal</th>
-                        <th>Container</th>
-                        <th>Opzet</th>
-                        <th>Bruine Tray</th>
-                        <th>Chrysdoos</th>
+                        <th style="text-align:right">Aantal</th>
+                        <th style="text-align:right">Eh prijs</th>
+                        <th style="text-align:right">Totaal</th>
+                        <th style="text-align:right">Container</th>
+                        <th style="text-align:right">Opzet</th>
+                        <th style="text-align:right">Bruine Tray</th>
+                        <th style="text-align:right">Chrysdoos</th>
                         <th></th>
                     </tr>
                     <tr>
                         <th>Totalen</th>
                         <th></th>
                         <th></th>
-                        <th>{{getTotalPrice()}}</th>
-                        <th>{{getTotalContainer()}}</th>
-                        <th>{{getTotalOpzet()}}</th>
-                        <th>{{getTotalTray()}}</th>
-                        <th>{{getTotalDoos()}}</th>
+                        <th style="text-align:right">{{getTotalPrice() | number:2}}</th>
+                        <th style="text-align:right">{{getTotalContainer()}}</th>
+                        <th style="text-align:right">{{getTotalOpzet()}}</th>
+                        <th style="text-align:right">{{getTotalTray()}}</th>
+                        <th style="text-align:right">{{getTotalDoos()}}</th>
                         <th></th>
                     </tr>
                     <tr ng-repeat="aankoop in aankopen">
-                        <td>{{aankoop.artikel}}</td>
-                        <td>{{aankoop.aantal}}</td>
-                        <td>{{aankoop.eenheidsprijs}}</td>
-                        <td>{{aankoop.totale_prijs}}</td>
-                        <td>{{aankoop.aantal_container}}</td>
-                        <td>{{aankoop.aantal_opzet}}</td>
-                        <td>{{aankoop.aantal_tray}}</td>
-                        <td>{{aankoop.aantal_doos}}</td>
+                        <td><b>{{aankoop.artikel}}</b></td>
+                        <td align="right">{{aankoop.aantal}}</td>
+                        <td align="right">{{aankoop.eenheidsprijs | number:3}}</td>
+                        <td align="right">{{aankoop.totale_prijs | number:2}}</td>
+                        <td align="right">{{aankoop.aantal_container}}</td>
+                        <td align="right">{{aankoop.aantal_opzet}}</td>
+                        <td align="right">{{aankoop.aantal_tray}}</td>
+                        <td align="right">{{aankoop.aantal_doos}}</td>
                         <td>
                             <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
                             <a href="#" class="btn-sm glyphicon glyphicon-trash"></a>
@@ -215,6 +215,11 @@
         } else {
             console.log('niet actief');
         }
+
+       /* if (localStorage.getItem("aankopen") === null) {
+            localStorage.setItem("aankopen",{});
+        }*/
+
 
         var artikelsJson = JSON.parse(localStorage.getItem('artikellijst'));
         var artikellijst = [];
