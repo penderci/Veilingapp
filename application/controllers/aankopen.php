@@ -70,4 +70,63 @@ class Aankopen extends CI_Controller
         $data = $this->Aankoop_model->get_aankopen_temp();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
+
+    public function synchronize(){
+        /*alle records uit de local storage*/
+        $postdata = file_get_contents('php://input');
+        $aankopen = json_decode($postdata);  /*array*/
+
+        /*haal de id op van de ingelogde persoon adhv het mailadres*/
+        $aankoper = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+        $aankoper_id = $aankoper->id;
+
+        $aankopen_batch = array();
+
+        foreach ($aankopen as $aankoop) {
+            echo('aankoop : <br>');
+            print_r($aankoop);
+
+            /*haal de id op van de persoon waarvoor het artikel gekocht werd*/
+            $gekochtVoor = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($aankoop->gekocht_voor);
+            $gekochtVoor_id = $gekochtVoor->id;
+
+            /*haal het id op van het artikel als dit bestaat, en anders, voeg het toe aan de artikel tabel en haal het id op*/
+            $artikel = $this->Artikel_model->get_artikel_id($aankoop->artikel);
+
+            echo('artikel');
+            echo($artikel);
+
+            /*TODO Insert in aankopen*/
+
+            /*
+             *  id
+                aankoper_id
+                gekocht_voor_id
+                datum
+                artikel_id
+                eenheidsprijs
+                aantal
+                aantal_container
+                aantal_doos
+                aantal_opzet
+                aantal_tray
+             *
+             */
+
+            /*$data = array(
+   array(
+      'title' => 'My title' ,
+      'name' => 'My Name' ,
+      'date' => 'My date'
+   ),
+   array(
+      'title' => 'Another title' ,
+      'name' => 'Another Name' ,
+      'date' => 'Another date'
+   )
+);
+
+$this->db->insert_batch('mytable', $data); */
+        }
+    }
 }

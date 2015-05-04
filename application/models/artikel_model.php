@@ -49,7 +49,7 @@ class Artikel_model extends CI_Model
         $this->db->delete('artikels');
     }
 
-    function get_where($id)
+    public function get_where($id)
     {
         $table = $this->get_table();
         $this->db->where('id', $id);
@@ -62,5 +62,19 @@ class Artikel_model extends CI_Model
     {
         $this->db->where('id', $data['id']);
         $this->db->update('artikels', $data);
+    }
+
+    public function get_artikel_id($artikel){
+        $query = $this->db->query("SELECT id FROM artikels WHERE lower(naam) = lower('" . $artikel ."')");
+        $aantal = $query->num_rows();
+
+        if ($aantal == 0) {
+            $id = $this->insert($artikel);
+        } else {
+            $result = $query->result();
+            $id = $result[0]->id;
+        }
+
+        return $id;
     }
 }

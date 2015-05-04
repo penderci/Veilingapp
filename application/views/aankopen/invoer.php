@@ -173,7 +173,7 @@
 
         </div>
         <!--Knop disablen als er geen internetconnectie is -->
-        <button type="submit" id="sync" class="btn btn-default btn-xs" style="float: right;">Sychroniseer</button>
+        <button type="submit" id="sync" class="btn btn-default btn-xs" style="float: right;" ng-click="synchronize($event)">Sychroniseer</button>
 
 <!--            </div>-->
 <!--        </div>-->

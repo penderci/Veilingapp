@@ -239,6 +239,27 @@
             return total;
         };
 
+        $scope.synchronize = function($event) {
+            var aankopen = JSON.parse(localStorage.getItem("aankopen"));
+            var aankopen2 = localStorage.getItem("aankopen")
+
+            $event.preventDefault();
+            alert('ok');
+            console.log(aankopen);
+            console.log(aankopen2);
+
+            $http({
+                url: 'aankopen/synchronize',
+                method: "POST",
+                data: aankopen2
+            }).success(function (data) {
+                //$scope.gekochtvoor = data;
+                //console.log($scope.gekochtvoor)
+                alert('sync gedaan');
+            });
+
+        }
+
     });
 })();
 

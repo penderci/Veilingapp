@@ -38,6 +38,18 @@ class Gebruiker_model extends CI_Model{
         return $query->result();
     }
 
+    public function get_ingelogde_gebruiker_id(){
+        $query = $this->db->query("SELECT id FROM gebruikers WHERE email = '" . $this->session->userdata('email') ."'");
+        $id = $query->result();
+        return $id[0];
+    }
+
+    public function get_gekochtVoor_gebruiker_id($naam){
+        $query = $this->db->query("SELECT id FROM gebruikers WHERE CONCAT(`voornaam`, ' ', `naam`) = '" . $naam ."'");
+        $id = $query->result();
+        return $id[0];
+    }
+
     /*public function get_gebruikers($q){
        // $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE email != '" . $this->session->userdata('email') . "' AND naam like '%$q%'");
         $this->db->select('voornaam');
