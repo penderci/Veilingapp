@@ -18,6 +18,7 @@
 <script type="text/javascript" src="<?php echo base_url();?>angular/angular-local-storage.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/checknet/js/jquery.checknet-1.6.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/angular-ui-date/src/date.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>app.js"></script>
 
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">
@@ -25,7 +26,10 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="<?php echo base_url();?>aankopen">Aankopen</a>
+            <a href="<?php echo base_url();?>overzicht">Overzicht</a>
+        </li>
+        <li>
+            <a href="<?php echo base_url();?>aankopen">Registratie</a>
         </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>

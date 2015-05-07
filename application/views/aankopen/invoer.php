@@ -1,5 +1,5 @@
-<!--Dit scherm zal dienen voor offline invoer van de aankopen, op te slaan in de local storage, en met een knop te syncen met de database (temp tabel?)-->
-<?php echo validation_errors(); ?>
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+ echo validation_errors(); ?>
 <form ng-controller="AankoopController" role="form" ng-submit="submitForm()">
     <div class="col-sm-10" style="position: absolute;left: 10%;">
         <div class="well bs-component">
@@ -11,7 +11,7 @@
                                 <label for="aankoopdatum" class="col-sm-6 control-label">Aankoopdatum</label>
 
                                 <div class="col-sm-6">
-                                    <input type="date" class="form-control input-sm" id="aankoopdatum"
+                                    <input ui-date="dateOptions" class="form-control input-sm" id="aankoopdatum"
                                            ng-model="aankoopdatum" required>
                                 </div>
                             </div>
@@ -219,6 +219,11 @@
        /* if (localStorage.getItem("aankopen") === null) {
             localStorage.setItem("aankopen",{});
         }*/
+
+        /*$(function() {
+            $( "#aankoopdatum" ).datepicker({dateFormat: 'dd/mm/yy'});
+            $( "#aankoopdatum" ).datepicker('setDate', new Date());
+        });*/
 
 
         var artikelsJson = JSON.parse(localStorage.getItem('artikellijst'));

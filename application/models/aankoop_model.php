@@ -30,4 +30,8 @@ class Aankoop_model extends CI_Model{
         return $query->result();
     }
 
+    public function insert_aankoop($data){
+        $this->db->insert('aankopen', $data);
+    }
+
 }
