@@ -20,6 +20,7 @@ class Gebruikers extends CI_Controller
 
     }
 
+    /*deze wordt gebruikt om de localstorage op te vullen, vermits in het invoerscherm de db niet beschikbaar is, en de autofill uit de localstorage komt*/
     public function get_gebruikers_list()
     {
 
@@ -29,5 +30,13 @@ class Gebruikers extends CI_Controller
             $q = strtolower($_GET['term']);
             $this->Gebruiker_model->get_gebruikers($q);
         }*/
+    }
+
+    /*deze wordt gebruikt in het overzichtsscherm, omdat de autofill hier uit de database gehaald wordt, er kan na het inladen in de local storage iets gewijzigd zijn*/
+    public function get_gebruikers_list_autofill(){
+        if (isset($_GET['term'])){
+            $q = strtolower($_GET['term']);
+            $this->Gebruiker_model->get_gebruikers_autofill($q);
+        }
     }
 }
