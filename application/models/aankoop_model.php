@@ -34,4 +34,13 @@ class Aankoop_model extends CI_Model{
         $this->db->insert('aankopen', $data);
     }
 
+    public function get_aankopen_ontvangen($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id){
+
+        $query = $this->db->query("SELECT * FROM aankopen WHERE aankoper_id = " . $aankoper_id .
+                                    " AND gekocht_voor_id = " . $gekochtVoor_id .
+                                    " AND datum BETWEEN '" . $vandatum ."' AND '" . $totdatum ."'");
+//
+        return $query->result();
+    }
+
 }

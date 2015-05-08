@@ -26,6 +26,23 @@
             .setPrefix('veilingapp');
     });
 
+    /*app.directive('jqdatepicker', function() {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function(scope, element, attrs, ctrl) {
+                $(element).datepicker({
+                    dateFormat: 'dd/mm/yy',
+                    onSelect: function(date) {
+                        ctrl.$setViewValue(date);
+                        ctrl.$render();
+                        scope.$apply();
+                    }
+                });
+            }
+        };
+    });*/
+
     /*ARTIKEL CONTROLLER*/
     app.controller('ArtikelController', function ($scope, $http) {
 
@@ -85,10 +102,10 @@
 
         $scope.submitForm = function () {
             if (localStorage.getItem("aankopen")) {
-                console.log('bekend');
+               // console.log('bekend');
                 var aankopen = JSON.parse(localStorage.getItem("aankopen"));
             } else {
-                console.log('niet bekend');
+              //  console.log('niet bekend');
                 var aankopen = [];}
 
             var datum = new Date($scope.aankoopdatum);
@@ -194,19 +211,20 @@
         };
 
         $scope.synchronize = function($event) {
-            var aankopen = JSON.parse(localStorage.getItem("aankopen"));
+            //var aankopen = JSON.parse(localStorage.getItem("aankopen"));
             var aankopen2 = localStorage.getItem("aankopen")
 
             $event.preventDefault();
-            console.log(aankopen);
-            console.log(aankopen2);
+
+           // console.log(aankopen);
+           // console.log(aankopen2);
 
             $http({
                 url: 'aankopen/synchronize',
                 method: "POST",
                 data: aankopen2
             }).success(function (data) {
-                console.log('sync gedaan');
+               // console.log('sync gedaan');
                 alert('De gegevens werden succesvol opgeslaan in de databank');
                 localStorage.removeItem('aankopen');
                 $scope.loadData();
@@ -223,16 +241,6 @@
 
     /*OVERZICHT CONTROLLER*/
     app.controller('OverzichtController', function ($scope, $http,primaryUserFactory) {
-        $scope.dateOptions = {
-            dateFormat: 'dd/mm/yy'
-        };
-
-        var datum = new Date();
-        var year = datum.getFullYear();
-
-        $scope.totdatum = datum.toLocaleDateString();
-        $scope.vandatum = new Date('01/01/' + year);
-
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.partner = data;
@@ -240,6 +248,78 @@
             .error(function(err){
                 alert('Er is een fout opgetreden');
             });
+
+        $scope.dateOptions = {
+            dateFormat: 'dd/mm/yy'
+        };
+
+        var datum = new Date();
+        var day = datum.getDate();
+        var month = datum.getMonth();
+        var month = month + 1;
+        var year = datum.getFullYear();
+
+        $scope.totdatum = new Date(day + '/' + month + '/' + year); //new Date().toISOString();;
+        $scope.vandatum = new Date('01/01/' + year);
+
+        //Haal enkel data op als alle 3 de velden ingevuld zijn
+        $scope.$watch('vandatum', function() {
+            if ($scope.partner && $scope.totdatum && $scope.vandatum){
+                $scope.aankopen_gedaan();
+            }
+        });
+
+        $scope.$watch('totdatum', function() {
+            if ($scope.partner && $scope.totdatum && $scope.vandatum){
+                   $scope.aankopen_gedaan();
+            }
+        });
+
+        $scope.$watch('partner', function() {
+            if ($scope.partner && $scope.totdatum && $scope.vandatum){
+                console.log('watch partner');
+                $scope.aankopen_gedaan();
+            }
+        });
+
+        $scope.aankopen_gedaan = function(){
+            $http({
+                url: 'aankopen/aankopen_gedaan',
+                method: "POST",
+                data: JSON.stringify({partner: $scope.partner, vandatum: $scope.vandatum,
+                                        totdatum: $scope.totdatum
+                                        })
+            }).success(function (data) {
+                $scope.ak_gedaan = data;
+                console.log('aankopen gedaan');
+                console.log($scope.ak_gedaan);
+            }).error(function(xhr, textStatus, error){
+                alert('Er is een fout opgetreden bij het syncen. Probeer nogmaals');
+                //console.log(xhr.statusText);
+                //console.log(textStatus);
+                //console.log(error);
+            });
+        }
+
+        $scope.aankopen_ontvangen = function(){
+            $http({
+                url: 'aankopen/aankopen_ontvangen',
+                method: "POST",
+                data: JSON.stringify({partner: $scope.partner, vandatum: $scope.vandatum,
+                    totdatum: $scope.totdatum
+                })
+            }).success(function (data) {
+                $scope.ak_gedaan = data;
+            }).error(function(xhr, textStatus, error){
+                alert('Er is een fout opgetreden bij het syncen. Probeer nogmaals');
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            });
+        }
+
+
+
 
     }); //einde OVERZICHT CONTROLLER
 

@@ -12,7 +12,7 @@ echo validation_errors(); ?>
 
                             <div class="col-sm-6">
                                 <input ui-date="dateOptions" class="form-control input-sm" id="vandatum"
-                                       ng-model="vandatum" required>
+                                       ng-model="vandatum" required jqdatepicker>
                             </div>
                         </div>
                     </td>
@@ -22,7 +22,7 @@ echo validation_errors(); ?>
 
                             <div class="col-sm-6">
                                 <input ui-date="dateOptions" class="form-control input-sm" id="totdatum"
-                                       ng-model="totdatum" required>
+                                       ng-model="totdatum" required jqdatepicker>
                             </div>
                         </div>
                     </td>
@@ -47,5 +47,12 @@ echo validation_errors(); ?>
         $("#partner").autocomplete({
             source: "gebruikers/get_gebruikers_list_autofill"
         });
+
+        /*var datum = new Date();
+        var jaar = datum.getFullYear();
+         $( "#vandatum" ).datepicker('setDate', new Date('01/01/' + jaar));
+         $( "#totdatum" ).datepicker('setDate', new Date());*/
+
+
     });
 </script>

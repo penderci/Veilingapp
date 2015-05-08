@@ -12,7 +12,7 @@ class Aankopen extends CI_Controller
 
             //$data['primary'] = $this->Gebruiker_model->get_primary_user_tobuyfor();
 
-            $data['leeggoed'] = $this->Aankoop_model->get_leeggoed();
+            //$data['leeggoed'] = $this->Aankoop_model->get_leeggoed();
 
             $data['artikels'] = $this->Aankoop_model->get_artikels();
 
@@ -169,5 +169,58 @@ class Aankopen extends CI_Controller
 
             }
         }
+    } //end synchronize
+
+    //Functies voor het overzichtsscherm
+
+    //haal de aankopen op van de persoon die ingelogd is, en die hij deed voor de gekozen partner
+    public function aankopen_gedaan(){
+        $postdata = file_get_contents('php://input');
+        $request = json_decode($postdata);
+
+        print_r($request);
+
+        $vanDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $request->vandatum);
+        $vanDateTime->modify('+1 day');
+        $vandatum = $vanDateTime->format('Y-m-d');
+
+        $totDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $request->totdatum);
+        $totDateTime->modify('+1 day');
+        $totdatum = $totDateTime->format('Y-m-d');
+
+       // $vandatum = $request->vandatum;
+      // $totdatum = $request->totdatum;
+
+        $gekochtVoor = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+        $gekochtVoor_id = $gekochtVoor->id;
+
+        $aankoper = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+        $aankoper_id = $aankoper->id;
+
+
+
+        $data = $this->Aankoop_model->get_aankopen_ontvangen($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id);
+
+        print_r('resultaat');
+        print_r($data);
+
+        //$this->output->set_content_type('application/json')->set_output(json_encode($data));
+        //$this->output->set_content_type('application/json')->set_output($data);
+
+
+
+
     }
+
+    //haal de aankopen die de gekozen partner deed voor de persoon die ingelogd is
+    public function aankopen_ontvangen(){
+        $postdata = file_get_contents('php://input');
+        $request = json_decode($postdata);
+
+        print_r($request);
+    }
+
+
+
+
 }
