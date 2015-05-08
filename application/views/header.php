@@ -24,6 +24,8 @@
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">
     <h1 class="navbar-header" style="color:white">Veilingadministratie</h1>
 
+    <?php  if ($this->session->userdata('is_logged_in')) {?>
+
     <ul class="nav navbar-nav navbar-right">
         <li>
             <a href="<?php echo base_url();?>overzicht">Overzicht</a>
@@ -41,7 +43,7 @@
         </li>
         <li>&nbsp &nbsp &nbsp &nbsp</li>
     </ul>
-
+    <?php }?>
 </div>
 <h1>Veilingadministratie</h1>
 <?php if ($this->session->userdata('is_logged_in')) { ?>

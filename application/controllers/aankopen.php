@@ -79,6 +79,13 @@ class Aankopen extends CI_Controller
 
     }
 
+    //verwijder een artikel uit de databank
+    public function delete()
+    {
+        $this->Aankoop_model->delete();
+        redirect(base_url() . 'overzicht');
+    }
+
     public function get_list()
     {
         $data = $this->Aankoop_model->get_aankopen_temp();
@@ -178,7 +185,30 @@ class Aankopen extends CI_Controller
         $postdata = file_get_contents('php://input');
         $request = json_decode($postdata);
 
-        print_r($request);
+        $vanDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $request->vandatum);
+        $vanDateTime->modify('+1 day');
+        $vandatum = $vanDateTime->format('Y-m-d');
+
+        $totDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $request->totdatum);
+        $totDateTime->modify('+1 day');
+        $totdatum = $totDateTime->format('Y-m-d');
+
+
+        $gekochtVoor = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+        $gekochtVoor_id = $gekochtVoor->id;
+
+        $aankoper = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+        $aankoper_id = $aankoper->id;
+
+        $aankopen = $this->Aankoop_model->get_aankopen_gedaan($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id);
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($aankopen));
+    }
+
+    //haal de aankopen die de gekozen partner deed voor de persoon die ingelogd is
+    public function aankopen_ontvangen(){
+        $postdata = file_get_contents('php://input');
+        $request = json_decode($postdata);
 
         $vanDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $request->vandatum);
         $vanDateTime->modify('+1 day');
@@ -188,36 +218,16 @@ class Aankopen extends CI_Controller
         $totDateTime->modify('+1 day');
         $totdatum = $totDateTime->format('Y-m-d');
 
-       // $vandatum = $request->vandatum;
-      // $totdatum = $request->totdatum;
 
-        $gekochtVoor = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+        $gekochtVoor = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
         $gekochtVoor_id = $gekochtVoor->id;
 
-        $aankoper = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+        $aankoper = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
         $aankoper_id = $aankoper->id;
 
+        $aankopen = $this->Aankoop_model->get_aankopen_ontvangen($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id);
 
-
-        $data = $this->Aankoop_model->get_aankopen_ontvangen($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id);
-
-        print_r('resultaat');
-        print_r($data);
-
-        //$this->output->set_content_type('application/json')->set_output(json_encode($data));
-        //$this->output->set_content_type('application/json')->set_output($data);
-
-
-
-
-    }
-
-    //haal de aankopen die de gekozen partner deed voor de persoon die ingelogd is
-    public function aankopen_ontvangen(){
-        $postdata = file_get_contents('php://input');
-        $request = json_decode($postdata);
-
-        print_r($request);
+        $this->output->set_content_type('application/json')->set_output(json_encode($aankopen));
     }
 
 

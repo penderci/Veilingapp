@@ -266,12 +266,14 @@
         $scope.$watch('vandatum', function() {
             if ($scope.partner && $scope.totdatum && $scope.vandatum){
                 $scope.aankopen_gedaan();
+                $scope.aankopen_ontvangen();
             }
         });
 
         $scope.$watch('totdatum', function() {
             if ($scope.partner && $scope.totdatum && $scope.vandatum){
                    $scope.aankopen_gedaan();
+                   $scope.aankopen_ontvangen();
             }
         });
 
@@ -279,6 +281,7 @@
             if ($scope.partner && $scope.totdatum && $scope.vandatum){
                 console.log('watch partner');
                 $scope.aankopen_gedaan();
+                $scope.aankopen_ontvangen();
             }
         });
 
@@ -292,14 +295,73 @@
             }).success(function (data) {
                 $scope.ak_gedaan = data;
                 console.log('aankopen gedaan');
-                console.log($scope.ak_gedaan);
+                console.log($scope);
             }).error(function(xhr, textStatus, error){
-                alert('Er is een fout opgetreden bij het syncen. Probeer nogmaals');
+                alert('Er is een fout opgetreden bij ophalen van de aankopen');
                 //console.log(xhr.statusText);
                 //console.log(textStatus);
                 //console.log(error);
             });
         }
+
+        $scope.getTotalPriceAk = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_gedaan, function (aankoop, index) {
+                if (aankoop.aantal != null && aankoop.eenheidsprijs) {
+                    total += parseFloat(aankoop.aantal * aankoop.eenheidsprijs);
+                }
+            });
+
+            return total.toFixed(3);
+
+        };
+
+        $scope.getTotalContainerAk = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_gedaan, function (aankoop, index) {
+                if (aankoop.aantal_container != null) {
+                    total += parseInt(aankoop.aantal_container);
+                }
+            });
+
+            return total;
+        };
+
+        $scope.getTotalOpzetAk = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_gedaan, function (aankoop, index) {
+                if (aankoop.aantal_opzet != null) {
+                    total += parseInt(aankoop.aantal_opzet);
+                }
+
+            });
+            return total;
+        };
+
+        $scope.getTotalTrayAk = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_gedaan, function (aankoop, index) {
+                if (aankoop.aantal_tray != null) {
+                    total += parseInt(aankoop.aantal_tray);
+                }
+            });
+            return total;
+        };
+
+        $scope.getTotalDoosAk = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_gedaan, function (aankoop, index) {
+                if (aankoop.aantal_doos != null) {
+                    total += parseInt(aankoop.aantal_doos);
+                }
+            });
+            return total;
+        };
 
         $scope.aankopen_ontvangen = function(){
             $http({
@@ -309,16 +371,73 @@
                     totdatum: $scope.totdatum
                 })
             }).success(function (data) {
-                $scope.ak_gedaan = data;
+                $scope.ak_ontvangen = data;
             }).error(function(xhr, textStatus, error){
-                alert('Er is een fout opgetreden bij het syncen. Probeer nogmaals');
+                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
                 console.log(xhr.statusText);
                 console.log(textStatus);
                 console.log(error);
             });
         }
 
+        $scope.getTotalPriceOntv = function () {
+            var total = 0;
 
+            angular.forEach($scope.ak_ontvangen, function (aankoop, index) {
+                if (aankoop.aantal != null && aankoop.eenheidsprijs) {
+                    total += parseFloat(aankoop.aantal * aankoop.eenheidsprijs);
+                }
+            });
+
+            return total.toFixed(3);
+
+        };
+
+        $scope.getTotalContainerOntv = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_ontvangen, function (aankoop, index) {
+                if (aankoop.aantal_container != null) {
+                    total += parseInt(aankoop.aantal_container);
+                }
+            });
+
+            return total;
+        };
+
+        $scope.getTotalOpzetOntv = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_ontvangen, function (aankoop, index) {
+                if (aankoop.aantal_opzet != null) {
+                    total += parseInt(aankoop.aantal_opzet);
+                }
+
+            });
+            return total;
+        };
+
+        $scope.getTotalTrayOntv = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_ontvangen, function (aankoop, index) {
+                if (aankoop.aantal_tray != null) {
+                    total += parseInt(aankoop.aantal_tray);
+                }
+            });
+            return total;
+        };
+
+        $scope.getTotalDoosOntv = function () {
+            var total = 0;
+
+            angular.forEach($scope.ak_ontvangen, function (aankoop, index) {
+                if (aankoop.aantal_doos != null) {
+                    total += parseInt(aankoop.aantal_doos);
+                }
+            });
+            return total;
+        };
 
 
     }); //einde OVERZICHT CONTROLLER

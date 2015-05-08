@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
  echo validation_errors(); ?>
 <form ng-controller="AankoopController" role="form" ng-submit="submitForm()">
-    <div class="col-sm-10" style="position: absolute;left: 10%;">
+    <div class="col-sm-11" style="position: absolute;left: 5%;">
         <div class="well bs-component">
             <div class="container">
                 <table>
@@ -32,7 +32,7 @@
         </div>
     </div>
     <div></div>
-    <div class="col-sm-10" style="position: absolute;left: 10%;top: 25%">
+    <div class="col-sm-11" style="position: absolute;left: 5%;top: 25%">
         <div class="well bs-component">
             <div class="container">
 
@@ -126,7 +126,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-10" style="position: absolute;left: 10%;top: 60%" >
+    <div class="col-sm-11" style="position: absolute;left: 5%;top: 60%" >
 <!--        <div class="well bs-component">-->
 <!--            <div class="container">-->
         <div style="height: 215px; overflow: auto;">
@@ -216,9 +216,15 @@
             console.log('niet actief');
         }
 
-       /* if (localStorage.getItem("aankopen") === null) {
-            localStorage.setItem("aankopen",{});
-        }*/
+        $('#aankoopdatum').keydown(function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+
+        /* if (localStorage.getItem("aankopen") === null) {
+             localStorage.setItem("aankopen",{});
+         }*/
 
         /*$(function() {
             $( "#aankoopdatum" ).datepicker({dateFormat: 'dd/mm/yy'});

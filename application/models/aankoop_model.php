@@ -34,12 +34,33 @@ class Aankoop_model extends CI_Model{
         $this->db->insert('aankopen', $data);
     }
 
+    function delete()
+    {
+        $this->db->where('id', $this->uri->segment(3));
+        $this->db->delete('aankopen');
+    }
+
+    public function get_aankopen_gedaan($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id){
+
+        $query = $this->db->query("SELECT a.id, a.datum, b.naam, a.eenheidsprijs, a.aantal, a.aantal_container, a.aantal_doos, a.aantal_opzet, a.aantal_tray
+                                    FROM aankopen a, artikels b WHERE a.aankoper_id = " . $aankoper_id .
+                                    " AND a.gekocht_voor_id = " . $gekochtVoor_id .
+                                    " AND a.datum BETWEEN '" . $vandatum ."' AND '" . $totdatum ."'
+                                    AND a.artikel_id = b.id
+                                    ORDER BY a.datum, b.naam");
+
+        return $query->result();
+    }
+
     public function get_aankopen_ontvangen($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id){
 
-        $query = $this->db->query("SELECT * FROM aankopen WHERE aankoper_id = " . $aankoper_id .
-                                    " AND gekocht_voor_id = " . $gekochtVoor_id .
-                                    " AND datum BETWEEN '" . $vandatum ."' AND '" . $totdatum ."'");
-//
+        $query = $this->db->query("SELECT a.id, a.datum, b.naam, a.eenheidsprijs, a.aantal, a.aantal_container, a.aantal_doos, a.aantal_opzet, a.aantal_tray
+                                    FROM aankopen a, artikels b WHERE a.aankoper_id = " . $aankoper_id .
+            " AND a.gekocht_voor_id = " . $gekochtVoor_id .
+            " AND a.datum BETWEEN '" . $vandatum ."' AND '" . $totdatum ."'
+                                    AND a.artikel_id = b.id
+                                    ORDER BY a.datum, b.naam");
+
         return $query->result();
     }
 
