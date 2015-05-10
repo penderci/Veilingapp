@@ -40,7 +40,7 @@
                     <tr>
                         <td class="col-sm-3">
 
-                            <div class="form-group-sm ui-widget">
+                            <div class="form-group-sm"> <!--ui-widget-->
                                 <label for="artikel" class="col-sm-4 control-label">Naam</label>
 
                                 <div class="col-sm-6">

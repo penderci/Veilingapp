@@ -28,10 +28,13 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
+            <a href="<?php echo base_url();?>aankopen">Registratie</a>
+        </li>
+        <li>
             <a href="<?php echo base_url();?>overzicht">Overzicht</a>
         </li>
         <li>
-            <a href="<?php echo base_url();?>aankopen">Registratie</a>
+            <a href="<?php echo base_url();?>overdrachten">Overdracht</a>
         </li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>

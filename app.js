@@ -20,6 +20,38 @@
 
         });
 
+    /*FACTORY voor het ophalen van alle partners waarvoor de ingelogde gebruiker kan kopen*/
+    app.factory('partnersFactory',function($http){
+        var factory={};
+
+        factory.partners = function() {
+            return $http({
+                url: 'gebruikers/get_gebruikers_list',
+                method: "POST"
+            })
+        }
+
+        return factory;
+    });
+
+
+
+    /*FACTORY voor het ophalen van de uitgevoerde betalingen, nodig in aankopenscherm voor totaal betalingen en voor scherm overdracht*/
+    app.factory('betalingenFactory',function($http){
+        var factory={};
+
+        factory.betalingen = function() {
+            return $http({
+                url: 'overdrachten/get_betalingen',
+                method: "POST"
+            })
+        }
+
+        return factory;
+
+    });
+
+
     /*config voor localstorage*/
     app.config(function (localStorageServiceProvider) {
         localStorageServiceProvider
@@ -442,5 +474,37 @@
 
     }); //einde OVERZICHT CONTROLLER
 
+    /*OVERDRACHT CONTROLLER*/
+    app.controller('OverdrachtController', function ($scope, $http,partnersFactory,primaryUserFactory){
+        partnersFactory.partners()
+            .success(function (data) {
+                $scope.partners = jQuery.makeArray(data);
+                console.log($scope);
+            })
+            .error(function(err){
+                alert('Er is een fout opgetreden bij het ophalen van de partners');
+            });
+
+        primaryUserFactory.primaryUser()
+            .success(function (data) {
+                $scope.primaryPartner = data;
+                console.log($scope);
+            })
+            .error(function(err){
+                alert('Er is een fout opgetreden');
+            });
+
+        $scope.dateOptions = {
+            dateFormat: 'dd/mm/yy'
+        };
+
+       /* $scope.betaaldAan = $scope.primaryPartner;
+        console.log($scope);*/
+
+
+        $scope.betaaldatum = new Date().toLocaleDateString();
+
+
+    }); //einde OVERDRACHT CONTROLLER
 })();
 
