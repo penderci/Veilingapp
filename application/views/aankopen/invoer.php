@@ -84,7 +84,7 @@
 
                                 <div class="col-sm-6">
                                     <input type="number" class="form-control input-sm" id="container"
-                                           ng-model="container">
+                                           ng-model="container" min="0" step="1">
                                 </div>
                             </div>
                             <br>
@@ -94,7 +94,7 @@
 
                                 <div class="col-sm-6">
                                     <input type="number" class="form-control input-sm" id="opzet"
-                                           ng-model="opzet">
+                                           ng-model="opzet" min="0" step="1">
                                 </div>
                             </div>
                             <br>
@@ -104,7 +104,7 @@
 
                                 <div class="col-sm-6">
                                     <input type="number" class="form-control input-sm" id="tray"
-                                           ng-model="tray">
+                                           ng-model="tray" min="0" step="1">
                                 </div>
                             </div>
                             <br>
@@ -114,7 +114,7 @@
 
                                 <div class="col-sm-6">
                                     <input type="number" class="form-control input-sm" id="doos"
-                                           ng-model="doos">
+                                           ng-model="doos" min="0" step="1">
                                 </div>
                             </div>
                         </td>

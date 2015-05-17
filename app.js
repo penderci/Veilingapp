@@ -317,6 +317,7 @@
             }
         });
 
+        //haal de aankopen op van de persoon die ingelogd is, en die hij deed voor de gekozen partner
         $scope.aankopen_gedaan = function(){
             $http({
                 url: 'aankopen/aankopen_gedaan',
@@ -395,6 +396,7 @@
             return total;
         };
 
+        //haal de aankopen op die de gekozen partner deed voor de persoon die ingelogd is
         $scope.aankopen_ontvangen = function(){
             $http({
                 url: 'aankopen/aankopen_ontvangen',
@@ -487,7 +489,7 @@
 
         primaryUserFactory.primaryUser()
             .success(function (data) {
-                $scope.primaryPartner = data;
+                $scope.betaaldAan = data;
                 console.log($scope);
             })
             .error(function(err){
@@ -503,6 +505,27 @@
 
 
         $scope.betaaldatum = new Date().toLocaleDateString();
+
+        $scope.submitForm = function () {
+            $http({
+                url: 'overdrachten/insert_overdracht',
+                method: "POST",
+                data: JSON.stringify({partner: $scope.betaaldAan,  bedrag: $scope.bedrag,
+                    aantal_container: $scope.container,  aantal_opzet: $scope.opzet, aantal_tray: $scope.tray, aantal_doos: $scope.doos,
+                    datum: $scope.betaaldatum
+                })
+            }).success(function (data) {
+                // console.log('sync gedaan');
+                alert('De gegevens werden succesvol opgeslaan in de databank');
+
+               // $scope.loadData();
+            }).error(function(xhr, textStatus, error){
+                alert('Er is een fout opgetreden bij het wegschrijven van de overdracht. Probeer nogmaals');
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            });
+        }
 
 
     }); //einde OVERDRACHT CONTROLLER

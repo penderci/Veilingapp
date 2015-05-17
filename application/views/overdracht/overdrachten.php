@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /*invoer / edit / delete / update van overdrachten */
 ?>
-<form ng-controller="OverdrachtController" role="form" class="form-horizontal">
+<form ng-controller="OverdrachtController" role="form" class="form-horizontal" ng-submit="submitForm()">
 <div class="col-sm-11" style="position: absolute;left: 5%;top: 10%">
     <div class="well bs-component">
         <div class="container">
@@ -25,11 +25,11 @@
                             <label for="betaaldAan" class="col-sm-4 control-label">Betaald aan</label>
 <!--                            <input type="hidden"  ng-model="primaryPartner">-->
                             <div class="col-sm-3">
-                                <select name="betaaldAan" ng-model="betaaldAan">
+                                <!--<select name="betaaldAan" ng-model="betaaldAan">
                                     <option ng-repeat="partner in partners" value="{{partner.naam}}">{{partner.naam}}</option>
-                                </select>
-                                <!--<input type="text" class="form-control input-sm" id="betaaldAan"
-                                       ng-model="betaaldAan" required>-->
+                                </select>-->
+                                <input type="text" class="form-control input-sm" id="betaaldAan"
+                                       ng-model="betaaldAan" required>
                             </div>
                         </div>
 
@@ -39,7 +39,7 @@
                             <label for="bedrag" class="col-sm-4 control-label">Bedrag</label>
 
                             <div class="col-sm-3">
-                                <input type="number" class="form-control input-sm" id="bedrag" ng-model="bedrag">
+                                <input type="number" class="form-control input-sm" id="bedrag" ng-model="bedrag" min="0" step="1">
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@
 
                             <div class="col-sm-3">
                                 <input type="number" class="form-control input-sm" id="container"
-                                       ng-model="container">
+                                       ng-model="container" min="0" step="1">
                             </div>
                         </div>
 
@@ -59,7 +59,7 @@
 
                             <div class="col-sm-3">
                                 <input type="number" class="form-control input-sm" id="opzet"
-                                       ng-model="opzet">
+                                       ng-model="opzet" min="0" step="1">
                             </div>
                         </div>
 
@@ -69,7 +69,7 @@
 
                             <div class="col-sm-3">
                                 <input type="number" class="form-control input-sm" id="tray"
-                                       ng-model="tray">
+                                       ng-model="tray" min="0" step="1">
                             </div>
                         </div>
 
@@ -79,7 +79,7 @@
 
                             <div class="col-sm-3">
                                 <input type="number" class="form-control input-sm" id="doos"
-                                       ng-model="doos">
+                                       ng-model="doos" min="0" step="1">
                             </div>
                         </div>
 
@@ -154,3 +154,28 @@
 
 
 </form>
+<script>
+    $(document).ready(function () {
+        $("#betaaldAan").autocomplete({
+            source: "gebruikers/get_gebruikers_list_autofill"
+        });
+
+        /*$('#vandatum').keydown(function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        $('#totdatum').keydown(function(e) {
+            e.preventDefault();
+            return false;
+        });*/
+
+
+        /*var datum = new Date();
+         var jaar = datum.getFullYear();
+         $( "#vandatum" ).datepicker('setDate', new Date('01/01/' + jaar));
+         $( "#totdatum" ).datepicker('setDate', new Date());*/
+
+
+    });
+</script>
