@@ -19,5 +19,82 @@ class Overdrachten extends CI_Controller
         $postdata = file_get_contents('php://input');
         $request = json_decode($postdata);
         print_r($request);
+
+        $gebruiker = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+        print_r($gebruiker);
+        $gebruiker_id = $gebruiker->id;
+
+        echo('gebruikerid = ' . $gebruiker_id);
+
+        $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+        $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
+
+        echo('koopt_voor_gebruikerid = ' . $koopt_voor_gebruiker_id);
+
+        $koppeling = $this->Gebruiker_model->get_koppeling_id($gebruiker_id,$koopt_voor_gebruiker_id);
+        $koppeling_id = $koppeling->id;
+
+        echo('koppelingid = ');
+        print_r($koppeling_id);
+
+        $myDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $request->datum);
+        $myDateTime->modify('+1 day');
+        $datum = $myDateTime->format('Y-m-d');
+
+        if(isset($request->bedrag)){
+            $bedrag = $request->bedrag;
+        } else {
+            $bedrag = 0;
+        }
+
+        if(isset($request->aantal_container)){
+            $aantal_container = $request->aantal_container;
+        } else {
+            $aantal_container = 0;
+        }
+
+        if(isset($request->aantal_opzet)){
+            $aantal_opzet = $request->aantal_opzet;
+        } else {
+            $aantal_opzet = 0;
+        }
+
+        if(isset($request->aantal_tray)){
+            $aantal_tray = $request->aantal_tray;
+        } else {
+            $aantal_tray = 0;
+        }
+
+        if(isset($request->aantal_doos)){
+            $aantal_doos = $request->aantal_doos;
+        } else {
+            $aantal_doos = 0;
+        }
+
+        $data = array(
+            'koppeling_id' => $koppeling_id,
+            'bedrag' => $bedrag,
+            'aantal_container' => $aantal_container,
+            'aantal_doos' => $aantal_doos,
+            'aantal_opzet' => $aantal_opzet,
+            'aantal_tray' => $aantal_tray,
+            'datum' => $datum
+        );
+
+        //doe de feitelijke insert in het model
+        $id = $this->Overdracht_model->insert_overdracht($data);
+
+        if ($id) {
+            echo $result = '{"status":"success"}';
+        } else {
+            echo $result = '{"status":"failure"}';
+        }
+
+
     }
+
+    public function get_betalingen(){
+
+    }
+
 }

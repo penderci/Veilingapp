@@ -74,8 +74,8 @@ class Artikels extends CI_Controller
         $this->form_validation->set_rules("naam", "Naam", "required|xss_clean");
 
         if ($this->form_validation->run() == FALSE) {
-            echo('valid false');
-            die();
+            //echo('valid false');
+            //die();
             $this->edit($id);
 
         } else {

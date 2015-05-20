@@ -1,4 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+echo validation_errors();
 /*invoer / edit / delete / update van overdrachten */
 ?>
 <form ng-controller="OverdrachtController" role="form" class="form-horizontal" ng-submit="submitForm()">
@@ -100,16 +102,14 @@
 </div>
 
 
-<!--<div class="col-sm-11" style="position: absolute;left: 5%;top: 45%">
+<div class="col-sm-11" style="position: absolute;left: 5%;top: 45%">
     <div style="height: 550px; overflow: auto;">
         <table class="table table-striped table-hover" style="font-size: 12px;">
             <caption>Uitgevoerde betalingen</caption>
             <tr>
                 <th>Datum</th>
-                <th>Artikel</th>
-                <th style="text-align:right">Aantal</th>
-                <th style="text-align:right">Eh prijs</th>
-                <th style="text-align:right">Totaal</th>
+                <th>Aan</th>
+                <th style="text-align:right">Bedrag</th>
                 <th style="text-align:right">Container</th>
                 <th style="text-align:right">Opzet</th>
                 <th style="text-align:right">Bruine Tray</th>
@@ -122,35 +122,33 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th style="text-align:right">{{getTotalPriceAk() | number:2}}</th>
-                <th style="text-align:right">{{getTotalContainerAk()}}</th>
-                <th style="text-align:right">{{getTotalOpzetAk()}}</th>
-                <th style="text-align:right">{{getTotalTrayAk()}}</th>
-                <th style="text-align:right">{{getTotalDoosAk()}}</th>
+                <th style="text-align:right">{{getTotalBetaald()}}</th>
+                <th style="text-align:right">{{getTotalContainer()}}</th>
+                <th style="text-align:right">{{getTotalOpzet()}}</th>
+                <th style="text-align:right">{{getTotalTray()}}</th>
+                <th style="text-align:right">{{getTotalDoos()}}</th>
                 <th></th>
                 <th></th>
             </tr>
-            <tr ng-repeat="aankoop in ak_gedaan">
-                <td><b>{{aankoop.datum | date:"dd/MM/yyyy"}}<br>&nbsp</b></td>
-                <td><b>{{aankoop.naam}}</b></td>
-                <td align="right">{{aankoop.aantal}}</td>
-                <td align="right">{{aankoop.eenheidsprijs | number:3}}</td>
-                <td align="right">{{aankoop.aantal * aankoop.eenheidsprijs| number:2}}</td>
-                <td align="right">{{aankoop.aantal_container}}</td>
-                <td align="right">{{aankoop.aantal_opzet}}</td>
-                <td align="right">{{aankoop.aantal_tray}}</td>
-                <td align="right">{{aankoop.aantal_doos}}</td>
+            <tr ng-repeat="betaling in betalingen">
+                <td><b>{{betaling.datum | date:"dd/MM/yyyy"}}<br>&nbsp</b></td>                <
+                <td align="right">{{betaling.aan}}</td>
+                <td align="right">{{betaling.bedrag}}</td>
+                <td align="right">{{betaling.aantal_container}}</td>
+                <td align="right">{{betaling.aantal_opzet}}</td>
+                <td align="right">{{betaling.aantal_tray}}</td>
+                <td align="right">{{betaling.aantal_doos}}</td>
                 <td>
                     <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
                 </td>
                 <td>
-                    <a href="aankopen/delete/{{aankoop.id}}" class="btn-sm glyphicon glyphicon-trash"></a>
+                    <a href="overdrachten/delete/{{betaling.id}}" class="btn-sm glyphicon glyphicon-trash"></a>
                 </td>
             </tr>
         </table>
 
     </div>
-</div>-->
+</div>
 
 
 </form>
@@ -158,6 +156,11 @@
     $(document).ready(function () {
         $("#betaaldAan").autocomplete({
             source: "gebruikers/get_gebruikers_list_autofill"
+        });
+
+        $('#betaaldatum').keydown(function(e) {
+            e.preventDefault();
+            return false;
         });
 
         /*$('#vandatum').keydown(function(e) {

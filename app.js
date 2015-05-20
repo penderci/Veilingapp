@@ -291,8 +291,8 @@
         var month = month + 1;
         var year = datum.getFullYear();
 
-        $scope.totdatum = new Date(day + '/' + month + '/' + year); //new Date().toISOString();;
-        $scope.vandatum = new Date('01/01/' + year);
+        $scope.totdatum = new Date(); //new Date().toISOString();;
+        $scope.vandatum = '01/01/'+new Date().getFullYear(); //new Date('01/01/' + year);
 
         //Haal enkel data op als alle 3 de velden ingevuld zijn
         $scope.$watch('vandatum', function() {
@@ -322,8 +322,8 @@
             $http({
                 url: 'aankopen/aankopen_gedaan',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.partner, vandatum: $scope.vandatum,
-                                        totdatum: $scope.totdatum
+                data: JSON.stringify({partner: $scope.partner, vandatum: new Date($scope.vandatum),
+                                        totdatum: new Date($scope.totdatum)
                                         })
             }).success(function (data) {
                 $scope.ak_gedaan = data;
@@ -401,8 +401,8 @@
             $http({
                 url: 'aankopen/aankopen_ontvangen',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.partner, vandatum: $scope.vandatum,
-                    totdatum: $scope.totdatum
+                data: JSON.stringify({partner: $scope.partner, vandatum: new Date($scope.vandatum),
+                    totdatum: new Date($scope.totdatum)
                 })
             }).success(function (data) {
                 $scope.ak_ontvangen = data;
@@ -507,12 +507,15 @@
         $scope.betaaldatum = new Date().toLocaleDateString();
 
         $scope.submitForm = function () {
+            //var datum = new Date($scope.betaaldatum);
+            console.log($scope);
+
             $http({
                 url: 'overdrachten/insert_overdracht',
                 method: "POST",
                 data: JSON.stringify({partner: $scope.betaaldAan,  bedrag: $scope.bedrag,
                     aantal_container: $scope.container,  aantal_opzet: $scope.opzet, aantal_tray: $scope.tray, aantal_doos: $scope.doos,
-                    datum: $scope.betaaldatum
+                    datum: new Date($scope.betaaldatum)
                 })
             }).success(function (data) {
                 // console.log('sync gedaan');
@@ -526,6 +529,31 @@
                 console.log(error);
             });
         }
+
+        $scope.loadData = function () {
+            /*$http.get('overdracht/get_betalingen').success(function (data) {
+                $scope.betalingen = data;
+            });*/
+
+            $http({
+                url: 'overdrachten/get_betalingen',
+                method: "GET",
+                data: JSON.stringify({betaaldAan: $scope.betaaldAan})
+            }).success(function (data) {
+                $scope.betalingen = data;
+                console.log('betalingen');
+                console.log($scope);
+            }).error(function(xhr, textStatus, error){
+                alert('Er is een fout opgetreden bij ophalen van de betalingen');
+                //console.log(xhr.statusText);
+                //console.log(textStatus);
+                //console.log(error);
+            });
+
+
+
+
+        };
 
 
     }); //einde OVERDRACHT CONTROLLER

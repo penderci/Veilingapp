@@ -6,4 +6,11 @@ class Overdracht_model extends CI_Model
     {
         parent::__construct();
     }
+
+    public function insert_overdracht($data)
+    {
+        $this->db->insert('overdrachten', $data);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+    }
 }

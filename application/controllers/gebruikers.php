@@ -39,4 +39,11 @@ class Gebruikers extends CI_Controller
             $this->Gebruiker_model->get_gebruikers_autofill($q);
         }
     }
+
+    public function get_user_by_name($naam){
+
+    }
+    public function get_user_by_email($email){
+
+    }
 }

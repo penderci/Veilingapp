@@ -84,5 +84,15 @@ class Gebruiker_model extends CI_Model{
 
     }
 
+    public function get_koppeling_id($gebruiker_id,$koopt_voor_gebruiker_id){
+        $query = $this->db->query("SELECT id FROM koppelingen WHERE gebruiker_id = " . $gebruiker_id ." AND koopt_voor_gebruiker_id = " . $koopt_voor_gebruiker_id);
+        $id = $query->result();
+
+        echo('koppeling = ');
+        print_r($id);
+        print_r($id[0]);
+        return $id[0];
+    }
+
 
 }
