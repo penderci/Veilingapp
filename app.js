@@ -478,33 +478,90 @@
 
     /*OVERDRACHT CONTROLLER*/
     app.controller('OverdrachtController', function ($scope, $http,partnersFactory,primaryUserFactory){
-        partnersFactory.partners()
-            .success(function (data) {
-                $scope.partners = jQuery.makeArray(data);
-                console.log($scope);
-            })
-            .error(function(err){
-                alert('Er is een fout opgetreden bij het ophalen van de partners');
-            });
-
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.betaaldAan = data;
                 console.log($scope);
             })
             .error(function(err){
-                alert('Er is een fout opgetreden');
+                alert('Er is een fout opgetreden bij het ophalen van de primaire partner');
             });
+
+        partnersFactory.partners()
+            .success(function (data) {
+                $scope.partners = jQuery.makeArray(data);
+                $scope.selectPrimary();
+                console.log($scope);
+            })
+            .error(function(err){
+                alert('Er is een fout opgetreden bij het ophalen van de partners');
+            });
+
+
 
         $scope.dateOptions = {
             dateFormat: 'dd/mm/yy'
         };
 
+        $scope.betaaldatum = new Date().toLocaleDateString();
+
+        $scope.selectPrimary= function(){
+            console.log('in select Primary');
+            console.log($scope);
+
+            for(var i=0;i<$scope.partners.length;i++){
+                console.log('betaaldaan = ' + $scope.betaaldAan);
+
+                if ($scope.partners[i].naam == $scope.betaaldAan) {
+                    $scope.betaaldAan = $scope.partners[i].naam;
+                }
+
+                console.log('naam = ' + $scope.partners[i].naam);
+            }
+
+            //angular.forEach($scope.partners, function(value, key) {
+            //    console.log('in loop');
+            //    var printFirstName = value.naam;
+            //    console.log(printFirstName);
+            //});
+        }
+
+
+
+        $scope.loadData = function () {
+            /*$http.get('overdracht/get_betalingen').success(function (data) {
+             $scope.betalingen = data;
+             });*/
+
+
+            $http({
+                url: 'overdrachten/get_betalingen',
+                method: "POST",
+                data: JSON.stringify({betaaldAan: $scope.betaaldAan})
+            }).success(function (data) {
+                $scope.betalingen = data;
+                console.log('betalingen');
+                console.log($scope);
+            }).error(function(xhr, textStatus, error){
+                alert('Er is een fout opgetreden bij ophalen van de betalingen');
+                //console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            });
+        };
+
+       /// console.log('betaald aan :');
+        //console.log($scope.betaaldAan);
+        $scope.loadData();
+
        /* $scope.betaaldAan = $scope.primaryPartner;
         console.log($scope);*/
 
+       /*TODO : Niet wissen, moet geactiveerd worden na het veranderen van het inputscherm naar een dropdown*/
+       $scope.$watch('betaaldAan', function() {
+            $scope.loadData();
+        });
 
-        $scope.betaaldatum = new Date().toLocaleDateString();
 
         $scope.submitForm = function () {
             //var datum = new Date($scope.betaaldatum);
@@ -519,8 +576,14 @@
                 })
             }).success(function (data) {
                 // console.log('sync gedaan');
-                alert('De gegevens werden succesvol opgeslaan in de databank');
+                //alert('De gegevens werden succesvol opgeslaan in de databank');
+                $scope.bedrag='';
+                $scope.container='';
+                $scope.opzet='';
+                $scope.tray='';
+                $scope.doos='';
 
+                $scope.loadData();
                // $scope.loadData();
             }).error(function(xhr, textStatus, error){
                 alert('Er is een fout opgetreden bij het wegschrijven van de overdracht. Probeer nogmaals');
@@ -530,30 +593,7 @@
             });
         }
 
-        $scope.loadData = function () {
-            /*$http.get('overdracht/get_betalingen').success(function (data) {
-                $scope.betalingen = data;
-            });*/
 
-            $http({
-                url: 'overdrachten/get_betalingen',
-                method: "GET",
-                data: JSON.stringify({betaaldAan: $scope.betaaldAan})
-            }).success(function (data) {
-                $scope.betalingen = data;
-                console.log('betalingen');
-                console.log($scope);
-            }).error(function(xhr, textStatus, error){
-                alert('Er is een fout opgetreden bij ophalen van de betalingen');
-                //console.log(xhr.statusText);
-                //console.log(textStatus);
-                //console.log(error);
-            });
-
-
-
-
-        };
 
 
     }); //einde OVERDRACHT CONTROLLER

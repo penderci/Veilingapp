@@ -44,7 +44,7 @@
                 <li><a href="#">Gebruikers</a></li>
             </ul>
         </li>
-        <li>&nbsp &nbsp &nbsp &nbsp</li>
+        <li>&nbsp; &nbsp; &nbsp; &nbsp;</li>
     </ul>
     <?php }?>
 </div>

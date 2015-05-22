@@ -202,6 +202,9 @@ class Aankopen extends CI_Controller
 
         $aankopen = $this->Aankoop_model->get_aankopen_gedaan($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id);
 
+        //echo('aankopen controller : ');
+       //print_r($aankopen);  !! dit geeft een fout :Error: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+
         $this->output->set_content_type('application/json')->set_output(json_encode($aankopen));
     }
 

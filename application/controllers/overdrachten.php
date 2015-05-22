@@ -18,24 +18,24 @@ class Overdrachten extends CI_Controller
     public function insert_overdracht(){
         $postdata = file_get_contents('php://input');
         $request = json_decode($postdata);
-        print_r($request);
+        //print_r($request);
 
         $gebruiker = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
-        print_r($gebruiker);
+        //print_r($gebruiker);
         $gebruiker_id = $gebruiker->id;
 
-        echo('gebruikerid = ' . $gebruiker_id);
+        //echo('gebruikerid = ' . $gebruiker_id);
 
         $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
         $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
 
-        echo('koopt_voor_gebruikerid = ' . $koopt_voor_gebruiker_id);
+        //echo('koopt_voor_gebruikerid = ' . $koopt_voor_gebruiker_id);
 
         $koppeling = $this->Gebruiker_model->get_koppeling_id($gebruiker_id,$koopt_voor_gebruiker_id);
         $koppeling_id = $koppeling->id;
 
-        echo('koppelingid = ');
-        print_r($koppeling_id);
+        //echo('koppelingid = ');
+        //print_r($koppeling_id);
 
         $myDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $request->datum);
         $myDateTime->modify('+1 day');
@@ -94,6 +94,40 @@ class Overdrachten extends CI_Controller
     }
 
     public function get_betalingen(){
+        $postdata = file_get_contents('php://input');
+        $request = json_decode($postdata);
+        //print_r($request);
+
+        $gebruiker = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+        //print_r($gebruiker);
+        $gebruiker_id = $gebruiker->id;
+
+        if(isset($request->betaaldAan)){
+            $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->betaaldAan);
+            $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
+        } else {
+            $naam = $this->Gebruiker_model->get_primary_user_tobuyfor();
+           // echo ('naam : ');
+           // print_r($naam);
+            $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($naam);
+            $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
+
+        }
+
+        $koppeling = $this->Gebruiker_model->get_koppeling_id($gebruiker_id,$koopt_voor_gebruiker_id);
+        $koppeling_id = $koppeling->id;
+
+       // echo('koppelingid = ');
+       // print_r($koppeling_id);
+
+        $overdrachten = $this->Overdracht_model->get_overdrachten($koppeling_id);
+
+        //echo('overdrachten = ');
+       // print_r($overdrachten);
+       // echo('na overdrachten');
+        //print_r(json_encode($overdrachten));
+
+       $this->output->set_content_type('application/json')->set_output(json_encode($overdrachten));
 
     }
 

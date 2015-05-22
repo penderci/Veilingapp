@@ -13,4 +13,13 @@ class Overdracht_model extends CI_Model
         $insert_id = $this->db->insert_id();
         return $insert_id;
     }
+
+    public function get_overdrachten($koppeling_id){
+        $query = $this->db->query("SELECT *
+                                    FROM overdrachten
+                                    WHERE koppeling_id = " . $koppeling_id .
+                                    " ORDER BY datum desc");
+
+        return $query->result();
+    }
 }
