@@ -25,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="overdrachten.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="overdrachten.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/overdracht/overdrachten.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5468531" vertical-offset="221" max-vertical-offset="3315">
-              <caret line="36" column="92" selection-start-line="36" selection-start-column="92" selection-end-line="36" selection-end-column="92" />
+            <state vertical-scroll-proportion="-3.9230769" vertical-offset="1836" max-vertical-offset="3315">
+              <caret line="114" column="73" selection-start-line="114" selection-start-column="73" selection-end-line="114" selection-end-column="73" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
@@ -73,11 +73,31 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.076923" vertical-offset="8992" max-vertical-offset="10268">
-              <caret line="555" column="0" selection-start-line="555" selection-start-column="0" selection-end-line="555" selection-end-column="0" />
+            <state vertical-scroll-proportion="-21.615385" vertical-offset="10726" max-vertical-offset="11560">
+              <caret line="667" column="58" selection-start-line="667" selection-start-column="58" selection-end-line="667" selection-end-column="58" />
               <folding>
                 <element signature="e#1460#1541#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="overzicht.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/aankopen/overzicht.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.384615" vertical-offset="288" max-vertical-offset="3196">
+              <caret line="42" column="102" selection-start-line="42" selection-start-column="102" selection-end-line="42" selection-end-column="102" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="header.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/views/header.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.40419582" vertical-offset="255" max-vertical-offset="1020">
+              <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -108,17 +128,17 @@
         <option value="$PROJECT_DIR$/application/models/aankoop_model.php" />
         <option value="$PROJECT_DIR$/application/config/autoload.php" />
         <option value="$PROJECT_DIR$/application/views/overdracht/invoer.php" />
-        <option value="$PROJECT_DIR$/application/views/aankopen/overzicht.php" />
-        <option value="$PROJECT_DIR$/application/views/aankopen/invoer.php" />
         <option value="$PROJECT_DIR$/application/controllers/artikels.php" />
         <option value="$PROJECT_DIR$/application/controllers/gebruikers.php" />
         <option value="$PROJECT_DIR$/application/models/overdracht_model.php" />
-        <option value="$PROJECT_DIR$/application/views/header.php" />
         <option value="$PROJECT_DIR$/application/controllers/aankopen.php" />
         <option value="$PROJECT_DIR$/application/models/gebruiker_model.php" />
         <option value="$PROJECT_DIR$/application/controllers/overdrachten.php" />
+        <option value="$PROJECT_DIR$/application/views/aankopen/invoer.php" />
+        <option value="$PROJECT_DIR$/application/views/aankopen/overzicht.php" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/application/views/overdracht/overdrachten.php" />
+        <option value="$PROJECT_DIR$/application/views/header.php" />
       </list>
     </option>
   </component>
@@ -674,13 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/aankopen/overzicht.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23916084" vertical-offset="2294" max-vertical-offset="3009">
-          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/models/overdracht_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33286715" vertical-offset="0" max-vertical-offset="715">
@@ -727,26 +740,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/header.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-20.26923" vertical-offset="255" max-vertical-offset="1003">
-          <caret line="46" column="39" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/login/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="697">
           <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/aankopen/invoer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.8153844" vertical-offset="263" max-vertical-offset="4879">
-          <caret line="218" column="24" selection-start-line="218" selection-start-column="12" selection-end-line="218" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -767,10 +764,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/aankopen/invoer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.68951046" vertical-offset="153" max-vertical-offset="5066">
+          <caret line="38" column="29" selection-start-line="28" selection-start-column="28" selection-end-line="38" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/aankopen/overzicht.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.384615" vertical-offset="288" max-vertical-offset="3196">
+          <caret line="42" column="102" selection-start-line="42" selection-start-column="102" selection-end-line="42" selection-end-column="102" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.076923" vertical-offset="8992" max-vertical-offset="10268">
-          <caret line="555" column="0" selection-start-line="555" selection-start-column="0" selection-end-line="555" selection-end-column="0" />
+        <state vertical-scroll-proportion="-21.615385" vertical-offset="10726" max-vertical-offset="11560">
+          <caret line="667" column="58" selection-start-line="667" selection-start-column="58" selection-end-line="667" selection-end-column="58" />
           <folding>
             <element signature="e#1460#1541#0" expanded="false" />
           </folding>
@@ -779,8 +792,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application/views/overdracht/overdrachten.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5468531" vertical-offset="221" max-vertical-offset="3315">
-          <caret line="36" column="92" selection-start-line="36" selection-start-column="92" selection-end-line="36" selection-end-column="92" />
+        <state vertical-scroll-proportion="-3.9230769" vertical-offset="1836" max-vertical-offset="3315">
+          <caret line="114" column="73" selection-start-line="114" selection-start-column="73" selection-end-line="114" selection-end-column="73" />
           <folding>
             <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
@@ -797,6 +810,14 @@
             <element signature="n#style#0;n#th#4;n#tr#1;n#table#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#th#5;n#tr#1;n#table#0;n#div#0;n#div#1;n#form#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40419582" vertical-offset="255" max-vertical-offset="1020">
+          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>

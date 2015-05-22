@@ -110,9 +110,9 @@ echo validation_errors();
 
 
     <div class="col-sm-11" style="position: absolute;left: 5%;top: 45%">
-        <div style="height: 550px; overflow: auto;">
+        <div style="height: 350px; overflow: auto;">
             <table class="table table-striped table-hover" style="font-size: 12px;">
-                <caption>Uitgevoerde betalingen</caption>
+                <caption>Uitgevoerde betalingen aan geselecteerde partner</caption>
                 <tr>
                     <th>Datum</th>
 <!--                    <th>Aan</th>-->

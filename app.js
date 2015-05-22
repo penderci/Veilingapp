@@ -272,13 +272,23 @@
     }); //einde AANKOOP CONTROLLER
 
     /*OVERZICHT CONTROLLER*/
-    app.controller('OverzichtController', function ($scope, $http,primaryUserFactory) {
+    app.controller('OverzichtController', function ($scope, $http,primaryUserFactory, partnersFactory) {
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.partner = data;
             })
             .error(function(err){
                 alert('Er is een fout opgetreden');
+            });
+
+        partnersFactory.partners()
+            .success(function (data) {
+                $scope.partners = jQuery.makeArray(data);
+                $scope.selectPrimary();
+                console.log($scope);
+            })
+            .error(function(err){
+                alert('Er is een fout opgetreden bij het ophalen van de partners');
             });
 
         $scope.dateOptions = {
@@ -316,6 +326,21 @@
                 $scope.aankopen_ontvangen();
             }
         });
+
+        $scope.selectPrimary= function(){
+            console.log('in select Primary');
+            console.log($scope);
+
+            for(var i=0;i<$scope.partners.length;i++){
+                console.log('betaaldaan = ' + $scope.partner);
+
+                if ($scope.partners[i].naam == $scope.partner) {
+                    $scope.betaaldAan = $scope.partners[i].naam;
+                }
+
+                console.log('naam = ' + $scope.partners[i].naam);
+            }
+        }
 
         //haal de aankopen op van de persoon die ingelogd is, en die hij deed voor de gekozen partner
         $scope.aankopen_gedaan = function(){
@@ -518,12 +543,6 @@
 
                 console.log('naam = ' + $scope.partners[i].naam);
             }
-
-            //angular.forEach($scope.partners, function(value, key) {
-            //    console.log('in loop');
-            //    var printFirstName = value.naam;
-            //    console.log(printFirstName);
-            //});
         }
 
 
@@ -593,7 +612,64 @@
             });
         }
 
+        /*Bereken de totalen*/
+        $scope.getTotalBetaald = function () {
+            var total = 0;
 
+            angular.forEach($scope.betalingen, function (betaling, index) {
+                if (betaling.bedrag != null) {
+                    total += parseInt(betaling.bedrag);
+                }
+            });
+
+            return total;
+
+        };
+
+        $scope.getTotalContainer = function () {
+            var total = 0;
+
+            angular.forEach($scope.betalingen, function (betaling, index) {
+                if (betaling.aantal_container != null) {
+                    total += parseInt(betaling.aantal_container);
+                }
+            });
+
+            return total;
+        };
+
+        $scope.getTotalOpzet = function () {
+            var total = 0;
+
+            angular.forEach($scope.betalingen, function (betaling, index) {
+                if (betaling.aantal_opzet != null) {
+                    total += parseInt(betaling.aantal_opzet);
+                }
+            });
+            return total;
+        };
+
+        $scope.getTotalTray = function () {
+            var total = 0;
+
+            angular.forEach($scope.betalingen, function (betaling, index) {
+                if (betaling.aantal_tray != null) {
+                    total += parseInt(betaling.aantal_tray);
+                }
+            });
+            return total;
+        };
+
+        $scope.getTotalDoos = function () {
+            var total = 0;
+
+            angular.forEach($scope.betalingen, function (betaling, index) {
+                if (betaling.aantal_doos != null) {
+                    total += parseInt(betaling.aantal_doos);
+                }
+            });
+            return total;
+        };
 
 
     }); //einde OVERDRACHT CONTROLLER

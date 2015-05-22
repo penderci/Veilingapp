@@ -42,6 +42,7 @@
                 <li><a href="artikels">Artikels</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Gebruikers</a></li>
+                <li><a href="#">Reset Paswoord</a></li>
             </ul>
         </li>
         <li>&nbsp; &nbsp; &nbsp; &nbsp;</li>

@@ -26,6 +26,17 @@
                                 </div>
                             </div>
                         </td>
+                        <!--<td class="col-sm-6">
+                        <div class="form-group-sm row">
+                            <label for="betaaldAan" class="col-sm-4 control-label">Betaald aan</label>
+                            <div class="col-sm-3">
+                                <select name="betaaldAan" ng-model="betaaldAan" class="form-control">
+                                    <option ng-repeat="partner in partners" value="{{partner.naam}}">{{partner.naam}}</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        </td>-->
                     </tr>
                 </table>
             </div>

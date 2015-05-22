@@ -26,13 +26,24 @@ echo validation_errors(); ?>
                             </div>
                         </div>
                     </td>
-                    <td class="col-sm-6">
+<!--                    <td class="col-sm-6">
                         <div class="form-group">
                             <label for="partner" class="col-sm-3 control-label">Partner</label>
 
                             <div class="col-sm-6">
                                 <input type="text" class="form-control input-sm" id="partner"
                                        ng-model="partner" required>
+                            </div>
+                        </div>
+                    </td>-->
+                    <td class="col-sm-6">
+                        <div class="form-group">
+                            <label for="partner" class="col-sm-3 control-label">Partner</label>
+                            <div class="col-sm-6">
+                                <select name="partner" ng-model="partner" class="form-control input-sm">
+                                    <option ng-repeat="partner in partners" value="{{partner.naam}}">{{partner.naam}}</option>
+                                </select>
+
                             </div>
                         </div>
                     </td>
