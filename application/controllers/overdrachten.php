@@ -7,6 +7,7 @@ class Overdrachten extends CI_Controller
     {
         if ($this->session->userdata('is_logged_in')) {
 
+            $data['active'] = 'Overdracht';
             $data['middle'] = '/overdracht/overdrachten';
             $this->load->view('template', $data);
         } else {
@@ -105,6 +106,9 @@ class Overdrachten extends CI_Controller
         if(isset($request->betaaldAan)){
             $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->betaaldAan);
             $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
+//        } elseif (isset($request->partner)) {
+//            $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+//            $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
         } else {
             $naam = $this->Gebruiker_model->get_primary_user_tobuyfor();
            // echo ('naam : ');
@@ -130,5 +134,58 @@ class Overdrachten extends CI_Controller
        $this->output->set_content_type('application/json')->set_output(json_encode($overdrachten));
 
     }
+
+    /*Bereken het totaal dat je ooit betaalde aan je partner*/
+//    public function get_totaal_betaald(){
+//        $postdata = file_get_contents('php://input');
+//        $request = json_decode($postdata);
+//
+//        $gebruiker = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+//
+//        $gebruiker_id = $gebruiker->id;
+//
+//        if(isset($request->partner)){
+//            $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+//            $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
+//        } else {
+//            $naam = $this->Gebruiker_model->get_primary_user_tobuyfor();
+//             $koopt_voor_gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($naam);
+//            $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
+//        }
+//
+//        $koppeling = $this->Gebruiker_model->get_koppeling_id($gebruiker_id,$koopt_voor_gebruiker_id);
+//        $koppeling_id = $koppeling->id;
+//
+//        $overdrachten = $this->Overdracht_model->totaal_betalingen($koppeling_id);
+//
+//        $this->output->set_content_type('application/json')->set_output(json_encode($overdrachten));
+//    }
+
+    /*Bereken het totaal dat je partner ooit aan jou betaalde*/
+//    public function get_totaal_ontvangen(){
+//        $postdata = file_get_contents('php://input');
+//        $request = json_decode($postdata);
+//
+//        $koopt_voor_gebruiker = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+//
+//        $koopt_voor_gebruiker_id = $koopt_voor_gebruiker->id;
+//
+//        if(isset($request->partner)){
+//            $gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+//            $gebruiker_id = $gebruiker->id;
+//        } else {
+//            $naam = $this->Gebruiker_model->get_primary_user_tobuyfor();
+//            $gebruiker = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($naam);
+//            $gebruiker_id = $gebruiker->id;
+//        }
+//
+//        $koppeling = $this->Gebruiker_model->get_koppeling_id($gebruiker_id,$koopt_voor_gebruiker_id);
+//        $koppeling_id = $koppeling->id;
+//
+//        $overdrachten = $this->Overdracht_model->totaal_betalingen($koppeling_id);
+//
+//        $this->output->set_content_type('application/json')->set_output(json_encode($overdrachten));
+//    }
+
 
 }

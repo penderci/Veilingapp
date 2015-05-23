@@ -16,7 +16,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="col-sm-6">
+                       <!-- <td class="col-sm-6">
                             <div class="form-group">
                                 <label for="bestemmeling" class="col-sm-6 control-label">Gekocht voor</label>
 
@@ -25,18 +25,18 @@
                                            ng-model="gekochtvoor" required>
                                 </div>
                             </div>
-                        </td>
-                        <!--<td class="col-sm-6">
-                        <div class="form-group-sm row">
-                            <label for="betaaldAan" class="col-sm-4 control-label">Betaald aan</label>
-                            <div class="col-sm-3">
-                                <select name="betaaldAan" ng-model="betaaldAan" class="form-control">
+                        </td>-->
+                        <td class="col-sm-6">
+                        <div class="form-group">
+                            <label for="bestemmeling" class="col-sm-6 control-label">Gekocht voor</label>
+                            <div class="col-sm-6">
+                                <select name="bestemmeling" ng-model="gekochtvoor" class="form-control input-sm">
                                     <option ng-repeat="partner in partners" value="{{partner.naam}}">{{partner.naam}}</option>
                                 </select>
 
                             </div>
                         </div>
-                        </td>-->
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -212,7 +212,7 @@
                 }});
 
             /*laad de gebruikers in die gekoppeld zijn aan de ingelogde gebruiker*/
-            $.ajax({
+            /*$.ajax({
                 url: "gebruikers/get_gebruikers_list",
                 type: "GET",
                 async: false,
@@ -220,12 +220,17 @@
                     console.log('succes');
                     //  console.log(data);
                     localStorage.setItem('gebruikerslijst',JSON.stringify(data));
-                }});
+                }});*/
 
 
         } else {
             console.log('niet actief');
         }
+
+        //zorg dat deze pagina niet gerefresht kan worden (ivm verlies van internet)
+        function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+
+        $(document).on("keydown", disableF5);
 
         $('#aankoopdatum').keydown(function(e) {
             e.preventDefault();
@@ -251,7 +256,7 @@
             artikellijst.push(obj.naam);
         }
 
-        var gebruikersJson = JSON.parse(localStorage.getItem('gebruikerslijst'));
+        /*var gebruikersJson = JSON.parse(localStorage.getItem('gebruikerslijst'));
         var gebruikerslijst = [];
 
         for(var i = 0; i < gebruikersJson.length; i++) {
@@ -262,7 +267,7 @@
 
         $("#bestemmeling").autocomplete({
             source: gebruikerslijst //"gebruikers/get_gebruikers_list"
-        });
+        });*/
 
         $("#artikel").autocomplete({
             source: artikellijst /*"artikels/get_list_autofill"*/

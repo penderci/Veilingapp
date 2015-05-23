@@ -77,10 +77,10 @@ echo validation_errors(); ?>
                             <th></th>
                         </tr>
                         <tr>
-                            <th>Totalen</th>
+                            <th colspan="4">Totalen voor geselcteerde periode</th>
+                            <!--<th></th>
                             <th></th>
-                            <th></th>
-                            <th></th>
+                            <th></th>-->
                             <th style="text-align:right">{{getTotalPriceAk() | number:2}}</th>
                             <th style="text-align:right">{{getTotalContainerAk()}}</th>
                             <th style="text-align:right">{{getTotalOpzetAk()}}</th>
@@ -124,7 +124,7 @@ echo validation_errors(); ?>
                             <th></th>
                         </tr>
                         <tr>
-                            <th>Totalen</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>

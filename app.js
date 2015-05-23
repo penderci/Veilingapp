@@ -112,7 +112,7 @@
 
 
     /*AANKOOP CONTROLLER*/
-    app.controller('AankoopController', function ($scope, $http, primaryUserFactory) {
+    app.controller('AankoopController', function ($scope, $http, primaryUserFactory, partnersFactory) {
 
         var aankoop = {};
 
@@ -131,6 +131,29 @@
             .error(function(err){
                 alert('Er is een fout opgetreden');
             });
+
+        partnersFactory.partners()
+            .success(function (data) {
+                $scope.partners = jQuery.makeArray(data);
+                $scope.selectPrimary();
+                console.log($scope);
+            })
+            .error(function(err){
+                alert('Er is een fout opgetreden bij het ophalen van de partners');
+            });
+
+        $scope.selectPrimary= function(){
+            console.log('in select Primary');
+            console.log($scope);
+
+            for(var i=0;i<$scope.partners.length;i++){
+
+                if ($scope.partners[i].naam == $scope.gekochtvoor) {
+                    $scope.gekochtvoor = $scope.partners[i].naam;
+                }
+
+            }
+        }
 
         $scope.submitForm = function () {
             if (localStorage.getItem("aankopen")) {

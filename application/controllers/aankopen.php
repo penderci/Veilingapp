@@ -16,6 +16,7 @@ class Aankopen extends CI_Controller
 
             $data['artikels'] = $this->Aankoop_model->get_artikels();
 
+            $data['active'] = 'Registratie';
             $data['middle'] = '/aankopen/invoer';
             $this->load->view('template', $data);
         } else {
@@ -30,6 +31,7 @@ class Aankopen extends CI_Controller
 
             //$data['leeggoed'] = $this->Aankoop_model->get_leeggoed();
 
+            $data['active'] = 'Overzicht';
             $data['middle'] = '/aankopen/overzicht';
             $this->load->view('template', $data);
         } else {
@@ -37,47 +39,47 @@ class Aankopen extends CI_Controller
         }
     }
 
-    public function insert_aankopen_temp()
-    {
-
-
-        $postdata = file_get_contents('php://input');
-        //  print_r($postdata);
-        // die();
-
-        $request = json_decode($postdata);
-
-
-        /* $this->form_validation->set_rules("aankoopdatum", "Datum", "required|xss_clean");
-         $this->form_validation->set_rules("gekocht_voor", "Gekocht voor", "required|xss_clean");
-         $this->form_validation->set_rules("artikel", "Naam", "required|xss_clean");*/
-
-        /* if ($this->form_validation->run() == FALSE) {
-             echo('false');
-             die();
-             $this->index();
-         } else {
-             echo('true');
-             die();*/
-        //$data = $this->get_data_from_post();
-
-        //$this->Aankoop_model->insert_aankoop_temp($data);
-
-        $id = $this->Aankoop_model->insert_aankoop_temp($request);
-
-        if ($id) {
-            echo $result = '{"status":"success"}';
-        } else {
-            echo $result = '{"status":"failure"}';
-        }
-
-
-        //return $result;
-        //redirect(base_url().'aankopen/invoer');
-
-        // }
-
-    }
+//    public function insert_aankopen_temp()
+//    {
+//
+//
+//        $postdata = file_get_contents('php://input');
+//        //  print_r($postdata);
+//        // die();
+//
+//        $request = json_decode($postdata);
+//
+//
+//        /* $this->form_validation->set_rules("aankoopdatum", "Datum", "required|xss_clean");
+//         $this->form_validation->set_rules("gekocht_voor", "Gekocht voor", "required|xss_clean");
+//         $this->form_validation->set_rules("artikel", "Naam", "required|xss_clean");*/
+//
+//        /* if ($this->form_validation->run() == FALSE) {
+//             echo('false');
+//             die();
+//             $this->index();
+//         } else {
+//             echo('true');
+//             die();*/
+//        //$data = $this->get_data_from_post();
+//
+//        //$this->Aankoop_model->insert_aankoop_temp($data);
+//
+//        $id = $this->Aankoop_model->insert_aankoop_temp($request);
+//
+//        if ($id) {
+//            echo $result = '{"status":"success"}';
+//        } else {
+//            echo $result = '{"status":"failure"}';
+//        }
+//
+//
+//        //return $result;
+//        //redirect(base_url().'aankopen/invoer');
+//
+//        // }
+//
+//    }
 
     //verwijder een artikel uit de databank
     public function delete()
@@ -112,6 +114,9 @@ class Aankopen extends CI_Controller
                 /*haal de id op van de persoon waarvoor het artikel gekocht werd*/
                 $gekochtVoor = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($aankoop->gekocht_voor);
                 $gekochtVoor_id = $gekochtVoor->id;
+
+                $koppeling = $this->Gebruiker_model->get_koppeling_id($aankoper_id,$gekochtVoor_id);
+                $koppeling_id = $koppeling->id;
 
                 /*haal het id op van het artikel als dit bestaat, en anders, voeg het toe aan de artikel tabel en haal het id op*/
                 $artikel_id = $this->Artikel_model->get_artikel_id($aankoop->artikel);
@@ -160,8 +165,9 @@ class Aankopen extends CI_Controller
                 $datum = $myDateTime->format('Y-m-d');
 
                 $data = array(
-                    'aankoper_id' => $aankoper_id,
-                    'gekocht_voor_id' => $gekochtVoor_id,
+                    'koppeling_id'=> $koppeling_id,
+                  //  'aankoper_id' => $aankoper_id,
+                  //  'gekocht_voor_id' => $gekochtVoor_id,
                     'datum' => $datum, //$aankoop->datum,
                     'artikel_id' => $artikel_id,
                     'eenheidsprijs' => $eenheidsprijs,
@@ -200,7 +206,10 @@ class Aankopen extends CI_Controller
         $aankoper = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
         $aankoper_id = $aankoper->id;
 
-        $aankopen = $this->Aankoop_model->get_aankopen_gedaan($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id);
+        $koppeling = $this->Gebruiker_model->get_koppeling_id($aankoper_id,$gekochtVoor_id);
+        $koppeling_id = $koppeling->id;
+
+        $aankopen = $this->Aankoop_model->get_aankopen($vandatum, $totdatum, $koppeling_id);//$aankoper_id, $gekochtVoor_id);
 
         //echo('aankopen controller : ');
        //print_r($aankopen);  !! dit geeft een fout :Error: JSON.parse: unexpected character at line 1 column 1 of the JSON data
@@ -228,9 +237,17 @@ class Aankopen extends CI_Controller
         $aankoper = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
         $aankoper_id = $aankoper->id;
 
-        $aankopen = $this->Aankoop_model->get_aankopen_ontvangen($vandatum, $totdatum, $aankoper_id, $gekochtVoor_id);
+        $koppeling = $this->Gebruiker_model->get_koppeling_id($aankoper_id,$gekochtVoor_id);
 
+
+        $koppeling_id = $koppeling->id;
+        $aankopen = $this->Aankoop_model->get_aankopen($vandatum, $totdatum, $koppeling_id);
         $this->output->set_content_type('application/json')->set_output(json_encode($aankopen));
+
+
+        //$aankoper_id, $gekochtVoor_id);
+
+        //$this->output->set_content_type('application/json')->set_output(json_encode($aankopen));
     }
 
 
