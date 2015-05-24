@@ -1,5 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 echo validation_errors(); ?>
+<style type="text/css">
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+</style>
 <form ng-controller="OverzichtController" role="form"">
 <div class="col-sm-11" style="position: absolute;left: 5%;">
     <div class="well bs-component">
@@ -77,7 +86,33 @@ echo validation_errors(); ?>
                             <th></th>
                         </tr>
                         <tr>
-                            <th colspan="4">Totalen voor geselcteerde periode</th>
+                            <th colspan="4">Eindbalans</th>
+                            <!--<th></th>
+                            <th></th>
+                            <th></th>-->
+                            <th style="text-align:right" ng-class="{ green: diff_totaal_delta >= 0, red: diff_totaal_delta < 0}">{{diff_totaal_delta | number:2}}</th>
+                            <th style="text-align:right" ng-class="{ green: diff_container_delta >= 0, red: diff_container_delta < 0}">{{diff_container_delta}}</th>
+                            <th style="text-align:right" ng-class="{ green: diff_opzet_delta >= 0, red: diff_opzet_delta < 0}">{{diff_opzet_delta}}</th>
+                            <th style="text-align:right" ng-class="{ green: diff_tray_delta >= 0, red: diff_tray_delta < 0}">{{diff_tray_delta}}</th>
+                            <th style="text-align:right" ng-class="{ green: diff_doos_delta >= 0, red: diff_doos_delta < 0}">{{diff_doos_delta}}</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr ng-repeat="da in delta_aankopen">
+                            <th colspan="4">Balans na aftrek overdrachten</th>
+                            <!--<th></th>
+                            <th></th>
+                            <th></th>-->
+                            <th style="text-align:right">{{da.totaal_delta | number:2}}</th>
+                            <th style="text-align:right">{{da.container_delta}}</th>
+                            <th style="text-align:right">{{da.opzet_delta}}</th>
+                            <th style="text-align:right">{{da.tray_delta}}</th>
+                            <th style="text-align:right">{{da.doos_delta}}</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th colspan="4">Totalen voor geselecteerde periode</th>
                             <!--<th></th>
                             <th></th>
                             <th></th>-->
@@ -121,7 +156,22 @@ echo validation_errors(); ?>
                             <th style="text-align:right">Opzet</th>
                             <th style="text-align:right">Bruine Tray</th>
                             <th style="text-align:right">Chrysdoos</th>
+                        </tr>
+
+                        <tr>
+                            <th colspan="9">&nbsp;</th>
+                        </tr>
+
+                        <tr ng-repeat="do in delta_ontvangen">
+                            <th colspan="4"></th>
+                            <!--<th></th>
                             <th></th>
+                            <th></th>-->
+                            <th style="text-align:right">{{do.totaal_delta | number:2}}</th>
+                            <th style="text-align:right">{{do.container_delta}}</th>
+                            <th style="text-align:right">{{do.opzet_delta}}</th>
+                            <th style="text-align:right">{{do.tray_delta}}</th>
+                            <th style="text-align:right">{{do.doos_delta}}</th>
                         </tr>
                         <tr>
                             <th></th>
@@ -133,7 +183,6 @@ echo validation_errors(); ?>
                             <th style="text-align:right">{{getTotalOpzetOntv()}}</th>
                             <th style="text-align:right">{{getTotalTrayOntv()}}</th>
                             <th style="text-align:right">{{getTotalDoosOntv()}}</th>
-                            <th></th>
                         </tr>
                         <tr ng-repeat="aankoop in ak_ontvangen">
                             <td><b>{{aankoop.datum | date:"dd/MM/yyyy"}}<br>&nbsp</b></td>

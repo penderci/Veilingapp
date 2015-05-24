@@ -295,7 +295,7 @@
     }); //einde AANKOOP CONTROLLER
 
     /*OVERZICHT CONTROLLER*/
-    app.controller('OverzichtController', function ($scope, $http,primaryUserFactory, partnersFactory) {
+    app.controller('OverzichtController', function ($scope, $timeout, $http,primaryUserFactory, partnersFactory) {
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.partner = data;
@@ -347,8 +347,14 @@
                 console.log('watch partner');
                 $scope.aankopen_gedaan();
                 $scope.aankopen_ontvangen();
+                $scope.delta_aankopen_fn();
+                $scope.delta_ontvangen_fn();
+               // $timeout($scope.diff_delta_fn());
             }
         });
+
+        //voer deze functie 1 sec na het laden van de pagina uit. Deze maakt gebruik van dom velden. Zonder timeout zijn de variabelen nog niet gekend.
+        $timeout(diff_delta_fn, 1000);
 
         $scope.selectPrimary= function(){
             console.log('in select Primary');
@@ -521,6 +527,78 @@
             return total;
         };
 
+        $scope.delta_aankopen_fn = function(){
+            $http({
+                url: 'aankopen/totaal_delta_ak_gedaan',
+                method: "POST",
+                data: JSON.stringify({partner: $scope.partner})
+            }).success(function (data) {
+                $scope.delta_aankopen = data;
+            }).error(function(xhr, textStatus, error){
+                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            });
+        }
+
+        $scope.delta_ontvangen_fn = function(){
+            $http({
+                url: 'aankopen/totaal_delta_ak_ontvangen',
+                method: "POST",
+                data: JSON.stringify({partner: $scope.partner})
+            }).success(function (data) {
+                $scope.delta_ontvangen = data;
+            }).error(function(xhr, textStatus, error){
+                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            });
+        }
+
+        function diff_delta_fn() {
+            /*var da_totaal_delta = 0;
+            var da_container_delta = 0;
+            var da_opzet_delta = 0;
+            var da_tray_delta = 0;
+            var da_doos_delta = 0;
+
+            var do_totaal_delta = 0;
+            var do_container_delta = 0;
+            var do_opzet_delta = 0;
+            var do_tray_delta = 0;
+            var do_doos_delta = 0;*/
+
+            /*geeft 1 record terug*/
+            angular.forEach($scope.delta_aankopen, function (da, index) {
+                console.log('in for each ak');
+                da_totaal_delta = da.totaal_delta;
+                da_container_delta = da.container_delta;
+                da_opzet_delta = da.opzet_delta;
+                da_tray_delta = da.tray_delta;
+                da_doos_delta = da.doos_delta;
+
+            });
+
+            /*geeft 1 record terug*/
+            angular.forEach($scope.delta_ontvangen, function (dontv, index) {
+                console.log('in for each ontv');
+                do_totaal_delta = dontv.totaal_delta;
+                do_container_delta = dontv.container_delta;
+                do_opzet_delta = dontv.opzet_delta;
+                do_tray_delta = dontv.tray_delta;
+                do_doos_delta = dontv.doos_delta;
+
+            });
+
+            $scope.diff_totaal_delta = da_totaal_delta - do_totaal_delta;
+            $scope.diff_container_delta = da_container_delta - do_container_delta;
+            $scope.diff_opzet_delta = da_opzet_delta - do_opzet_delta;
+            $scope.diff_tray_delta = da_tray_delta - do_tray_delta;
+            $scope.diff_doos_delta = da_doos_delta - do_doos_delta;
+
+        };
 
     }); //einde OVERZICHT CONTROLLER
 

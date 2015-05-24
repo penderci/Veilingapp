@@ -40,10 +40,9 @@ class Gebruikers extends CI_Controller
         }
     }
 
-    public function get_user_by_name($naam){
+ /*   public function get_koppeling_id(){
 
-    }
-    public function get_user_by_email($email){
 
-    }
+    }*/
+
 }

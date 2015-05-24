@@ -250,6 +250,41 @@ class Aankopen extends CI_Controller
         //$this->output->set_content_type('application/json')->set_output(json_encode($aankopen));
     }
 
+public function totaal_delta_ak_gedaan(){
+    $postdata = file_get_contents('php://input');
+    $request = json_decode($postdata);
+
+    $gekochtVoor = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+    $gekochtVoor_id = $gekochtVoor->id;
+
+    $aankoper = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+    $aankoper_id = $aankoper->id;
+
+    $koppeling = $this->Gebruiker_model->get_koppeling_id($aankoper_id,$gekochtVoor_id);
+    $koppeling_id = $koppeling->id;
+
+    $aankopen_delta = $this->Aankoop_model->get_delta_ak_gedaan($koppeling_id);
+
+    $this->output->set_content_type('application/json')->set_output(json_encode($aankopen_delta));
+}
+
+    public function totaal_delta_ak_ontvangen(){
+        $postdata = file_get_contents('php://input');
+        $request = json_decode($postdata);
+
+        $gekochtVoor = $this->Gebruiker_model->get_ingelogde_gebruiker_id();
+        $gekochtVoor_id = $gekochtVoor->id;
+
+        $aankoper = $this->Gebruiker_model->get_gekochtVoor_gebruiker_id($request->partner);
+        $aankoper_id = $aankoper->id;
+
+        $koppeling = $this->Gebruiker_model->get_koppeling_id($aankoper_id,$gekochtVoor_id);
+        $koppeling_id = $koppeling->id;
+
+        $ontvangen_delta = $this->Aankoop_model->get_delta_ak_gedaan($koppeling_id);
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($ontvangen_delta));
+    }
 
 
 
