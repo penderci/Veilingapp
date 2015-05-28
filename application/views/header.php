@@ -6,6 +6,7 @@
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/checknet/css/checknet.css" media="all">
+<!--    <link href="--><?php //echo base_url(); ?><!--assets/css/ui-bootstrap-0.13.0-csp.css" rel="stylesheet" type="text/css">-->
 
     <!--Credits for the checknet plugin : http://tomriley.net/blog/archives/tomriley.net-->
 
@@ -19,6 +20,9 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/jquery-ui/jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/checknet/js/jquery.checknet-1.6.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/angular-ui-date/src/date.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>angular/angular-sanitize.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>angular/angular-dialog-service/dist/dialogs.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>app.js"></script>
 
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">

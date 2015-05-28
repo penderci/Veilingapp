@@ -3,7 +3,14 @@
  */
 (function () {
 
-    var app = angular.module('veilingapp', ['LocalStorageModule','ui.date']);
+    var app = angular.module('veilingapp', ['LocalStorageModule','ui.date','ui.bootstrap','dialogs.main']); //,'ui.bootstrap' ,'ui.bootstrap','dialogs' ,'ui.bootstrap','dialogs.main','ngSanitize'
+
+    app.filter('offset', function() {
+        return function(input, start) {
+            start = parseInt(start, 10);
+            return input.slice(start);
+        };
+    });
 
     /*FACTORY voor het ophalen van de primaire gebruiker waarvoor gekocht wordt. Deze selectie is op meerdere plaatsen nodig*/
     app.factory('primaryUserFactory',function($http){
@@ -76,16 +83,46 @@
     });*/
 
     /*ARTIKEL CONTROLLER*/
-    app.controller('ArtikelController', function ($scope, $http) {
+    app.controller('ArtikelController', function ($scope, $http, dialogs) { //, $dialogs
+        $scope.launch_dialog = function($id){
+            console.log('in launch');
+            var dlg = null;
 
-        $http({
-            url: 'artikels/get_list',
-            method: "POST"
-        }).success(function (data) {
-            $scope.artikels = data;
-        });
+            dlg = dialogs.confirm('Weet je zeker dat je dit artikel, en alle gerelateerde aankopen wil verwijderen?');
+            dlg.result.then(function(btn){
+                $scope.confirmed = $id + ' wordt verwijderd';
+               console.log($scope.confirmed);
+
+                $http({method: 'GET', url: 'artikels/delete/' + $id}).
+                    success(function(data, status, headers, config) {
+                        $scope.loadData();
+                    }).
+                    error(function(data, status, headers, config) {
+                        alert('Er is een fout opgetreden bij het verwijderen van het artikel of gelinkte gegevens');
+                    });
+
+                $scope.loadData();
+            },function(btn){
+                $scope.confirmed = 'Ok, ik doe niks';
+               // console.log($scope.confirmed);
+               // $scope.loadData();
+
+            });
+        };
+
+
+        $scope.loadData = function() {
+            $http({
+                url: 'artikels/get_list',
+                method: "POST"
+            }).success(function (data) {
+                $scope.artikels = data;
+            });
+        }
 
         $scope.inputnaam = undefined;
+
+        $scope.loadData();
 
         $scope.submitForm = function () {
             console.log('posting data ....');

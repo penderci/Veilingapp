@@ -227,10 +227,10 @@
             console.log('niet actief');
         }
 
-        //zorg dat deze pagina niet gerefresht kan worden (ivm verlies van internet)
-        function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+        //zorg dat deze pagina niet gerefresht kan worden (ivm verlies van internet)  => werkt niet in Safari !!!
+        /*function disableF5(e) { if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
 
-        $(document).on("keydown", disableF5);
+        $(document).on("keydown", disableF5);*/
 
         $('#aankoopdatum').keydown(function(e) {
             e.preventDefault();
