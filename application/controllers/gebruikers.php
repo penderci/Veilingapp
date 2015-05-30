@@ -40,6 +40,37 @@ class Gebruikers extends CI_Controller
         }
     }
 
+
+    public function reset_paswoord(){
+        if ($this->session->userdata('is_logged_in')) {
+            $data['middle'] = '/gebruikers/reset_paswoord';
+            $this->load->view('template', $data);
+        } else {
+            redirect(base_url() . 'login');
+        }
+    }
+
+    public function save_nieuw_paswoord(){
+        /*opgelet geen echo's hier zetten, anders wordt dit naar success van de angular call gestuurd ipv ok of nok*/
+
+        $postdata = file_get_contents('php://input');
+        $posted = json_decode($postdata);
+
+        /*TODO : geen check doen, maar update in de tabel waar email gelijk en paswoord gelijk : indien geen match geeft dit geen id terug cfr id na insert
+        dan iets terug sturen met $this->output->set_output($data);*/
+
+        if ($this->Gebruiker_model->check_pwd_exists($posted->oud_pwd, $posted->nieuw_pwd)) {
+            echo 'ok';
+        } else {
+            echo 'nok';
+        }
+
+
+
+
+    }
+
+
  /*   public function get_koppeling_id(){
 
 

@@ -94,5 +94,53 @@ class Gebruiker_model extends CI_Model{
         return $id[0];
     }
 
+    public function check_pwd_exists($oudpwd, $nieuwpwd){
+
+
+        $data = array(
+            'paswoord' => md5($nieuwpwd)
+        );
+
+        $array = array('email' => $this->session->userdata('email'), 'paswoord' => md5($oudpwd));
+
+        $this->db->where($array);
+        $this->db->update('gebruikers',$data);
+
+        if($this->db->affected_rows() == '0'){
+            return false;
+        } else {
+            return true;
+        }
+
+
+        /*$query = $this->db->query("SELECT paswoord
+                                    FROM gebruikers
+                                    WHERE email = '" . $this->session->userdata('email') ."'");
+
+        $pwd = $query->result();
+
+        echo('paswoord');
+        print_r($pwd[0]->paswoord);
+
+        echo('db-pwd');
+        echo ($oudpwd);
+
+
+
+        if( $pwd[0]->paswoord== md5($oudpwd)){
+            return true;
+        } else {
+            return false;
+        }*/
+
+        /*$this->db->where('paswoord',md5($this->input->post('inputPassword')));
+
+        if ($query->num_rows()== 1) {
+            return true;
+        } else {
+            return false;
+        }*/
+    }
+
 
 }
