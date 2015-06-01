@@ -81,11 +81,11 @@ class Aankopen extends CI_Controller
 //
 //    }
 
-    //verwijder een artikel uit de databank
+    //verwijder een aankoop uit de databank
     public function delete()
     {
         $this->Aankoop_model->delete();
-        redirect(base_url() . 'overzicht');
+        //redirect(base_url() . 'overzicht');
     }
 
     public function get_list()

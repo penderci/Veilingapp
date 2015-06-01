@@ -3,10 +3,10 @@
  */
 (function () {
 
-    var app = angular.module('veilingapp', ['LocalStorageModule','ui.date','ui.bootstrap','dialogs.main']); //,'ui.bootstrap' ,'ui.bootstrap','dialogs' ,'ui.bootstrap','dialogs.main','ngSanitize'
+    var app = angular.module('veilingapp', ['LocalStorageModule', 'ui.date', 'ui.bootstrap', 'dialogs.main']); //,'ui.bootstrap' ,'ui.bootstrap','dialogs' ,'ui.bootstrap','dialogs.main','ngSanitize'
 
-    app.filter('offset', function() {
-        return function(input, start) {
+    app.filter('offset', function () {
+        return function (input, start) {
             start = parseInt(start, 10);
             return input.slice(start);
         };
@@ -20,7 +20,7 @@
                 var firstPassword = '#' + attrs.pwCheck;
                 elem.add(firstPassword).on('keyup', function () {
                     scope.$apply(function () {
-                        var v = elem.val()===$(firstPassword).val();
+                        var v = elem.val() === $(firstPassword).val();
                         ctrl.$setValidity('pwmatch', v);
                     });
                 });
@@ -30,10 +30,10 @@
 
 
     /*FACTORY voor het ophalen van de primaire gebruiker waarvoor gekocht wordt. Deze selectie is op meerdere plaatsen nodig*/
-    app.factory('primaryUserFactory',function($http){
-        var factory={};
+    app.factory('primaryUserFactory', function ($http) {
+        var factory = {};
 
-        factory.primaryUser = function() {
+        factory.primaryUser = function () {
             return $http({
                 url: 'gebruikers/get_primary_user',
                 method: "POST"
@@ -42,13 +42,13 @@
 
         return factory;
 
-        });
+    });
 
     /*FACTORY voor het ophalen van alle partners waarvoor de ingelogde gebruiker kan kopen*/
-    app.factory('partnersFactory',function($http){
-        var factory={};
+    app.factory('partnersFactory', function ($http) {
+        var factory = {};
 
-        factory.partners = function() {
+        factory.partners = function () {
             return $http({
                 url: 'gebruikers/get_gebruikers_list',
                 method: "POST"
@@ -59,12 +59,11 @@
     });
 
 
-
     /*FACTORY voor het ophalen van de uitgevoerde betalingen, nodig in aankopenscherm voor totaal betalingen en voor scherm overdracht*/
-    app.factory('betalingenFactory',function($http){
-        var factory={};
+    app.factory('betalingenFactory', function ($http) {
+        var factory = {};
 
-        factory.betalingen = function() {
+        factory.betalingen = function () {
             return $http({
                 url: 'overdrachten/get_betalingen',
                 method: "POST"
@@ -83,52 +82,52 @@
     });
 
     /*app.directive('jqdatepicker', function() {
-        return {
-            restrict: 'A',
-            require: 'ngModel',
-            link: function(scope, element, attrs, ctrl) {
-                $(element).datepicker({
-                    dateFormat: 'dd/mm/yy',
-                    onSelect: function(date) {
-                        ctrl.$setViewValue(date);
-                        ctrl.$render();
-                        scope.$apply();
-                    }
-                });
-            }
-        };
-    });*/
+     return {
+     restrict: 'A',
+     require: 'ngModel',
+     link: function(scope, element, attrs, ctrl) {
+     $(element).datepicker({
+     dateFormat: 'dd/mm/yy',
+     onSelect: function(date) {
+     ctrl.$setViewValue(date);
+     ctrl.$render();
+     scope.$apply();
+     }
+     });
+     }
+     };
+     });*/
 
     /*ARTIKEL CONTROLLER*/
     app.controller('ArtikelController', function ($scope, $http, dialogs) { //, $dialogs
-        $scope.launch_dialog = function($id){
+        $scope.launch_dialog = function ($id, $naam) {
             console.log('in launch');
             var dlg = null;
 
-            dlg = dialogs.confirm('Weet je zeker dat je dit artikel, en alle gerelateerde aankopen wil verwijderen?');
-            dlg.result.then(function(btn){
+            dlg = dialogs.confirm('Weet je zeker dat je het artikel ' + $naam + ', en alle gerelateerde aankopen wil verwijderen?');
+            dlg.result.then(function (btn) {
                 $scope.confirmed = $id + ' wordt verwijderd';
-               console.log($scope.confirmed);
+                console.log($scope.confirmed);
 
                 $http({method: 'GET', url: 'artikels/delete/' + $id}).
-                    success(function(data, status, headers, config) {
+                    success(function (data, status, headers, config) {
                         $scope.loadData();
                     }).
-                    error(function(data, status, headers, config) {
+                    error(function (data, status, headers, config) {
                         alert('Er is een fout opgetreden bij het verwijderen van het artikel of gelinkte gegevens');
                     });
 
                 $scope.loadData();
-            },function(btn){
+            }, function (btn) {
                 $scope.confirmed = 'Ok, ik doe niks';
-               // console.log($scope.confirmed);
-               // $scope.loadData();
+                // console.log($scope.confirmed);
+                // $scope.loadData();
 
             });
         };
 
 
-        $scope.loadData = function() {
+        $scope.loadData = function () {
             $http({
                 url: 'artikels/get_list',
                 method: "POST"
@@ -182,7 +181,7 @@
             .success(function (data) {
                 $scope.gekochtvoor = data;
             })
-            .error(function(err){
+            .error(function (err) {
                 alert('Er is een fout opgetreden');
             });
 
@@ -192,15 +191,15 @@
                 $scope.selectPrimary();
                 console.log($scope);
             })
-            .error(function(err){
+            .error(function (err) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
             });
 
-        $scope.selectPrimary= function(){
+        $scope.selectPrimary = function () {
             console.log('in select Primary');
             console.log($scope);
 
-            for(var i=0;i<$scope.partners.length;i++){
+            for (var i = 0; i < $scope.partners.length; i++) {
 
                 if ($scope.partners[i].naam == $scope.gekochtvoor) {
                     $scope.gekochtvoor = $scope.partners[i].naam;
@@ -211,17 +210,19 @@
 
         $scope.submitForm = function () {
             if (localStorage.getItem("aankopen")) {
-               // console.log('bekend');
+                // console.log('bekend');
                 var aankopen = JSON.parse(localStorage.getItem("aankopen"));
             } else {
-              //  console.log('niet bekend');
-                var aankopen = [];}
+                //  console.log('niet bekend');
+                var aankopen = [];
+            }
 
             var datum = new Date($scope.aankoopdatum);
             //console.log('datum' + $scope.aankoopdatum);
             //console.log(datum);
 
-            var aankoop = {'datum': datum, //$scope.aankoopdatum,
+            var aankoop = {
+                'datum': datum, //$scope.aankoopdatum,
                 'gekocht_voor': $scope.gekochtvoor,
                 'artikel': $scope.artikel,
                 'aantal': $scope.aantal,
@@ -230,11 +231,12 @@
                 'aantal_container': $scope.container,
                 'aantal_opzet': $scope.opzet,
                 'aantal_tray': $scope.tray,
-                'aantal_doos': $scope.doos};
+                'aantal_doos': $scope.doos
+            };
 
             aankopen.push(aankoop);
 
-            localStorage.setItem("aankopen",JSON.stringify(aankopen));
+            localStorage.setItem("aankopen", JSON.stringify(aankopen));
 
             $scope.artikel = '';
             $scope.aantal = '';
@@ -249,12 +251,12 @@
 
 
         /*$http({
-            url: 'gebruikers/get_primary_user',
-            method: "POST"
-        }).success(function (data) {
-            $scope.gekochtvoor = data;
-            console.log($scope.gekochtvoor)
-        });*/
+         url: 'gebruikers/get_primary_user',
+         method: "POST"
+         }).success(function (data) {
+         $scope.gekochtvoor = data;
+         console.log($scope.gekochtvoor)
+         });*/
 
         $scope.loadData = function () {
             $scope.aankopen = JSON.parse(localStorage.getItem("aankopen"));
@@ -319,25 +321,25 @@
             return total;
         };
 
-        $scope.synchronize = function($event) {
+        $scope.synchronize = function ($event) {
             //var aankopen = JSON.parse(localStorage.getItem("aankopen"));
             var aankopen2 = localStorage.getItem("aankopen")
 
             $event.preventDefault();
 
-           // console.log(aankopen);
-           // console.log(aankopen2);
+            // console.log(aankopen);
+            // console.log(aankopen2);
 
             $http({
                 url: 'aankopen/synchronize',
                 method: "POST",
                 data: aankopen2
             }).success(function (data) {
-               // console.log('sync gedaan');
+                // console.log('sync gedaan');
                 alert('De gegevens werden succesvol opgeslaan in de databank');
                 localStorage.removeItem('aankopen');
                 $scope.loadData();
-            }).error(function(xhr, textStatus, error){
+            }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij het syncen. Probeer nogmaals');
                 console.log(xhr.statusText);
                 console.log(textStatus);
@@ -349,12 +351,12 @@
     }); //einde AANKOOP CONTROLLER
 
     /*OVERZICHT CONTROLLER*/
-    app.controller('OverzichtController', function ($scope, $timeout, $http,primaryUserFactory, partnersFactory) {
+    app.controller('OverzichtController', function ($scope, $timeout, $http, primaryUserFactory, partnersFactory) {
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.partner = data;
             })
-            .error(function(err){
+            .error(function (err) {
                 alert('Er is een fout opgetreden');
             });
 
@@ -364,7 +366,7 @@
                 $scope.selectPrimary();
                 console.log($scope);
             })
-            .error(function(err){
+            .error(function (err) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
             });
 
@@ -379,42 +381,42 @@
         var year = datum.getFullYear();
 
         $scope.totdatum = new Date(); //new Date().toISOString();;
-        $scope.vandatum = '01/01/'+new Date().getFullYear(); //new Date('01/01/' + year);
+        $scope.vandatum = '01/01/' + new Date().getFullYear(); //new Date('01/01/' + year);
 
         //Haal enkel data op als alle 3 de velden ingevuld zijn
-        $scope.$watch('vandatum', function() {
-            if ($scope.partner && $scope.totdatum && $scope.vandatum){
+        $scope.$watch('vandatum', function () {
+            if ($scope.partner && $scope.totdatum && $scope.vandatum) {
                 $scope.aankopen_gedaan();
                 $scope.aankopen_ontvangen();
             }
         });
 
-        $scope.$watch('totdatum', function() {
-            if ($scope.partner && $scope.totdatum && $scope.vandatum){
-                   $scope.aankopen_gedaan();
-                   $scope.aankopen_ontvangen();
+        $scope.$watch('totdatum', function () {
+            if ($scope.partner && $scope.totdatum && $scope.vandatum) {
+                $scope.aankopen_gedaan();
+                $scope.aankopen_ontvangen();
             }
         });
 
-        $scope.$watch('partner', function() {
-            if ($scope.partner && $scope.totdatum && $scope.vandatum){
+        $scope.$watch('partner', function () {
+            if ($scope.partner && $scope.totdatum && $scope.vandatum) {
                 console.log('watch partner');
                 $scope.aankopen_gedaan();
                 $scope.aankopen_ontvangen();
                 $scope.delta_aankopen_fn();
                 $scope.delta_ontvangen_fn();
-               // $timeout($scope.diff_delta_fn());
+                $timeout(diff_delta_fn, 1000);
             }
         });
 
         //voer deze functie 1 sec na het laden van de pagina uit. Deze maakt gebruik van dom velden. Zonder timeout zijn de variabelen nog niet gekend.
         $timeout(diff_delta_fn, 1000);
 
-        $scope.selectPrimary= function(){
+        $scope.selectPrimary = function () {
             console.log('in select Primary');
             console.log($scope);
 
-            for(var i=0;i<$scope.partners.length;i++){
+            for (var i = 0; i < $scope.partners.length; i++) {
                 console.log('betaaldaan = ' + $scope.partner);
 
                 if ($scope.partners[i].naam == $scope.partner) {
@@ -426,18 +428,19 @@
         }
 
         //haal de aankopen op van de persoon die ingelogd is, en die hij deed voor de gekozen partner
-        $scope.aankopen_gedaan = function(){
+        $scope.aankopen_gedaan = function () {
             $http({
                 url: 'aankopen/aankopen_gedaan',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.partner, vandatum: new Date($scope.vandatum),
-                                        totdatum: new Date($scope.totdatum)
-                                        })
+                data: JSON.stringify({
+                    partner: $scope.partner, vandatum: new Date($scope.vandatum),
+                    totdatum: new Date($scope.totdatum)
+                })
             }).success(function (data) {
                 $scope.ak_gedaan = data;
                 console.log('aankopen gedaan');
                 console.log($scope);
-            }).error(function(xhr, textStatus, error){
+            }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij ophalen van de aankopen');
                 //console.log(xhr.statusText);
                 //console.log(textStatus);
@@ -505,16 +508,17 @@
         };
 
         //haal de aankopen op die de gekozen partner deed voor de persoon die ingelogd is
-        $scope.aankopen_ontvangen = function(){
+        $scope.aankopen_ontvangen = function () {
             $http({
                 url: 'aankopen/aankopen_ontvangen',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.partner, vandatum: new Date($scope.vandatum),
+                data: JSON.stringify({
+                    partner: $scope.partner, vandatum: new Date($scope.vandatum),
                     totdatum: new Date($scope.totdatum)
                 })
             }).success(function (data) {
                 $scope.ak_ontvangen = data;
-            }).error(function(xhr, textStatus, error){
+            }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij het ophalen van de aankopen');
                 console.log(xhr.statusText);
                 console.log(textStatus);
@@ -581,14 +585,14 @@
             return total;
         };
 
-        $scope.delta_aankopen_fn = function(){
+        $scope.delta_aankopen_fn = function () {
             $http({
                 url: 'aankopen/totaal_delta_ak_gedaan',
                 method: "POST",
                 data: JSON.stringify({partner: $scope.partner})
             }).success(function (data) {
                 $scope.delta_aankopen = data;
-            }).error(function(xhr, textStatus, error){
+            }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij het ophalen van de aankopen');
                 console.log(xhr.statusText);
                 console.log(textStatus);
@@ -596,14 +600,14 @@
             });
         }
 
-        $scope.delta_ontvangen_fn = function(){
+        $scope.delta_ontvangen_fn = function () {
             $http({
                 url: 'aankopen/totaal_delta_ak_ontvangen',
                 method: "POST",
                 data: JSON.stringify({partner: $scope.partner})
             }).success(function (data) {
                 $scope.delta_ontvangen = data;
-            }).error(function(xhr, textStatus, error){
+            }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij het ophalen van de aankopen');
                 console.log(xhr.statusText);
                 console.log(textStatus);
@@ -613,16 +617,16 @@
 
         function diff_delta_fn() {
             /*var da_totaal_delta = 0;
-            var da_container_delta = 0;
-            var da_opzet_delta = 0;
-            var da_tray_delta = 0;
-            var da_doos_delta = 0;
+             var da_container_delta = 0;
+             var da_opzet_delta = 0;
+             var da_tray_delta = 0;
+             var da_doos_delta = 0;
 
-            var do_totaal_delta = 0;
-            var do_container_delta = 0;
-            var do_opzet_delta = 0;
-            var do_tray_delta = 0;
-            var do_doos_delta = 0;*/
+             var do_totaal_delta = 0;
+             var do_container_delta = 0;
+             var do_opzet_delta = 0;
+             var do_tray_delta = 0;
+             var do_doos_delta = 0;*/
 
             /*geeft 1 record terug*/
             angular.forEach($scope.delta_aankopen, function (da, index) {
@@ -654,16 +658,32 @@
 
         };
 
+        $scope.delete_aankoop = function ($id) {
+            console.log('in delete aankoop');
+
+            $http({method: 'GET', url: 'aankopen/delete/' + $id}).
+                success(function (data, status, headers, config) {
+                    $scope.aankopen_gedaan();
+                    $scope.aankopen_ontvangen();
+                    $scope.delta_aankopen_fn();
+                    $scope.delta_ontvangen_fn();
+                    $timeout(diff_delta_fn, 1000);
+                }).
+                error(function (data, status, headers, config) {
+                    alert('Er is een fout opgetreden bij het verwijderen van de aankoop');
+                });
+        };
+
     }); //einde OVERZICHT CONTROLLER
 
     /*OVERDRACHT CONTROLLER*/
-    app.controller('OverdrachtController', function ($scope, $http,partnersFactory,primaryUserFactory){
+    app.controller('OverdrachtController', function ($scope, $http, partnersFactory, primaryUserFactory) {
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.betaaldAan = data;
                 console.log($scope);
             })
-            .error(function(err){
+            .error(function (err) {
                 alert('Er is een fout opgetreden bij het ophalen van de primaire partner');
             });
 
@@ -673,10 +693,9 @@
                 $scope.selectPrimary();
                 console.log($scope);
             })
-            .error(function(err){
+            .error(function (err) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
             });
-
 
 
         $scope.dateOptions = {
@@ -685,11 +704,11 @@
 
         $scope.betaaldatum = new Date().toLocaleDateString();
 
-        $scope.selectPrimary= function(){
+        $scope.selectPrimary = function () {
             console.log('in select Primary');
             console.log($scope);
 
-            for(var i=0;i<$scope.partners.length;i++){
+            for (var i = 0; i < $scope.partners.length; i++) {
                 console.log('betaaldaan = ' + $scope.betaaldAan);
 
                 if ($scope.partners[i].naam == $scope.betaaldAan) {
@@ -699,7 +718,6 @@
                 console.log('naam = ' + $scope.partners[i].naam);
             }
         }
-
 
 
         $scope.loadData = function () {
@@ -716,7 +734,7 @@
                 $scope.betalingen = data;
                 console.log('betalingen');
                 console.log($scope);
-            }).error(function(xhr, textStatus, error){
+            }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij ophalen van de betalingen');
                 //console.log(xhr.statusText);
                 console.log(textStatus);
@@ -724,15 +742,15 @@
             });
         };
 
-       /// console.log('betaald aan :');
+        /// console.log('betaald aan :');
         //console.log($scope.betaaldAan);
         $scope.loadData();
 
-       /* $scope.betaaldAan = $scope.primaryPartner;
-        console.log($scope);*/
+        /* $scope.betaaldAan = $scope.primaryPartner;
+         console.log($scope);*/
 
-       /*TODO : Niet wissen, moet geactiveerd worden na het veranderen van het inputscherm naar een dropdown*/
-       $scope.$watch('betaaldAan', function() {
+        /*TODO : Niet wissen, moet geactiveerd worden na het veranderen van het inputscherm naar een dropdown*/
+        $scope.$watch('betaaldAan', function () {
             $scope.loadData();
         });
 
@@ -744,22 +762,27 @@
             $http({
                 url: 'overdrachten/insert_overdracht',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.betaaldAan,  bedrag: $scope.bedrag,
-                    aantal_container: $scope.container,  aantal_opzet: $scope.opzet, aantal_tray: $scope.tray, aantal_doos: $scope.doos,
+                data: JSON.stringify({
+                    partner: $scope.betaaldAan,
+                    bedrag: $scope.bedrag,
+                    aantal_container: $scope.container,
+                    aantal_opzet: $scope.opzet,
+                    aantal_tray: $scope.tray,
+                    aantal_doos: $scope.doos,
                     datum: new Date($scope.betaaldatum)
                 })
             }).success(function (data) {
                 // console.log('sync gedaan');
                 //alert('De gegevens werden succesvol opgeslaan in de databank');
-                $scope.bedrag='';
-                $scope.container='';
-                $scope.opzet='';
-                $scope.tray='';
-                $scope.doos='';
+                $scope.bedrag = '';
+                $scope.container = '';
+                $scope.opzet = '';
+                $scope.tray = '';
+                $scope.doos = '';
 
                 $scope.loadData();
-               // $scope.loadData();
-            }).error(function(xhr, textStatus, error){
+                // $scope.loadData();
+            }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij het wegschrijven van de overdracht. Probeer nogmaals');
                 console.log(xhr.statusText);
                 console.log(textStatus);
@@ -826,11 +849,24 @@
             return total;
         };
 
+        $scope.delete_overdracht = function ($id) {
+            console.log('in delete overdracht');
+
+            $http({method: 'GET', url: 'overdrachten/delete/' + $id}).
+                success(function (data, status, headers, config) {
+                    $scope.loadData();
+                }).
+                error(function (data, status, headers, config) {
+                    alert('Er is een fout opgetreden bij het verwijderen van de overdracht');
+                });
+
+        };
+
 
     }); //einde OVERDRACHT CONTROLLER
 
     /*RESETPWD CONTROLLER*/
-    app.controller('ResetPwdController', function ($scope, $http){
+    app.controller('ResetPwdController', function ($scope, $http) {
         $scope.submitForm = function () {
             $http({
                 method: 'POST',
@@ -838,7 +874,7 @@
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify({oud_pwd: $scope.oudpwd, nieuw_pwd: $scope.pw1})
             }).success(function (data) {
-                if (data == 'ok'){
+                if (data == 'ok') {
                     alert('De wijziging van het paswoord is opgeslagen');
                     $scope.oudpwd = '';
                     $scope.pw1 = '';
@@ -846,7 +882,7 @@
                 } else {
                     alert('Het oude paswoord is niet correct. Probeer nog eens.');
                 }
-            }).error(function(err){
+            }).error(function (err) {
                 alert('Er is een fout opgetreden bij het aanpassen van het wachtwoord. Probeer opnieuw.');
             });
         }

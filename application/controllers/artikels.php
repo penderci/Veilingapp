@@ -58,13 +58,14 @@ class Artikels extends CI_Controller
     //Open het scherm om een artikel aan te passen
     public function edit($update_id)
     {
+        if ($this->session->userdata('is_logged_in')) {
+            $data = $this->get_data_from_db($update_id);
+            $data['middle'] = '/artikels/edit';
 
-        $data = $this->get_data_from_db($update_id);
-        $data['middle'] = '/artikels/edit';
-
-
-        $this->load->view('template', $data);
-
+            $this->load->view('template', $data);
+        } else {
+            redirect(base_url() . 'login');
+        }
 
     }
 

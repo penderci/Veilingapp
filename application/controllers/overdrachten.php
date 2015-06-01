@@ -16,6 +16,13 @@ class Overdrachten extends CI_Controller
 
     }
 
+    //verwijder een aankoop uit de databank
+    public function delete()
+    {
+        $this->Overdracht_model->delete();
+        //redirect(base_url() . 'overzicht');
+    }
+
     public function insert_overdracht(){
         $postdata = file_get_contents('php://input');
         $request = json_decode($postdata);

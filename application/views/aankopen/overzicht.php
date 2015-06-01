@@ -138,7 +138,8 @@ echo validation_errors(); ?>
                                 <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
                             </td>
                             <td>
-                                <a href="aankopen/delete/{{aankoop.id}}" class="btn-sm glyphicon glyphicon-trash"></a>
+                                <a href="#" ng-click="delete_aankoop(aankoop.id)" class="btn-sm glyphicon glyphicon-trash"></a>
+<!--                                <a href="aankopen/delete/{{aankoop.id}}" class="btn-sm glyphicon glyphicon-trash"></a>-->
                             </td>
                         </tr>
                     </table>

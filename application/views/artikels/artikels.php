@@ -23,7 +23,7 @@
                 <td>
                     <a href="artikels/edit/{{artikel.id}}" class="btn-sm glyphicon glyphicon-pencil"></a>
                     </td><td>
-                    <a href="#" ng-click="launch_dialog(artikel.id)" class="btn-sm glyphicon glyphicon-trash"></a>
+                    <a href="#" ng-click="launch_dialog(artikel.id, artikel.naam)" class="btn-sm glyphicon glyphicon-trash"></a>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
             </tr>
