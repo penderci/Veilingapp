@@ -3,6 +3,15 @@
 echo validation_errors();
 /*invoer / edit / delete / update van overdrachten */
 ?>
+<style type="text/css">
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+</style>
 <form ng-controller="OverdrachtController" role="form" class="form-horizontal" ng-submit="submitForm()">
     <div class="col-sm-11" style="position: absolute;left: 5%;top: 10%">
         <div class="well bs-component">
@@ -121,6 +130,17 @@ echo validation_errors();
                     <th style="text-align:right">Opzet</th>
                     <th style="text-align:right">Bruine Tray</th>
                     <th style="text-align:right">Chrysdoos</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>Openstaand</th>
+                    <!--                    <th></th>-->
+                    <th style="text-align:right" ng-class="{ green: diff_totaal_delta >= 0, red: diff_totaal_delta < 0}">{{diff_totaal_delta | number:2}}</th>
+                    <th style="text-align:right" ng-class="{ green: diff_container_delta >= 0, red: diff_container_delta < 0}">{{diff_container_delta}}</th>
+                    <th style="text-align:right" ng-class="{ green: diff_opzet_delta >= 0, red: diff_opzet_delta < 0}">{{diff_opzet_delta}}</th>
+                    <th style="text-align:right" ng-class="{ green: diff_tray_delta >= 0, red: diff_tray_delta < 0}">{{diff_tray_delta}}</th>
+                    <th style="text-align:right" ng-class="{ green: diff_doos_delta >= 0, red: diff_doos_delta < 0}">{{diff_doos_delta}}</th>
                     <th></th>
                     <th></th>
                 </tr>

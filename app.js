@@ -616,7 +616,7 @@
         }
 
         function diff_delta_fn() {
-            /*var da_totaal_delta = 0;
+             var da_totaal_delta = 0;
              var da_container_delta = 0;
              var da_opzet_delta = 0;
              var da_tray_delta = 0;
@@ -626,7 +626,7 @@
              var do_container_delta = 0;
              var do_opzet_delta = 0;
              var do_tray_delta = 0;
-             var do_doos_delta = 0;*/
+             var do_doos_delta = 0;
 
             /*geeft 1 record terug*/
             angular.forEach($scope.delta_aankopen, function (da, index) {
@@ -647,7 +647,6 @@
                 do_opzet_delta = dontv.opzet_delta;
                 do_tray_delta = dontv.tray_delta;
                 do_doos_delta = dontv.doos_delta;
-
             });
 
             $scope.diff_totaal_delta = da_totaal_delta - do_totaal_delta;
@@ -677,7 +676,7 @@
     }); //einde OVERZICHT CONTROLLER
 
     /*OVERDRACHT CONTROLLER*/
-    app.controller('OverdrachtController', function ($scope, $http, partnersFactory, primaryUserFactory) {
+    app.controller('OverdrachtController', function ($scope, $http, $timeout, partnersFactory, primaryUserFactory) {
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.betaaldAan = data;
@@ -732,6 +731,9 @@
                 data: JSON.stringify({betaaldAan: $scope.betaaldAan})
             }).success(function (data) {
                 $scope.betalingen = data;
+                $timeout(delta_aankopen_fn,500);
+                $timeout(delta_ontvangen_fn,500);
+                $timeout(diff_delta_fn, 1000);
                 console.log('betalingen');
                 console.log($scope);
             }).error(function (xhr, textStatus, error) {
@@ -744,7 +746,8 @@
 
         /// console.log('betaald aan :');
         //console.log($scope.betaaldAan);
-        $scope.loadData();
+        //$scope.loadData();
+
 
         /* $scope.betaaldAan = $scope.primaryPartner;
          console.log($scope);*/
@@ -752,6 +755,7 @@
         /*TODO : Niet wissen, moet geactiveerd worden na het veranderen van het inputscherm naar een dropdown*/
         $scope.$watch('betaaldAan', function () {
             $scope.loadData();
+            //$timeout(diff_delta_fn, 1000);
         });
 
 
@@ -781,6 +785,7 @@
                 $scope.doos = '';
 
                 $scope.loadData();
+               // $timeout(diff_delta_fn, 1000);
                 // $scope.loadData();
             }).error(function (xhr, textStatus, error) {
                 alert('Er is een fout opgetreden bij het wegschrijven van de overdracht. Probeer nogmaals');
@@ -849,12 +854,88 @@
             return total;
         };
 
+        /*************************************
+         *
+         *
+         *
+         * @param $id
+         */
+        function delta_aankopen_fn() {
+            $http({
+                url: 'aankopen/totaal_delta_ak_gedaan',
+                method: "POST",
+                data: JSON.stringify({partner: $scope.betaaldAan})
+            }).success(function (data) {
+                $scope.delta_aankopen = data;
+            }).error(function (xhr, textStatus, error) {
+                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            });
+        }
+
+        function delta_ontvangen_fn() {
+            $http({
+                url: 'aankopen/totaal_delta_ak_ontvangen',
+                method: "POST",
+                data: JSON.stringify({partner: $scope.betaaldAan})
+            }).success(function (data) {
+                $scope.delta_ontvangen = data;
+            }).error(function (xhr, textStatus, error) {
+                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            });
+        }
+
+        function diff_delta_fn() {
+            /*geeft 1 record terug*/
+            angular.forEach($scope.delta_aankopen, function (da, index) {
+                console.log('in for each ak');
+                da_totaal_delta = da.totaal_delta;
+                da_container_delta = da.container_delta;
+                da_opzet_delta = da.opzet_delta;
+                da_tray_delta = da.tray_delta;
+                da_doos_delta = da.doos_delta;
+
+            });
+
+            /*geeft 1 record terug*/
+            angular.forEach($scope.delta_ontvangen, function (dontv, index) {
+                console.log('in for each ontv');
+                do_totaal_delta = dontv.totaal_delta;
+                do_container_delta = dontv.container_delta;
+                do_opzet_delta = dontv.opzet_delta;
+                do_tray_delta = dontv.tray_delta;
+                do_doos_delta = dontv.doos_delta;
+
+            });
+
+            $scope.diff_totaal_delta = da_totaal_delta - do_totaal_delta;
+            $scope.diff_container_delta = da_container_delta - do_container_delta;
+            $scope.diff_opzet_delta = da_opzet_delta - do_opzet_delta;
+            $scope.diff_tray_delta = da_tray_delta - do_tray_delta;
+            $scope.diff_doos_delta = da_doos_delta - do_doos_delta;
+
+        };
+
+        /*********************
+         *
+         *
+         *
+         *
+         * @param $id
+         */
+
         $scope.delete_overdracht = function ($id) {
             console.log('in delete overdracht');
 
             $http({method: 'GET', url: 'overdrachten/delete/' + $id}).
                 success(function (data, status, headers, config) {
                     $scope.loadData();
+                    //$timeout(diff_delta_fn, 1000);
                 }).
                 error(function (data, status, headers, config) {
                     alert('Er is een fout opgetreden bij het verwijderen van de overdracht');

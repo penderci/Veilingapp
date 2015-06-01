@@ -66,10 +66,10 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="artikels">Artikels</a></li>
+                    <li><a href="<?php echo base_url(); ?>artikels">Artikels</a></li>
                     <li class="divider"></li>
                     <li><a href="#">Gebruikers</a></li>
-                    <li><a href="gebruikers/reset_paswoord">Reset Paswoord</a></li>
+                    <li><a href="<?php echo base_url(); ?>gebruikers/reset_paswoord">Reset Paswoord</a></li>
                 </ul>
             </li>
             <li>&nbsp; &nbsp; &nbsp; &nbsp;</li>
