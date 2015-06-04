@@ -17,6 +17,10 @@ class Gebruiker_model extends CI_Model{
         }
     }
 
+    public function insert_gebruiker($data){
+        $this->db->insert('gebruikers', $data);
+    }
+
     public function get_primary_user_tobuyfor(){
         $query = $this->db->query("SELECT id FROM gebruikers WHERE email = '" . $this->session->userdata('email'). "'");
         $result=$query->result();

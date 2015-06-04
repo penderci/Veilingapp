@@ -17,7 +17,7 @@ echo $this->input->post('inputPassword');
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                        <label for="inputPassword" class="col-sm-2 control-label">Paswoord</label>
 
                         <div class="col-sm-6">
                             <input class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" type="password" value="cindy">

@@ -4,7 +4,7 @@
     <div class="col-sm-11" style="position: absolute;left: 5%;">
         <div class="well bs-component">
             <div class="container">
-                <table>
+                <table class="col-sm-11">
                     <tr>
                         <td class="col-sm-6">
                             <div class="form-group">

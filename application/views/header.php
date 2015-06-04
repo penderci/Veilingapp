@@ -67,9 +67,11 @@
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="<?php echo base_url(); ?>artikels">Artikels</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Gebruikers</a></li>
                     <li><a href="<?php echo base_url(); ?>gebruikers/reset_paswoord">Reset Paswoord</a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?php echo base_url(); ?>gebruikers">Gebruikers</a></li>
+                    <li><a href="<?php echo base_url(); ?>gebruikers/reset_paswoord_gebruiker">Reset Gebruikerspaswoord</a></li>
+
                 </ul>
             </li>
             <li>&nbsp; &nbsp; &nbsp; &nbsp;</li>

@@ -14,6 +14,25 @@ class Gebruikers extends CI_Controller
 
     }
 
+    public function insert_gebruiker(){
+        $postdata = file_get_contents('php://input');
+        $gebruiker = json_decode($postdata);
+
+        /*        print_r($gebruiker);
+                die();*/
+
+        $data = array(
+            'voornaam'=> $gebruiker->voornaam,
+            'naam'=>$gebruiker->naam,
+            'email'=>$gebruiker->email,
+            'paswoord'=>md5($gebruiker->paswoord),
+            'rol_id'=>$gebruiker->rol
+
+        );
+
+        $this->Gebruiker_model->insert_gebruiker($data);
+    }
+
     public function get_primary_user(){
         $data = $this->Gebruiker_model->get_primary_user_tobuyfor();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
@@ -65,15 +84,9 @@ class Gebruikers extends CI_Controller
             echo 'nok';
         }
 
-
-
-
     }
 
 
- /*   public function get_koppeling_id(){
 
-
-    }*/
 
 }

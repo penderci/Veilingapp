@@ -74,6 +74,21 @@
 
     });
 
+    /*FACTORY voor het ophalen van de gebruikersrollen*/
+    app.factory('rollenFactory', function ($http) {
+        var factory = {};
+
+        factory.rollen = function () {
+            return $http({
+                url: 'rollen/get_rollen',
+                method: "POST"
+            })
+        }
+
+        return factory;
+
+    });
+
 
     /*config voor localstorage*/
     app.config(function (localStorageServiceProvider) {
@@ -969,5 +984,42 @@
         }
     });
     //einde RESETPWD CONTROLLER
+
+
+
+    /*GERUIKERSCONTROLLER*/
+    app.controller('GebruikersController', function ($scope, $http, rollenFactory) {
+        rollenFactory.rollen()
+            .success(function (data) {
+                $scope.rollen = jQuery.makeArray(data);
+                $scope.type = $scope.rollen[0].id;
+                console.log($scope);
+            })
+            .error(function (err) {
+                alert('Er is een fout opgetreden bij het ophalen van de rollen');
+            });
+
+        $scope.submitForm = function () {
+            console.log('posting data ....');
+
+            $http({
+                method: 'POST',
+                url: 'gebruikers/insert_gebruiker',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify({naam: $scope.naam, voornaam: $scope.voornaam, email: $scope.email, paswoord: $scope.paswoord, rol: $scope.type})
+            }).success(function (data) {
+                $scope.message = data;
+                $scope.naam = '';
+                $scope.voornaam = '';
+                $scope.email = '';
+                $scope.paswoord = '';
+                //$scope.inputnaam = '';
+                //$scope.loadData();
+            });
+        }
+    });
+    //einde GERUIKERSCONTROLLER
+
+
 })();
 

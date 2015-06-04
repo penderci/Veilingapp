@@ -40,7 +40,7 @@
                     <label for="pw1" class="col-sm-4 control-label">Nieuw paswoord</label>
 
                     <div class="col-sm-3">
-                        <input class="form-control input-sm" id="pw1" name="pw1"
+                        <input type="password" class="form-control input-sm" id="pw1" name="pw1"
                                ng-model="pw1" required>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <label for="pw2" class="col-sm-4 control-label">Herhaal nieuw paswoord</label>
 
                     <div class="col-sm-3">
-                        <input class="form-control input-sm" id="pw2" name="pw2"
+                        <input type="password" class="form-control input-sm" id="pw2" name="pw2"
                                ng-model="pw2" pw-check="pw1" required>
                     </div>
                 </div>
