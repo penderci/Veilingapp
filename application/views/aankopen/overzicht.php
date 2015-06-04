@@ -64,7 +64,7 @@ echo validation_errors(); ?>
 
 
 <div class="col-sm-11" style="position: absolute;left: 5%;top: 25%">
-    <div style="height: 550px; overflow: auto;">
+    <div style="height: 500px; overflow: auto;">
         <table>
             <tr>
                 <td VALIGN="top">
@@ -86,7 +86,7 @@ echo validation_errors(); ?>
                             <th></th>
                         </tr>
                         <tr>
-                            <th colspan="4">Eindbalans</th>
+                            <th colspan="4" tooltip="Jouw totaal - totaal partner" tooltip-trigger tooltip-placement="top">Eindbalans</th>
                             <!--<th></th>
                             <th></th>
                             <th></th>-->
@@ -135,10 +135,10 @@ echo validation_errors(); ?>
                             <td align="right">{{aankoop.aantal_tray}}</td>
                             <td align="right">{{aankoop.aantal_doos}}</td>
                             <td>
-                                <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
+                                <a href="#" class="btn-sm glyphicon glyphicon-pencil" tooltip="Wijzig aankoop" tooltip-trigger tooltip-placement="top"></a>
                             </td>
                             <td>
-                                <a href="#" ng-click="delete_aankoop(aankoop.id)" class="btn-sm glyphicon glyphicon-trash"></a>
+                                <a href="#" ng-click="delete_aankoop(aankoop.id)" class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder aankoop" tooltip-trigger tooltip-placement="top"></a>
 <!--                                <a href="aankopen/delete/{{aankoop.id}}" class="btn-sm glyphicon glyphicon-trash"></a>-->
                             </td>
                         </tr>

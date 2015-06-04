@@ -6,7 +6,8 @@
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/checknet/css/checknet.css" media="all">
-<!--    <link href="--><?php //echo base_url(); ?><!--assets/css/ui-bootstrap-0.13.0-csp.css" rel="stylesheet" type="text/css">-->
+    <!--    <link href="-->
+    <?php //echo base_url(); ?><!--assets/css/ui-bootstrap-0.13.0-csp.css" rel="stylesheet" type="text/css">-->
 
     <!--Credits for the checknet plugin : http://tomriley.net/blog/archives/tomriley.net-->
 
@@ -22,14 +23,15 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/angular-ui-date/src/date.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>angular/angular-sanitize.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>angular/angular-dialog-service/dist/dialogs.min.js"></script>
+<script type="text/javascript"
+        src="<?php echo base_url(); ?>angular/angular-dialog-service/dist/dialogs.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>app.js"></script>
 
 <div class="navbar navbar-default navbar-fixed-top" style="text-align:center">
     <h1 class="navbar-header" style="color:white">Veilingadministratie</h1>
-    <?php if(!isset($active)){
+    <?php if (!isset($active)) {
         $active = 'Menu';
-    }?>
+    } ?>
 
 
     <?php if ($this->session->userdata('is_logged_in')) { ?>
@@ -37,24 +39,24 @@
 
         <ul class="nav navbar-nav navbar-right">
             <?php if ($active == 'Registratie'){ ?>
-                <li class="active">
-            <?php } else { ?>
-                <li>
-            <?php } ?>
+        <li class="active">
+        <?php } else { ?>
+            <li>
+                <?php } ?>
                 <a href="<?php echo base_url(); ?>aankopen">Registratie</a>
             </li>
             <?php if ($active == 'Overzicht'){ ?>
-                <li class="active">
-            <?php } else { ?>
-                <li>
-            <?php } ?>
+        <li class="active">
+        <?php } else { ?>
+            <li>
+                <?php } ?>
                 <a href="<?php echo base_url(); ?>overzicht">Overzicht</a>
             </li>
             <?php if ($active == 'Overdracht'){ ?>
-                <li class="active">
-            <?php } else { ?>
-                <li>
-            <?php } ?>
+        <li class="active">
+        <?php } else { ?>
+            <li>
+                <?php } ?>
                 <a href="<?php echo base_url(); ?>overdrachten">Overdracht</a>
             </li>
             <?php if ($active == 'Menu'){ ?>
@@ -68,10 +70,11 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="<?php echo base_url(); ?>artikels">Artikels</a></li>
                     <li><a href="<?php echo base_url(); ?>gebruikers/reset_paswoord">Reset Paswoord</a></li>
-                    <li class="divider"></li>
-                    <li><a href="<?php echo base_url(); ?>gebruikers">Gebruikers</a></li>
-                    <li><a href="<?php echo base_url(); ?>gebruikers/reset_paswoord_gebruiker">Reset Gebruikerspaswoord</a></li>
 
+                    <?php if ($this->session->userdata('rol') && $this->session->userdata('rol') == '2') { ?>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo base_url(); ?>gebruikers">Gebruikers</a></li>
+                    <?php } ?>
                 </ul>
             </li>
             <li>&nbsp; &nbsp; &nbsp; &nbsp;</li>

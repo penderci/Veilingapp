@@ -17,6 +17,17 @@ class Gebruiker_model extends CI_Model{
         }
     }
 
+    public function get_rol(){
+        $this->db->where('email',$this->input->post('inputEmail'));
+        $this->db->where('paswoord',md5($this->input->post('inputPassword')));
+
+        $query = $this->db->get('gebruikers');
+        $result = $query->result();
+        $rol = $result[0]->rol_id;
+
+        return $rol;
+    }
+
     public function insert_gebruiker($data){
         $this->db->insert('gebruikers', $data);
     }
@@ -35,6 +46,12 @@ class Gebruiker_model extends CI_Model{
 
         return  $result[0]->newnaam;
 
+    }
+
+    public function get_alle_gebruikers(){
+        $query = $this->db->query("SELECT a.naam, a.voornaam, a.email, a.paswoord, b.rol FROM gebruikers a, rollen b
+        WHERE a.rol_id = b.id");
+        return  $query->result();
     }
 
     public function get_gebruikers(){

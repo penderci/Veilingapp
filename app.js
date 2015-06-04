@@ -1014,9 +1014,25 @@
                 $scope.email = '';
                 $scope.paswoord = '';
                 //$scope.inputnaam = '';
-                //$scope.loadData();
+                $scope.loadData();
             });
         }
+
+        $scope.loadData = function () {
+            $http({
+                url: 'gebruikers/get_alle_gebruikers',
+                method: "POST"
+            }).success(function (data) {
+                $scope.gebruikers = data;
+                console.log($scope);
+            }).error(function (xhr, textStatus, error) {
+                alert('Er is een fout opgetreden bij ophalen van de gebruikers');
+                console.log(textStatus);
+                console.log(error);
+            });
+        };
+
+        $scope.loadData();
     });
     //einde GERUIKERSCONTROLLER
 

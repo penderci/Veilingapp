@@ -45,9 +45,11 @@ class Login extends CI_Controller
     public function validate_credentials()
     {
         if ($this->Gebruiker_model->can_login()) {
+            $rol = $this->Gebruiker_model->get_rol();
             $data = array(
                 'email' => $this->input->post('inputEmail'),
-                'is_logged_in' => 1
+                'is_logged_in' => 1,
+                'rol' => $rol
             );
             $this->session->set_userdata($data);
             return true;

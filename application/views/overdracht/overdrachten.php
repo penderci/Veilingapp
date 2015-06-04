@@ -164,10 +164,10 @@ echo validation_errors();
                     <td align="right">{{betaling.aantal_tray}}</td>
                     <td align="right">{{betaling.aantal_doos}}</td>
                     <td>
-                        <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
+                        <a href="#" class="btn-sm glyphicon glyphicon-pencil" tooltip="Wijzig overdracht" tooltip-trigger tooltip-placement="top"></a>
                     </td>
                     <td>
-                        <a href="#" ng-click="delete_overdracht(betaling.id)" class="btn-sm glyphicon glyphicon-trash"></a>
+                        <a href="#" ng-click="delete_overdracht(betaling.id)" class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder overdracht" tooltip-trigger tooltip-placement="top"></a>
 <!--                        <a href="overdrachten/delete/{{betaling.id}}" class="btn-sm glyphicon glyphicon-trash"></a>-->
                     </td>
                 </tr>

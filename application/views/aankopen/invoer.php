@@ -52,7 +52,7 @@
                         <td class="col-sm-3">
 
                             <div class="form-group-sm"> <!--ui-widget-->
-                                <label for="artikel" class="col-sm-4 control-label">Naam</label>
+                                <label for="artikel" class="col-sm-4 control-label">Artikel</label>
 
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control input-sm" id="artikel"
@@ -175,16 +175,16 @@
                         <td align="right">{{aankoop.aantal_opzet}}</td>
                         <td align="right">{{aankoop.aantal_tray}}</td>
                         <td align="right">{{aankoop.aantal_doos}}</td>
-                        <td>
+<!--                        <td>
                             <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
                             <a href="#" class="btn-sm glyphicon glyphicon-trash"></a>
-                        </td>
+                        </td>-->
                     </tr>
                 </table>
 
         </div>
         <!--Knop disablen als er geen internetconnectie is -->
-        <button type="submit" id="sync" class="btn btn-default btn-xs" style="float: right;" ng-click="synchronize($event)">Sychroniseer</button>
+        <button type="submit" id="sync" class="btn btn-default btn-xs" style="float: right;" ng-click="synchronize($event)" tooltip="Stuur naar databank" tooltip-trigger tooltip-placement="top">Sychroniseer</button>
 
 <!--            </div>-->
 <!--        </div>-->

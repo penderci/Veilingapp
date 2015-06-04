@@ -64,10 +64,50 @@ echo validation_errors(); ?>
                             </div>
                         </td>
                     </tr>
-                    <tr><td></td><td><button type="submit" class="btn btn-default btn-xs" style="float: right;">Opslaan</button></td> </tr>
+                    <tr><td></td><td><button type="submit" class="btn btn-default btn-xs" style="float: right;" >Opslaan</button></td> </tr>
                 </table>
-
             </div>
         </div>
     </div>
+
+<div class="col-sm-11" style="position: absolute;left: 5%;top: 35%">
+    <div style="height: 400px; overflow: auto;">
+        <table class="table table-striped table-hover" style="font-size: 12px;">
+            <tr>
+                <th>Voornaam</th>
+                <th>Naam</th>
+                <th>Email</th>
+                <th>Type</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+
+            <!--        <table>-->
+            <tr ng-repeat="gebruiker in gebruikers"> <!-- | filter: q as results">-->
+                <td>{{gebruiker.voornaam}}</td>
+                <td>{{gebruiker.naam}}</td>
+                <td>{{gebruiker.email}}</td>
+                <td>{{gebruiker.rol}}</td>
+                <td>
+                    <a href="#" class="btn-sm glyphicon glyphicon-pencil" tooltip="Wijzig gebruiker" tooltip-trigger tooltip-placement="top"></a>
+                </td>
+                <td>
+                    <a href="#" class="btn-sm glyphicon glyphicon-trash" tooltip="Wis gebruiker" tooltip-trigger tooltip-placement="top"></a>
+                    <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
+                </td>
+                <td>
+                    <a href="#" class="btn-sm glyphicon glyphicon-link" tooltip="Koppelingen" tooltip-trigger tooltip-placement="top"></a>
+                    <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
+                </td>
+                <td>
+                    <a href="#" class="btn-sm glyphicon glyphicon-user" tooltip="Paswoord wijzigen" tooltip-trigger tooltip-placement="top"></a>
+                    <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
+                </td>
+
+            </tr>
+        </table>
+    </div>
+</div>
 </form>
