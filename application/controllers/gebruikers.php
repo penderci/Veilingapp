@@ -38,6 +38,30 @@ class Gebruikers extends CI_Controller
         redirect(base_url() . 'gebruikers');
     }
 
+    public function edit(){
+        if ($this->session->userdata('is_logged_in')) {
+            if ($this->session->userdata('rol') && $this->session->userdata('rol') == '2') {
+                $id = $this->uri->segment(3);
+
+                $query = $this->Gebruiker_model->get_where($id);
+
+                foreach ($query->result() as $row) {
+                    $data['id'] = $row->id;
+                    $data['naam'] = $row->naam;
+                    $data['voornaam'] = $row->voornaam;
+                    $data['email'] = $row->email;
+                    $data['rol_id'] = $row->rol_id;
+                }
+
+                $data['middle'] = '/gebruikers/edit_gebruiker';
+                $this->load->view('template', $data);
+            }
+        } else {
+            redirect(base_url() . 'login');
+        }
+
+    }
+
     public function get_alle_gebruikers(){
         $data = $this->Gebruiker_model->get_alle_gebruikers();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));

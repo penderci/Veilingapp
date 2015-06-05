@@ -37,6 +37,13 @@ class Gebruiker_model extends CI_Model{
         $this->db->delete('gebruikers');
     }
 
+    public function get_where($id)
+    {
+        $this->db->where('id', $id);
+        $query = $this->db->get('gebruikers');
+        return $query;
+    }
+
     public function get_primary_user_tobuyfor(){
         $query = $this->db->query("SELECT id FROM gebruikers WHERE email = '" . $this->session->userdata('email'). "'");
         $result=$query->result();
