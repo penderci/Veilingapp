@@ -1101,8 +1101,19 @@
         rollenFactory.rollen()
             .success(function (data) {
                 $scope.rollen = jQuery.makeArray(data);
-                console.log($('#var_rol_id').val());
-                $scope.type=$('#var_rol_id').val();
+                $scope.type = $('#var_rol_id').val();
+
+                //console.log($('#var_rol_id').val());
+                ////$scope.type=$('#var_rol_id').val();
+                //angular.forEach($scope.rollen, function (rol, index) {
+                //    console.log('in rol');
+                //    console.log(rol);
+                //    if (rol.id == $('#var_rol_id').val()) {
+                //        console.log('deze selecteren');
+                //        $scope.type=parseInt(rol.id);
+                //    }
+                //});
+
                 console.log($scope);
             })
             .error(function (err) {

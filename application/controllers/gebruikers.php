@@ -62,6 +62,37 @@ class Gebruikers extends CI_Controller
 
     }
 
+    public function update($id)
+    {
+       // $test = $this->input->post();
+        //print_r($test);
+        //die();
+
+        $this->form_validation->set_rules("naam", "Naam", "required|xss_clean");
+        $this->form_validation->set_rules("voornaam", "Voornaam", "required|xss_clean");
+        $this->form_validation->set_rules("email", "Email", "required|valid_email|xss_clean");
+        $this->form_validation->set_rules("var_rol_id2", "Gebruikerstype", "required|xss_clean");
+
+        if ($this->form_validation->run() == FALSE) {
+            //echo('valid false');
+            //die();
+            $this->edit($id);
+
+        } else {
+            $data['naam'] = $this->input->post('naam', TRUE);
+            $data['voornaam'] = $this->input->post('voornaam', TRUE);
+            $data['email'] = $this->input->post('email', TRUE);
+            $data['rol_id'] = $this->input->post('var_rol_id2', TRUE);
+            $data['id'] = $id;
+
+            print_r($data);
+
+            $this->Gebruiker_model->update_gebruiker($data);
+            redirect(base_url() . 'gebruikers/edit/'.$id);
+
+        }
+    }
+
     public function get_alle_gebruikers(){
         $data = $this->Gebruiker_model->get_alle_gebruikers();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));

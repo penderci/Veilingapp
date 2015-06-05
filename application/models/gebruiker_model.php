@@ -37,6 +37,11 @@ class Gebruiker_model extends CI_Model{
         $this->db->delete('gebruikers');
     }
 
+    public function update_gebruiker($data){
+        $this->db->where('id', $data['id']);
+        $this->db->update('gebruikers', $data);
+    }
+
     public function get_where($id)
     {
         $this->db->where('id', $id);
@@ -90,7 +95,7 @@ class Gebruiker_model extends CI_Model{
 
     public function get_alle_gebruikers(){
         $query = $this->db->query("SELECT a.id, a.naam, a.voornaam, a.email, a.paswoord, b.rol FROM gebruikers a, rollen b
-        WHERE a.rol_id = b.id");
+        WHERE a.rol_id = b.id ORDER BY a.voornaam, a.naam");
         return  $query->result();
     }
 

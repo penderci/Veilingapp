@@ -52,9 +52,10 @@ echo validation_errors(); ?>
                                 <label for="type" class="col-sm-6 control-label">Gebruikerstype</label>
 
                                 <div class="col-sm-6">
-                                    <select name="type" ng-model="type" class="form-control input-sm" required>
+                                    <select name="type" id="type" ng-model="type" ng-options="r.id as r.rol for r in rollen" class="form-control input-sm" required></select>
+                                    <!--<select name="type" ng-model="type" class="form-control input-sm" required>
                                         <option ng-repeat="rol in rollen" value="{{rol.id}}">{{rol.rol}}</option>
-                                    </select>
+                                    </select>-->
                                 </div>
                             </div>
                         </td>
