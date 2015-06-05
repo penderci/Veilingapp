@@ -26,7 +26,7 @@
                             <?php if ($this->session->userdata('rol') && $this->session->userdata('rol') == '2') { ?>
                                 <a href="#" ng-click="launch_dialog(artikel.id, artikel.naam)"
                                    class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder artikel" tooltip-trigger tooltip-placement="top"></a>
-                            <?php } ?>      
+                            <?php } ?>
                         </td>
                     </tr>
                 </table>

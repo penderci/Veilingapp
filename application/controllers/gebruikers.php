@@ -33,6 +33,11 @@ class Gebruikers extends CI_Controller
         $this->Gebruiker_model->insert_gebruiker($data);
     }
 
+    public function delete_gebruiker(){
+        $this->Gebruiker_model->delete_gebruiker();
+        redirect(base_url() . 'gebruikers');
+    }
+
     public function get_alle_gebruikers(){
         $data = $this->Gebruiker_model->get_alle_gebruikers();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
@@ -93,6 +98,38 @@ class Gebruikers extends CI_Controller
     }
 
 
+    public function admin_reset_paswoord()
+    {
+        if ($this->session->userdata('is_logged_in')) {
+            $data['middle'] = '/gebruikers/admin_reset_paswoord';
+            $data['id']=$this->uri->segment(3);
+            $voornaam = $this->uri->segment(4);
+            $naam = $this->uri->segment(5);
+            $data['naam'] = $voornaam . ' ' . $naam;
+
+            $this->load->view('template', $data);
+        } else {
+            redirect(base_url() . 'login');
+        }
+
+    }
+
+    public function admin_save_nieuw_paswoord(){
+        /*opgelet geen echo's hier zetten, anders wordt dit naar success van de angular call gestuurd ipv ok of nok*/
+
+        $postdata = file_get_contents('php://input');
+        $posted = json_decode($postdata);
+
+        /*TODO : geen check doen, maar update in de tabel waar email gelijk en paswoord gelijk : indien geen match geeft dit geen id terug cfr id na insert
+        dan iets terug sturen met $this->output->set_output($data);*/
+
+       if ($this->Gebruiker_model->admin_save_nieuw_paswoord($posted->id, $posted->nieuw_pwd)) {
+            echo 'ok';
+        } else {
+            echo 'nok';
+        }
+
+    }
 
 
 }

@@ -44,5 +44,9 @@ $route['404_override'] = '';
 $route['overzicht'] = "aankopen/overzicht";
 
 
+$route['gebruikers/admin_reset_paswoord/(:num)/(:any)/admin_save_nieuw_paswoord'] = "gebruikers/admin_save_nieuw_paswoord";
+
+
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -94,7 +94,7 @@ echo validation_errors(); ?>
                     <a href="#" class="btn-sm glyphicon glyphicon-pencil" tooltip="Wijzig gebruiker" tooltip-trigger tooltip-placement="top"></a>
                 </td>
                 <td>
-                    <a href="#" class="btn-sm glyphicon glyphicon-trash" tooltip="Wis gebruiker" tooltip-trigger tooltip-placement="top"></a>
+                    <a href="#" ng-click="launch_dialog(gebruiker.id, gebruiker.voornaam, gebruiker.naam)" class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder gebruiker" tooltip-trigger tooltip-placement="top"></a>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
                 <td>
@@ -102,7 +102,7 @@ echo validation_errors(); ?>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
                 <td>
-                    <a href="#" class="btn-sm glyphicon glyphicon-user" tooltip="Paswoord wijzigen" tooltip-trigger tooltip-placement="top"></a>
+                    <a href="gebruikers/admin_reset_paswoord/{{gebruiker.id}}/{{gebruiker.voornaam}}/{{gebruiker.naam}}" class="btn-sm glyphicon glyphicon-user" tooltip="Paswoord wijzigen" tooltip-trigger tooltip-placement="top"></a>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
 

@@ -985,10 +985,42 @@
     });
     //einde RESETPWD CONTROLLER
 
+    /*ADMINRESETPWD CONTROLLER*/
+    app.controller('AdminResetPwdController', function ($scope, $http, $window) {
+        $scope.submitForm = function (id) {
+            $http({
+                method: 'POST',
+                url: 'admin_save_nieuw_paswoord',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify({id: id, nieuw_pwd: $scope.pw1})
+            }).success(function (data) {
+                if (data == 'ok') {
+                    alert('De wijziging van het paswoord is opgeslagen');
+                } else {
+                    console.log($scope);
+                    alert('De gebruiker werd niet gevonden. Probeer nog eens.');
+                }
+            }).error(function (err) {
+                alert('Er is een fout opgetreden bij het aanpassen van het wachtwoord. Probeer opnieuw.');
+            });
+        }
 
+        $scope.naar_gebruikers = function($event){
+            $event.preventDefault();
+
+            // console.log(aankopen);
+            // console.log(aankopen2);
+
+            $http({
+                url: 'gebruikers',
+                method: "POST"
+            });
+        }
+    });
+    //einde ADMINRESETPWD CONTROLLER
 
     /*GERUIKERSCONTROLLER*/
-    app.controller('GebruikersController', function ($scope, $http, rollenFactory) {
+    app.controller('GebruikersController', function ($scope, $http, rollenFactory, dialogs) {
         rollenFactory.rollen()
             .success(function (data) {
                 $scope.rollen = jQuery.makeArray(data);
@@ -1029,6 +1061,32 @@
                 alert('Er is een fout opgetreden bij ophalen van de gebruikers');
                 console.log(textStatus);
                 console.log(error);
+            });
+        };
+
+        $scope.launch_dialog = function ($id, $voornaam, $naam) {
+            console.log('in launch');
+            var dlg = null;
+
+            dlg = dialogs.confirm('Weet je zeker dat je de gebruiker ' + $voornaam + ' ' + $naam + ', en alle gerelateerde aankopen wil verwijderen?');
+            dlg.result.then(function (btn) {
+                $scope.confirmed = $id + ' wordt verwijderd';
+                console.log($scope.confirmed);
+
+                $http({method: 'GET', url: 'gebruikers/delete_gebruiker/' + $id}).
+                    success(function (data, status, headers, config) {
+                        $scope.loadData();
+                    }).
+                    error(function (data, status, headers, config) {
+                        alert('Er is een fout opgetreden bij het verwijderen van de gebruiker of gelinkte gegevens');
+                    });
+
+                $scope.loadData();
+            }, function (btn) {
+                $scope.confirmed = 'Ok, ik doe niks';
+                // console.log($scope.confirmed);
+                // $scope.loadData();
+
             });
         };
 

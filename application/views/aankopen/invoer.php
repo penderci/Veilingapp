@@ -30,7 +30,7 @@
                         <div class="form-group">
                             <label for="bestemmeling" class="col-sm-6 control-label">Gekocht voor</label>
                             <div class="col-sm-6">
-                                <select name="bestemmeling" ng-model="gekochtvoor" class="form-control input-sm">
+                                <select name="bestemmeling" ng-model="gekochtvoor" class="form-control input-sm" required>
                                     <option ng-repeat="partner in partners" value="{{partner.naam}}">{{partner.naam}}</option>
                                 </select>
 

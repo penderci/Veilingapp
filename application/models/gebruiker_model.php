@@ -32,24 +32,57 @@ class Gebruiker_model extends CI_Model{
         $this->db->insert('gebruikers', $data);
     }
 
+    public function delete_gebruiker(){
+        $this->db->where('id', $this->uri->segment(3));
+        $this->db->delete('gebruikers');
+    }
+
     public function get_primary_user_tobuyfor(){
         $query = $this->db->query("SELECT id FROM gebruikers WHERE email = '" . $this->session->userdata('email'). "'");
         $result=$query->result();
         $user_id = $result[0]->id;
 
         $query = $this->db->query("SELECT koopt_voor_gebruiker_id FROM koppelingen WHERE gebruiker_id = " . $user_id . " AND primair=1");
-        $result = $query->result();
-        $priamary_user_id = $result[0]->koopt_voor_gebruiker_id;
 
-        $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) newnaam FROM gebruikers WHERE id = " . $priamary_user_id);
-        $result = $query->result();
+        $aant_recs = $query->num_rows();
+
+        /*Controleer of er wel een primary user is aangeduid. Indien neen, neem de eerste gebruiker die gekoppeld is*/
+        if ($aant_recs == 0) {
+            $this->db->limit(1);
+            $query = $this->db->query("SELECT koopt_voor_gebruiker_id FROM koppelingen WHERE gebruiker_id = " . $user_id);
+            $result = $query->result();
+            $aant_recs = $query->num_rows();
+
+            if ($aant_recs > 0){
+                $primary_user_id = $result[0]->koopt_voor_gebruiker_id;
+            }
+
+
+        } else {
+            $result = $query->result();
+            $primary_user_id = $result[0]->koopt_voor_gebruiker_id;
+        }
+
+        //$result = $query->result();
+        //$primary_user_id = $result[0]->koopt_voor_gebruiker_id;
+
+        if ($aant_recs > 0){
+
+            $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) newnaam FROM gebruikers WHERE id = " . $primary_user_id);
+            $result = $query->result();
 
         return  $result[0]->newnaam;
+        } else {
+            $result = array();
+            $result[0] = new stdClass;
+            $result[0]->newnaam = null;
+            return  $result[0]->newnaam;
+        }
 
     }
 
     public function get_alle_gebruikers(){
-        $query = $this->db->query("SELECT a.naam, a.voornaam, a.email, a.paswoord, b.rol FROM gebruikers a, rollen b
+        $query = $this->db->query("SELECT a.id, a.naam, a.voornaam, a.email, a.paswoord, b.rol FROM gebruikers a, rollen b
         WHERE a.rol_id = b.id");
         return  $query->result();
     }
@@ -133,34 +166,26 @@ class Gebruiker_model extends CI_Model{
             return true;
         }
 
+    }
 
-        /*$query = $this->db->query("SELECT paswoord
-                                    FROM gebruikers
-                                    WHERE email = '" . $this->session->userdata('email') ."'");
+    public function admin_save_nieuw_paswoord($id, $nieuwpwd){
 
-        $pwd = $query->result();
-
-        echo('paswoord');
-        print_r($pwd[0]->paswoord);
-
-        echo('db-pwd');
-        echo ($oudpwd);
+        $data = array(
+            'paswoord' => md5($nieuwpwd)
+        );
+        $this->db->update('gebruikers', $data, "id =" . $id);
 
 
+        /*$array = array('id' => $id);
+        $this->db->where($array);
+        $data = array(
+            'paswoord' => md5($nieuwpwd)
+        );
+        $this->db->update('gebruikers', $data);*/
 
-        if( $pwd[0]->paswoord== md5($oudpwd)){
-            return true;
-        } else {
-            return false;
-        }*/
+        /*Controle op aantal rijen heeft geen nut, als het nieuwe paswoord dezelfde waarde heeft als het oude, wordt de update niet uitgevoerd.*/
 
-        /*$this->db->where('paswoord',md5($this->input->post('inputPassword')));
-
-        if ($query->num_rows()== 1) {
-            return true;
-        } else {
-            return false;
-        }*/
+        return true;
     }
 
 
