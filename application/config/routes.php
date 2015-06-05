@@ -46,6 +46,8 @@ $route['overzicht'] = "aankopen/overzicht";
 
 $route['gebruikers/admin_reset_paswoord/(:num)/(:any)/admin_save_nieuw_paswoord'] = "gebruikers/admin_save_nieuw_paswoord";
 $route['gebruikers/edit/rollen/get_rollen'] = "rollen/get_rollen";
+$route['gebruikers/koppeling/gebruikers/get_alle_niet_gekoppelde_gebruikers'] = "gebruikers/get_alle_niet_gekoppelde_gebruikers";
+$route['gebruikers/koppeling/gebruikers/get_alle_gekoppelde_gebruikers'] = "gebruikers/get_alle_gekoppelde_gebruikers";
 
 
 

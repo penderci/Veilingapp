@@ -14,7 +14,8 @@ class Gebruikers extends CI_Controller
 
     }
 
-    public function insert_gebruiker(){
+    public function insert_gebruiker()
+    {
         $postdata = file_get_contents('php://input');
         $gebruiker = json_decode($postdata);
 
@@ -22,23 +23,25 @@ class Gebruikers extends CI_Controller
                 die();*/
 
         $data = array(
-            'voornaam'=> $gebruiker->voornaam,
-            'naam'=>$gebruiker->naam,
-            'email'=>$gebruiker->email,
-            'paswoord'=>md5($gebruiker->paswoord),
-            'rol_id'=>$gebruiker->rol
+            'voornaam' => $gebruiker->voornaam,
+            'naam' => $gebruiker->naam,
+            'email' => $gebruiker->email,
+            'paswoord' => md5($gebruiker->paswoord),
+            'rol_id' => $gebruiker->rol
 
         );
 
         $this->Gebruiker_model->insert_gebruiker($data);
     }
 
-    public function delete_gebruiker(){
+    public function delete_gebruiker()
+    {
         $this->Gebruiker_model->delete_gebruiker();
         redirect(base_url() . 'gebruikers');
     }
 
-    public function edit(){
+    public function edit()
+    {
         if ($this->session->userdata('is_logged_in')) {
             if ($this->session->userdata('rol') && $this->session->userdata('rol') == '2') {
                 $id = $this->uri->segment(3);
@@ -64,7 +67,7 @@ class Gebruikers extends CI_Controller
 
     public function update($id)
     {
-       // $test = $this->input->post();
+        // $test = $this->input->post();
         //print_r($test);
         //die();
 
@@ -88,18 +91,61 @@ class Gebruikers extends CI_Controller
             print_r($data);
 
             $this->Gebruiker_model->update_gebruiker($data);
-            redirect(base_url() . 'gebruikers/edit/'.$id);
+            redirect(base_url() . 'gebruikers/edit/' . $id);
 
         }
     }
 
-    public function get_alle_gebruikers(){
+    public function koppeling()
+    {
+        if ($this->session->userdata('is_logged_in')) {
+            if ($this->session->userdata('rol') && $this->session->userdata('rol') == '2') {
+                $id = $this->uri->segment(3);
+
+                $data['id'] = $id;
+
+ /*               echo('id = ');
+                print_r($data);
+                die();*/
+
+                $data['middle'] = '/gebruikers/koppeling';
+                $this->load->view('template', $data);
+            }
+        } else {
+            redirect(base_url() . 'login');
+        }
+
+    }
+
+    public function get_alle_gebruikers()
+    {
         $data = $this->Gebruiker_model->get_alle_gebruikers();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
 
     }
 
-    public function get_primary_user(){
+    public function get_alle_gekoppelde_gebruikers()
+    {   $postdata = file_get_contents('php://input');
+        $posted = json_decode($postdata);
+
+        $id = $posted->id;
+
+        $data = $this->Gebruiker_model->get_alle_gekoppelde_gebruikers($id);
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function get_alle_niet_gekoppelde_gebruikers()
+    {   $postdata = file_get_contents('php://input');
+        $posted = json_decode($postdata);
+
+        $id = $posted->id;
+
+        $data = $this->Gebruiker_model->get_alle_niet_gekoppelde_gebruikers($id);
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function get_primary_user()
+    {
         $data = $this->Gebruiker_model->get_primary_user_tobuyfor();
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
 
@@ -118,15 +164,17 @@ class Gebruikers extends CI_Controller
     }
 
     /*deze wordt gebruikt in het overzichtsscherm, omdat de autofill hier uit de database gehaald wordt, er kan na het inladen in de local storage iets gewijzigd zijn*/
-    public function get_gebruikers_list_autofill(){
-        if (isset($_GET['term'])){
+    public function get_gebruikers_list_autofill()
+    {
+        if (isset($_GET['term'])) {
             $q = strtolower($_GET['term']);
             $this->Gebruiker_model->get_gebruikers_autofill($q);
         }
     }
 
 
-    public function reset_paswoord(){
+    public function reset_paswoord()
+    {
         if ($this->session->userdata('is_logged_in')) {
             $data['middle'] = '/gebruikers/reset_paswoord';
             $this->load->view('template', $data);
@@ -135,7 +183,8 @@ class Gebruikers extends CI_Controller
         }
     }
 
-    public function save_nieuw_paswoord(){
+    public function save_nieuw_paswoord()
+    {
         /*opgelet geen echo's hier zetten, anders wordt dit naar success van de angular call gestuurd ipv ok of nok*/
 
         $postdata = file_get_contents('php://input');
@@ -157,7 +206,7 @@ class Gebruikers extends CI_Controller
     {
         if ($this->session->userdata('is_logged_in')) {
             $data['middle'] = '/gebruikers/admin_reset_paswoord';
-            $data['id']=$this->uri->segment(3);
+            $data['id'] = $this->uri->segment(3);
             $voornaam = $this->uri->segment(4);
             $naam = $this->uri->segment(5);
             $data['naam'] = $voornaam . ' ' . $naam;
@@ -169,7 +218,8 @@ class Gebruikers extends CI_Controller
 
     }
 
-    public function admin_save_nieuw_paswoord(){
+    public function admin_save_nieuw_paswoord()
+    {
         /*opgelet geen echo's hier zetten, anders wordt dit naar success van de angular call gestuurd ipv ok of nok*/
 
         $postdata = file_get_contents('php://input');
@@ -178,7 +228,7 @@ class Gebruikers extends CI_Controller
         /*TODO : geen check doen, maar update in de tabel waar email gelijk en paswoord gelijk : indien geen match geeft dit geen id terug cfr id na insert
         dan iets terug sturen met $this->output->set_output($data);*/
 
-       if ($this->Gebruiker_model->admin_save_nieuw_paswoord($posted->id, $posted->nieuw_pwd)) {
+        if ($this->Gebruiker_model->admin_save_nieuw_paswoord($posted->id, $posted->nieuw_pwd)) {
             echo 'ok';
         } else {
             echo 'nok';

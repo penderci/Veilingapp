@@ -99,7 +99,7 @@ echo validation_errors(); ?>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
                 <td>
-                    <a href="#" class="btn-sm glyphicon glyphicon-link" tooltip="Koppelingen" tooltip-trigger tooltip-placement="top"></a>
+                    <a href="gebruikers/koppeling/{{gebruiker.id}}" class="btn-sm glyphicon glyphicon-link" tooltip="Koppelingen" tooltip-trigger tooltip-placement="top"></a>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
                 <td>

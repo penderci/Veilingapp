@@ -103,10 +103,24 @@ class Gebruiker_model extends CI_Model{
         $user = $this->get_ingelogde_gebruiker_id();
         $id = $user->id;
 
-        $query = $this->db->query("SELECT CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE email != '" . $this->session->userdata('email') ."'"
+        $query = $this->db->query("SELECT id, CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE email != '" . $this->session->userdata('email') ."'"
         . " AND id IN (SELECT koopt_voor_gebruiker_id FROM koppelingen WHERE gebruiker_id = " . $id .")");
         return $query->result();
     }
+
+    /*functies voor het koppelen van gebruikers*/
+    public function get_alle_gekoppelde_gebruikers($id){
+        $query = $this->db->query("SELECT g.id, CONCAT(`voornaam`, ' ', `naam`) naam, k.id koppeling_id, k.primair FROM gebruikers g, koppelingen k WHERE
+             g.id = k.koopt_voor_gebruiker_id AND gebruiker_id = " . $id);
+        return $query->result();
+    }
+
+    public function get_alle_niet_gekoppelde_gebruikers($id){
+        $query = $this->db->query("SELECT id, CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE id != '" . $id ."'"
+            . " AND id not IN (SELECT koopt_voor_gebruiker_id FROM koppelingen WHERE gebruiker_id = " . $id .")");
+        return $query->result();
+    }
+    /*einde functies voor het koppelen van gebruikers*/
 
     public function get_ingelogde_gebruiker_id(){
         $query = $this->db->query("SELECT id FROM gebruikers WHERE email = '" . $this->session->userdata('email') ."'");

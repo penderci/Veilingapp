@@ -58,7 +58,6 @@
         return factory;
     });
 
-
     /*FACTORY voor het ophalen van de uitgevoerde betalingen, nodig in aankopenscherm voor totaal betalingen en voor scherm overdracht*/
     app.factory('betalingenFactory', function ($http) {
         var factory = {};
@@ -1103,45 +1102,46 @@
                 $scope.rollen = jQuery.makeArray(data);
                 $scope.type = $('#var_rol_id').val();
 
-                //console.log($('#var_rol_id').val());
-                ////$scope.type=$('#var_rol_id').val();
-                //angular.forEach($scope.rollen, function (rol, index) {
-                //    console.log('in rol');
-                //    console.log(rol);
-                //    if (rol.id == $('#var_rol_id').val()) {
-                //        console.log('deze selecteren');
-                //        $scope.type=parseInt(rol.id);
-                //    }
-                //});
-
                 console.log($scope);
             })
             .error(function (err) {
                 alert('Er is een fout opgetreden bij het ophalen van de rollen');
             });
 
-       /* $scope.submitForm = function () {
-            console.log('posting data ....');
-
-            $http({
-                method: 'POST',
-                url: 'gebruikers/insert_gebruiker',
-                headers: {'Content-Type': 'application/json'},
-                data: JSON.stringify({naam: $scope.naam, voornaam: $scope.voornaam, email: $scope.email, paswoord: $scope.paswoord, rol: $scope.type})
-            }).success(function (data) {
-                $scope.message = data;
-                $scope.naam = '';
-                $scope.voornaam = '';
-                $scope.email = '';
-                $scope.paswoord = '';
-                //$scope.inputnaam = '';
-                $scope.loadData();
-            });
-        }*/
-
 
     });
     //einde EDITGERUIKERSCONTROLLER
+
+    /*KOPPELINGCONTROLLER*/
+    app.controller('KoppelingController', function ($scope, $http) {
+
+        $scope.id=$('#id').val();
+
+        $scope.loadData = function () {
+            $http({
+                url: 'gebruikers/get_alle_niet_gekoppelde_gebruikers',
+                method: "POST",
+                data: JSON.stringify({id: $scope.id})
+            }).success(function (data) {
+                $scope.gebruikers = data;
+            });
+
+            $http({
+                url: 'gebruikers/get_alle_gekoppelde_gebruikers',
+                method: "POST",
+                data: JSON.stringify({id: $scope.id})
+            }).success(function (data) {
+                $scope.gekoppelde_gebruikers = data;
+            });
+
+            console.log($scope);
+        }
+
+        $scope.loadData();
+
+
+    });
+    //einde KOPPELINGCONTROLLER
 
 })();
 
