@@ -120,6 +120,47 @@ class Gebruiker_model extends CI_Model{
             . " AND id not IN (SELECT koopt_voor_gebruiker_id FROM koppelingen WHERE gebruiker_id = " . $id .")");
         return $query->result();
     }
+
+    public function maak_koppeling_gebruikers($id1, $id2){
+        $data['gebruiker_id'] = $id1;
+        $data['koopt_voor_gebruiker_id'] = $id2;
+
+        $this->db->insert('koppelingen', $data);
+
+        $data2['gebruiker_id'] = $id2;
+        $data2['koopt_voor_gebruiker_id'] = $id1;
+
+        $this->db->insert('koppelingen', $data2);
+    }
+
+    public function update_primair($id, $gebruiker_id){
+        /*zet 'primair' van de koppeling_id op 1*/
+        $data = array(
+            'primair' => 1
+        );
+
+        $array = array('id' => $id);
+
+        $this->db->where($array);
+        $this->db->update('koppelingen',$data);
+
+        /*zet het veld primair van alle andere gekoppelde gebruikers op 0*/
+        $data = array(
+            'primair' => 0
+        );
+
+        $array = array('id !=' => $id, 'gebruiker_id' => $gebruiker_id);
+
+        $this->db->where($array);
+        $this->db->update('koppelingen',$data);
+
+    }
+
+    public function delete_koppeling(){
+        $this->db->where('id', $this->uri->segment(7));
+        $this->db->delete('koppelingen');
+    }
+
     /*einde functies voor het koppelen van gebruikers*/
 
     public function get_ingelogde_gebruiker_id(){

@@ -43,7 +43,9 @@ echo validation_errors(); ?>
                                 <label for="type" class="col-sm-6 control-label">Gebruikerstype</label>
 
                                 <div class="col-sm-6">
-                                    <select name="type" id="type" ng-model="type" ng-options="r.id as r.rol for r in rollen" class="form-control input-sm" required></select>
+                                    <select name="type" id="type" ng-model="type" ng-options="r.id as r.rol for r in rollen" class="form-control input-sm" required>
+                                        <option></option>
+                                    </select>
                                     <input class="form-control input-sm" id="var_rol_id2"  name="var_rol_id2" value={{type}} style="display: none;">
 
                                     <!--<select name="type" id="type" ng-model="type" class="form-control input-sm" required>

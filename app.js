@@ -1113,7 +1113,7 @@
     //einde EDITGERUIKERSCONTROLLER
 
     /*KOPPELINGCONTROLLER*/
-    app.controller('KoppelingController', function ($scope, $http) {
+    app.controller('KoppelingController', function ($scope, $http, dialogs) {
 
         $scope.id=$('#id').val();
 
@@ -1138,6 +1138,63 @@
         }
 
         $scope.loadData();
+
+        $scope.submitForm = function () {
+            console.log('posting data ....');
+            console.log('gekozen id = ');
+            console.log($scope.gebruiker);
+
+            $http({
+                method: 'POST',
+                url: 'gebruikers/koppel_gebruikers',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify({id1: $scope.gebruiker, id2: $scope.id})
+            }).success(function (data) {
+                $scope.message = data;
+
+                $scope.loadData();
+            });
+        }
+
+        $scope.updateSelection = function(position, gekoppelde_gebruikers, id) {
+            console.log('id = ' + id);
+
+            $http({
+                method: 'POST',
+                url: 'gebruikers/update_primair',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify({id: id, gebruiker_id: $scope.id})
+            }).success(function (data) {
+
+                $scope.loadData();
+            });
+
+        }
+
+        $scope.launch_dialog = function ($id, $naam) {
+            console.log('in launch');
+            var dlg = null;
+
+            dlg = dialogs.confirm('Weet je zeker dat je de koppeling met  ' + $naam + ', en alle gerelateerde aankopen wil verwijderen?');
+            dlg.result.then(function (btn) {
+                $scope.confirmed = $id + ' wordt verwijderd';
+                console.log($scope.confirmed);
+
+                $http({method: 'GET', url: 'gebruikers/delete_koppeling/' + $id}).
+                    success(function (data, status, headers, config) {
+                        $scope.loadData();
+                    }).
+                    error(function (data, status, headers, config) {
+                        alert('Er is een fout opgetreden bij het verwijderen van de koppeling of gelinkte gegevens');
+                    });
+
+                $scope.loadData();
+            }, function (btn) {
+                $scope.confirmed = 'Ok, ik doe niks';
+
+
+            });
+        };
 
 
     });

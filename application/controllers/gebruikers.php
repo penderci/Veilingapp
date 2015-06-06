@@ -96,13 +96,17 @@ class Gebruikers extends CI_Controller
         }
     }
 
+    /*Functies voor het koppelen van gebruikers*/
     public function koppeling()
     {
         if ($this->session->userdata('is_logged_in')) {
             if ($this->session->userdata('rol') && $this->session->userdata('rol') == '2') {
                 $id = $this->uri->segment(3);
+                $voornaam = $this->uri->segment(4);
+                $naam = $this->uri->segment(5);
 
                 $data['id'] = $id;
+                $data['naam'] = $voornaam . ' ' . $naam;
 
  /*               echo('id = ');
                 print_r($data);
@@ -117,12 +121,17 @@ class Gebruikers extends CI_Controller
 
     }
 
-    public function get_alle_gebruikers()
-    {
-        $data = $this->Gebruiker_model->get_alle_gebruikers();
-        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    public function koppel_gebruikers(){
+        $postdata = file_get_contents('php://input');
+        $posted = json_decode($postdata);
+
+        $id1 = $posted->id1;
+        $id2 = $posted->id2;
+
+        $this->Gebruiker_model->maak_koppeling_gebruikers($id1, $id2);
 
     }
+
 
     public function get_alle_gekoppelde_gebruikers()
     {   $postdata = file_get_contents('php://input');
@@ -142,6 +151,28 @@ class Gebruikers extends CI_Controller
 
         $data = $this->Gebruiker_model->get_alle_niet_gekoppelde_gebruikers($id);
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
+
+    public function update_primair(){
+        $postdata = file_get_contents('php://input');
+        $posted = json_decode($postdata);
+
+        $id = $posted->id;
+        $gebruiker_id = $posted->gebruiker_id;
+
+        $this->Gebruiker_model->update_primair($id, $gebruiker_id);
+    }
+
+    public function delete_koppeling(){
+        $this->Gebruiker_model->delete_koppeling();
+    }
+    /*einde functies voor het koppelen van gebruikers*/
+
+    public function get_alle_gebruikers()
+    {
+        $data = $this->Gebruiker_model->get_alle_gebruikers();
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+
     }
 
     public function get_primary_user()

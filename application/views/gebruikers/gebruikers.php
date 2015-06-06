@@ -52,7 +52,9 @@ echo validation_errors(); ?>
                                 <label for="type" class="col-sm-6 control-label">Gebruikerstype</label>
 
                                 <div class="col-sm-6">
-                                    <select name="type" id="type" ng-model="type" ng-options="r.id as r.rol for r in rollen" class="form-control input-sm" required></select>
+                                    <select name="type" id="type" ng-model="type" ng-options="r.id as r.rol for r in rollen" class="form-control input-sm" required>
+                                        <option></option>
+                                    </select>
                                     <!--<select name="type" ng-model="type" class="form-control input-sm" required>
                                         <option ng-repeat="rol in rollen" value="{{rol.id}}">{{rol.rol}}</option>
                                     </select>-->
@@ -99,7 +101,7 @@ echo validation_errors(); ?>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
                 <td>
-                    <a href="gebruikers/koppeling/{{gebruiker.id}}" class="btn-sm glyphicon glyphicon-link" tooltip="Koppelingen" tooltip-trigger tooltip-placement="top"></a>
+                    <a href="gebruikers/koppeling/{{gebruiker.id}}/{{gebruiker.voornaam}}/{{gebruiker.naam}}" class="btn-sm glyphicon glyphicon-link" tooltip="Koppelingen" tooltip-trigger tooltip-placement="top"></a>
                     <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                 </td>
                 <td>
