@@ -110,7 +110,7 @@ class Gebruiker_model extends CI_Model{
 
     /*functies voor het koppelen van gebruikers*/
     public function get_alle_gekoppelde_gebruikers($id){
-        $query = $this->db->query("SELECT g.id, CONCAT(`voornaam`, ' ', `naam`) naam, k.id koppeling_id, k.primair FROM gebruikers g, koppelingen k WHERE
+        $query = $this->db->query("SELECT g.id koopt_voor_gebruiker_id, CONCAT(`voornaam`, ' ', `naam`) naam, k.id koppeling_id, k.primair, k.gebruiker_id FROM gebruikers g, koppelingen k WHERE
              g.id = k.koopt_voor_gebruiker_id AND gebruiker_id = " . $id);
         return $query->result();
     }
@@ -157,8 +157,13 @@ class Gebruiker_model extends CI_Model{
     }
 
     public function delete_koppeling(){
-        $this->db->where('id', $this->uri->segment(7));
-        $this->db->delete('koppelingen');
+        $array = array('koopt_voor_gebruiker_id' => $this->uri->segment(7), 'gebruiker_id' => $this->uri->segment(8));
+        $this->db->where($array);
+        $this->db->delete('koppelingen',$array);
+
+        $array = array('koopt_voor_gebruiker_id' => $this->uri->segment(8), 'gebruiker_id' => $this->uri->segment(7));
+        $this->db->where($array);
+        $this->db->delete('koppelingen',$array);
     }
 
     /*einde functies voor het koppelen van gebruikers*/

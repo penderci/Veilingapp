@@ -127,8 +127,10 @@
                     success(function (data, status, headers, config) {
                         $scope.loadData();
                     }).
-                    error(function (data, status, headers, config) {
+                    error(function (err, status) {
                         alert('Er is een fout opgetreden bij het verwijderen van het artikel of gelinkte gegevens');
+                        console.log(err);
+                        console.log(status);
                     });
 
                 $scope.loadData();
@@ -195,8 +197,10 @@
             .success(function (data) {
                 $scope.gekochtvoor = data;
             })
-            .error(function (err) {
-                alert('Er is een fout opgetreden');
+            .error(function (err, status) {
+                alert('Er is een fout opgetreden bij het ophalen van de primary user');
+                console.log(err);
+                console.log(status);
             });
 
         partnersFactory.partners()
@@ -205,8 +209,10 @@
                 $scope.selectPrimary();
                 console.log($scope);
             })
-            .error(function (err) {
+            .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
+                console.log(err);
+                console.log(status);
             });
 
         $scope.selectPrimary = function () {
@@ -353,11 +359,10 @@
                 alert('De gegevens werden succesvol opgeslaan in de databank');
                 localStorage.removeItem('aankopen');
                 $scope.loadData();
-            }).error(function (xhr, textStatus, error) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij het syncen. Probeer nogmaals');
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+                console.log(err);
+                console.log(status);
             });
 
         }
@@ -370,8 +375,10 @@
             .success(function (data) {
                 $scope.partner = data;
             })
-            .error(function (err) {
-                alert('Er is een fout opgetreden');
+            .error(function (err, status) {
+                alert('Er is een fout opgetreden bij het ophalen van de primary user');
+                console.log(err);
+                console.log(status);
             });
 
         partnersFactory.partners()
@@ -380,8 +387,10 @@
                 $scope.selectPrimary();
                 console.log($scope);
             })
-            .error(function (err) {
+            .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
+                console.log(err);
+                console.log(status);
             });
 
         $scope.dateOptions = {
@@ -454,11 +463,11 @@
                 $scope.ak_gedaan = data;
                 console.log('aankopen gedaan');
                 console.log($scope);
-            }).error(function (xhr, textStatus, error) {
-                alert('Er is een fout opgetreden bij ophalen van de aankopen');
-                //console.log(xhr.statusText);
-                //console.log(textStatus);
-                //console.log(error);
+            }).error(function (err, status) {
+                alert('Er is een fout opgetreden bij ophalen van de gedane aankopen');
+                console.log(err);
+                console.log(status);
+
             });
         }
 
@@ -532,11 +541,10 @@
                 })
             }).success(function (data) {
                 $scope.ak_ontvangen = data;
-            }).error(function (xhr, textStatus, error) {
-                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+            }).error(function (err, status) {
+                alert('Er is een fout opgetreden bij het ophalen van de ontvangen aankopen');
+                console.log(err);
+                console.log(status);
             });
         }
 
@@ -606,11 +614,10 @@
                 data: JSON.stringify({partner: $scope.partner})
             }).success(function (data) {
                 $scope.delta_aankopen = data;
-            }).error(function (xhr, textStatus, error) {
-                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+            }).error(function (err, status) {
+                alert('Er is een fout opgetreden bij het ophalen van de totalen van de gedane aankopen');
+                console.log(err);
+                console.log(status);
             });
         }
 
@@ -621,11 +628,10 @@
                 data: JSON.stringify({partner: $scope.partner})
             }).success(function (data) {
                 $scope.delta_ontvangen = data;
-            }).error(function (xhr, textStatus, error) {
-                alert('Er is een fout opgetreden bij het ophalen van de aankopen');
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+            }).error(function (err, status) {
+                alert('Er is een fout opgetreden bij het ophalen van de totalen van de ontvangen aankopen');
+                console.log(err);
+                console.log(status);
             });
         }
 
@@ -682,8 +688,10 @@
                     $scope.delta_ontvangen_fn();
                     $timeout(diff_delta_fn, 1000);
                 }).
-                error(function (data, status, headers, config) {
+                error(function (err, status) {
                     alert('Er is een fout opgetreden bij het verwijderen van de aankoop');
+                    console.log(err);
+                    console.log(status);
                 });
         };
 
@@ -696,8 +704,10 @@
                 $scope.betaaldAan = data;
                 console.log($scope);
             })
-            .error(function (err) {
+            .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de primaire partner');
+                console.log(err);
+                console.log(status);
             });
 
         partnersFactory.partners()
@@ -706,8 +716,10 @@
                 $scope.selectPrimary();
                 console.log($scope);
             })
-            .error(function (err) {
+            .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
+                console.log(err);
+                console.log(status);
             });
 
 
@@ -750,11 +762,10 @@
                 $timeout(diff_delta_fn, 1000);
                 console.log('betalingen');
                 console.log($scope);
-            }).error(function (xhr, textStatus, error) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij ophalen van de betalingen');
-                //console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+                console.log(err);
+                console.log(status);
             });
         };
 
@@ -801,11 +812,10 @@
                 $scope.loadData();
                // $timeout(diff_delta_fn, 1000);
                 // $scope.loadData();
-            }).error(function (xhr, textStatus, error) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij het wegschrijven van de overdracht. Probeer nogmaals');
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+                console.log(err);
+                console.log(status);
             });
         }
 
@@ -881,11 +891,10 @@
                 data: JSON.stringify({partner: $scope.betaaldAan})
             }).success(function (data) {
                 $scope.delta_aankopen = data;
-            }).error(function (xhr, textStatus, error) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de aankopen');
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+                console.log(err);
+                console.log(status);
             });
         }
 
@@ -896,11 +905,10 @@
                 data: JSON.stringify({partner: $scope.betaaldAan})
             }).success(function (data) {
                 $scope.delta_ontvangen = data;
-            }).error(function (xhr, textStatus, error) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de aankopen');
-                console.log(xhr.statusText);
-                console.log(textStatus);
-                console.log(error);
+                console.log(err);
+                console.log(status);
             });
         }
 
@@ -951,8 +959,10 @@
                     $scope.loadData();
                     //$timeout(diff_delta_fn, 1000);
                 }).
-                error(function (data, status, headers, config) {
+                error(function (err, status) {
                     alert('Er is een fout opgetreden bij het verwijderen van de overdracht');
+                    console.log(err);
+                    console.log(status);
                 });
 
         };
@@ -977,8 +987,10 @@
                 } else {
                     alert('Het oude paswoord is niet correct. Probeer nog eens.');
                 }
-            }).error(function (err) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij het aanpassen van het wachtwoord. Probeer opnieuw.');
+                console.log(err);
+                console.log(status);
             });
         }
     });
@@ -999,8 +1011,10 @@
                     console.log($scope);
                     alert('De gebruiker werd niet gevonden. Probeer nog eens.');
                 }
-            }).error(function (err) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij het aanpassen van het wachtwoord. Probeer opnieuw.');
+                console.log(err);
+                console.log(status);
             });
         }
 
@@ -1028,8 +1042,10 @@
                 $scope.type = $scope.rollen[0].id;
                 console.log($scope);
             })
-            .error(function (err) {
+            .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de rollen');
+                console.log(err);
+                console.log(status);
             });
 
         $scope.submitForm = function () {
@@ -1058,10 +1074,10 @@
             }).success(function (data) {
                 $scope.gebruikers = data;
                 console.log($scope);
-            }).error(function (xhr, textStatus, error) {
+            }).error(function (err, status) {
                 alert('Er is een fout opgetreden bij ophalen van de gebruikers');
-                console.log(textStatus);
-                console.log(error);
+                console.log(err);
+                console.log(status);
             });
         };
 
@@ -1078,8 +1094,10 @@
                     success(function (data, status, headers, config) {
                         $scope.loadData();
                     }).
-                    error(function (data, status, headers, config) {
+                    error(function (err, status) {
                         alert('Er is een fout opgetreden bij het verwijderen van de gebruiker of gelinkte gegevens');
+                        console.log(err);
+                        console.log(status);
                     });
 
                 $scope.loadData();
@@ -1104,8 +1122,10 @@
 
                 console.log($scope);
             })
-            .error(function (err) {
+            .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de rollen');
+                console.log(err);
+                console.log(status);
             });
 
 
@@ -1171,7 +1191,7 @@
 
         }
 
-        $scope.launch_dialog = function ($id, $naam) {
+        $scope.launch_dialog = function ($id, $id2, $naam) {
             console.log('in launch');
             var dlg = null;
 
@@ -1180,12 +1200,15 @@
                 $scope.confirmed = $id + ' wordt verwijderd';
                 console.log($scope.confirmed);
 
-                $http({method: 'GET', url: 'gebruikers/delete_koppeling/' + $id}).
-                    success(function (data, status, headers, config) {
+                //$http({method: 'GET', url: 'gebruikers/delete_koppeling/' + $id}).
+                $http({method: 'GET', url: 'gebruikers/delete_koppeling/' + $id + '/' + $id2}).
+                    success(function (data) {
                         $scope.loadData();
                     }).
-                    error(function (data, status, headers, config) {
+                    error(function (err, status) {
                         alert('Er is een fout opgetreden bij het verwijderen van de koppeling of gelinkte gegevens');
+                        console.log(err);
+                        console.log(status);
                     });
 
                 $scope.loadData();

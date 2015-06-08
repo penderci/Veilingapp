@@ -56,7 +56,8 @@ echo validation_errors(); ?>
                     ng-change="string"-->
 
                     <td>
-                        <a href="#" ng-click="launch_dialog(koppel.koppeling_id, koppel.naam)" class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder koppeling" tooltip-trigger tooltip-placement="top"></a>
+<!--                        <a href="#" ng-click="launch_dialog(koppel.koppeling_id, koppel.naam)" class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder koppeling" tooltip-trigger tooltip-placement="top"></a>-->
+                       <a href="#" ng-click="launch_dialog(koppel.koopt_voor_gebruiker_id, koppel.gebruiker_id, koppel.naam)" class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder koppeling" tooltip-trigger tooltip-placement="top"></a>
                         <!--ng-click="launch_dialog()"                 artikels/delete/{{artikel.id}}-->
                     </td>
 
