@@ -371,6 +371,19 @@
 
     /*OVERZICHT CONTROLLER*/
     app.controller('OverzichtController', function ($scope, $timeout, $http, primaryUserFactory, partnersFactory) {
+        $scope.showme = false;
+
+        $scope.showmefn = function($bool){
+            console.log('in showme');
+            $scope.showme = $bool;
+
+            if ($bool == true){
+                console.log('true');
+            } else {
+                console.log('false');
+            }
+        }
+
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.partner = data;
@@ -411,6 +424,8 @@
             if ($scope.partner && $scope.totdatum && $scope.vandatum) {
                 $scope.aankopen_gedaan();
                 $scope.aankopen_ontvangen();
+                $scope.store_sessionvars();
+
             }
         });
 
@@ -418,6 +433,7 @@
             if ($scope.partner && $scope.totdatum && $scope.vandatum) {
                 $scope.aankopen_gedaan();
                 $scope.aankopen_ontvangen();
+                $scope.store_sessionvars();
             }
         });
 
@@ -428,6 +444,7 @@
                 $scope.aankopen_ontvangen();
                 $scope.delta_aankopen_fn();
                 $scope.delta_ontvangen_fn();
+                $scope.store_sessionvars();
                 $timeout(diff_delta_fn, 1000);
             }
         });
@@ -694,6 +711,46 @@
                     console.log(status);
                 });
         };
+
+        $scope.store_sessionvars = function(){
+            console.log('in store session vars');
+            console.log($scope.vandatum);
+            console.log($scope.totdatum);
+            console.log($scope.partner);
+
+            sessionStorage.overzicht_partners = JSON.stringify($scope.partner);
+            sessionStorage.overzicht_vandatum = JSON.stringify(new Date($scope.vandatum));
+            sessionStorage.overzicht_totdatum = JSON.stringify(new Date($scope.totdatum));
+        }
+
+        /*Editeren van een aankooplijn*/
+       /* $scope.load_edit = function($id){
+            $http({method: 'GET',
+                url: 'aankopen/edit_aankoop/' + $id + '/' +  $scope.partner + '/' + $scope.vandatum + '/' + $scope.totdatum
+            }).
+                *//*success(function (data) {
+                 $scope.loadData();
+                 }).*//*
+                error(function (err, status) {
+                    alert('Er is een fout opgetreden bij openen van het scherm om de aankoop te wijzigen');
+                    console.log(err);
+                    console.log(status);
+                });*/
+
+            /*$http({method: 'POST',
+                url: 'aankopen/edit_aankoop',
+                data: JSON.stringify({id: $id, partner: $scope.partner, vandatum: new Date($scope.vandatum),
+                    totdatum: new Date($scope.totdatum)})
+            }).
+                *//*success(function (data) {
+                 $scope.loadData();
+                 }).*//*
+                error(function (err, status) {
+                    alert('Er is een fout opgetreden bij openen van het scherm om de aankoop te wijzigen');
+                    console.log(err);
+                    console.log(status);
+                });*/
+        //}
 
     }); //einde OVERZICHT CONTROLLER
 
@@ -1222,6 +1279,15 @@
 
     });
     //einde KOPPELINGCONTROLLER
+
+    /*EDITAANKOOPCONTROLLER*/
+    app.controller('EditAkController', function ($scope, $http) {
+
+        //$scope.id=$('#id').val();
+
+
+    });
+    //einde EDITAANKOOPCONTROLLER
 
 })();
 

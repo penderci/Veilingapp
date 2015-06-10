@@ -286,6 +286,33 @@ public function totaal_delta_ak_gedaan(){
         $this->output->set_content_type('application/json')->set_output(json_encode($ontvangen_delta));
     }
 
+    /*Functies voor het wijzigen van een aankooplijn*/
+    public function edit_aankoop(){
+        if ($this->session->userdata('is_logged_in')) {
 
+            //$data['leeggoed'] = $this->Aankoop_model->get_leeggoed();
+
+
+            /*$postdata = file_get_contents('php://input');
+            $result = json_decode($postdata);*/
+
+            /*$data['aankoop_id'] = $this->uri->segment(3);
+            $data['partner'] = $this->uri->segment(4);
+            $data['vandatum'] = $this->uri->segment(5);
+            $data['totdatum'] = $this->uri->segment(6);*/
+
+            /*$data['aankoop_id'] = $result->id;
+            $data['partner'] = $result->partner;
+            $data['vandatum'] = $result->vandatum;
+            $data['totdatum'] = $result->totdatum;*/
+            $data['middle'] = '/aankopen/edit_aankoop';
+
+            //print_r($data);
+            //die();
+            echo $this->load->view('template', $data);
+        } else {
+            redirect(base_url() . 'login');
+        }
+    }
 
 }
