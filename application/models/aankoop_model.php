@@ -40,6 +40,12 @@ class Aankoop_model extends CI_Model{
         $this->db->delete('aankopen');
     }
 
+    public function update_aankoop($data){
+        $this->db->where('id', $data['id']);
+        $this->db->update('aankopen', $data);
+    }
+
+
     public function get_aankopen($vandatum, $totdatum, $koppeling_id){//$aankoper_id, $gekochtVoor_id){
 
 //        $query = $this->db->query("SELECT a.id, a.datum, b.naam, a.eenheidsprijs, a.aantal, a.aantal_container, a.aantal_doos, a.aantal_opzet, a.aantal_tray

@@ -21,13 +21,13 @@ class Artikels extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($data));
     }
 
-    /*public function get_list_autofill()
+    public function get_list_autofill()
     {
         if (isset($_GET['term'])) {
             $q = strtolower($_GET['term']);
             $this->Artikel_model->get_artikels_autofill($q);
         }
-    }*/
+    }
 
 
 

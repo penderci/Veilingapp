@@ -88,6 +88,26 @@ class Aankopen extends CI_Controller
         //redirect(base_url() . 'overzicht');
     }
 
+    public function update_aankoop(){
+        $postdata = file_get_contents('php://input');
+        $aankoop = json_decode($postdata);
+
+        /*haal het id op van het artikel als dit bestaat, en anders, voeg het toe aan de artikel tabel en haal het id op*/
+        $artikel_id = $this->Artikel_model->get_artikel_id($aankoop->artikel);
+
+        $data['id'] = $aankoop->id;
+        $data['artikel_id'] = $artikel_id;
+        $data['eenheidsprijs'] = $aankoop->ehprijs;
+        $data['aantal'] = $aankoop->aantal;
+        $data['aantal_container'] = $aankoop->container;
+        $data['aantal_doos'] = $aankoop->doos;
+        $data['aantal_opzet'] = $aankoop->opzet;
+        $data['aantal_tray'] = $aankoop->tray;
+
+        $this->Aankoop_model->update_aankoop($data);
+
+    }
+
     public function get_list()
     {
         $data = $this->Aankoop_model->get_aankopen_temp();
@@ -121,8 +141,8 @@ class Aankopen extends CI_Controller
                 /*haal het id op van het artikel als dit bestaat, en anders, voeg het toe aan de artikel tabel en haal het id op*/
                 $artikel_id = $this->Artikel_model->get_artikel_id($aankoop->artikel);
 
-                echo('artikel');
-                echo($artikel_id);
+               // echo('artikel');
+                //echo($artikel_id);
 
                 if (property_exists($aankoop, 'eenheidsprijs')) {
                     $eenheidsprijs = $aankoop->eenheidsprijs;

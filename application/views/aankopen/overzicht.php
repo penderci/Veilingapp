@@ -137,7 +137,7 @@ echo validation_errors(); ?>
                             <td align="right">{{aankoop.aantal_doos}}</td>
                             <td>
 <!--                                <a href="aankopen/edit_aankoop/{{aankoop.id}}" ng-click="load_edit(aankoop.id)" target="_blank" class="btn-sm glyphicon glyphicon-pencil" tooltip="Wijzig aankoop" tooltip-trigger tooltip-placement="top"></a>-->
-                                <a href="#" ng-click="showmefn(true)" class="btn-sm glyphicon glyphicon-pencil" tooltip="Wijzig aankoop" tooltip-trigger tooltip-placement="top"></a>
+                                <a href="#" ng-click="showmefn(true, aankoop, null)" class="btn-sm glyphicon glyphicon-pencil" tooltip="Wijzig aankoop" tooltip-trigger tooltip-placement="top"></a>
                             </td>
                             <td>
                                 <a href="#" ng-click="delete_aankoop(aankoop.id)" class="btn-sm glyphicon glyphicon-trash" tooltip="Verwijder aankoop" tooltip-trigger tooltip-placement="top"></a>
@@ -208,22 +208,23 @@ echo validation_errors(); ?>
 
 </div>
 <div ng-show="showme">
-    <a href="#" ng-click="showme=false">Terug</a>
+
     <div class="col-sm-11" style="position: absolute;left: 5%;">
-        <div class="well bs-component">
+        <a href="#" ng-click="showmefn(false,null,'terug')" class="btn-sm btn-default btn-xs">Terug</a>
+<!--        <div class="well bs-component">
             <div class="container">
                 <table class="col-sm-11">
-                    <tr>
-                        <td class="col-sm-6">
+                    <tr>-->
+<!--                        <td class="col-sm-6">
                             <div class="form-group">
                                 <label for="aankoopdatum" class="col-sm-6 control-label">Aankoopdatum</label>
 
                                 <div class="col-sm-6">
                                     <input ui-date="dateOptions" class="form-control input-sm" id="aankoopdatum"
-                                           ng-model="aankoopdatum" required>
+                                           ng-model="update_ak.datum" required>
                                 </div>
                             </div>
-                        </td>
+                        </td>-->
                         <!-- <td class="col-sm-6">
                              <div class="form-group">
                                  <label for="bestemmeling" class="col-sm-6 control-label">Gekocht voor</label>
@@ -234,7 +235,7 @@ echo validation_errors(); ?>
                                  </div>
                              </div>
                          </td>-->
-                        <td class="col-sm-6">
+                        <!--<td class="col-sm-6">
                             <div class="form-group">
                                 <label for="bestemmeling" class="col-sm-6 control-label">Gekocht voor</label>
                                 <div class="col-sm-6">
@@ -244,11 +245,11 @@ echo validation_errors(); ?>
 
                                 </div>
                             </div>
-                        </td>
-                    </tr>
+                        </td>-->
+<!--                    </tr>
                 </table>
             </div>
-        </div>
+        </div>-->
         <!--</div>
         <div></div>
         <div class="col-sm-11" style="position: absolute;left: 5%;top: 25%">-->
@@ -260,80 +261,80 @@ echo validation_errors(); ?>
                         <td class="col-sm-3">
 
                             <div class="form-group-sm"> <!--ui-widget-->
-                                <label for="artikel" class="col-sm-4 control-label">Artikel</label>
+                                <label for="upd_artikel" class="col-sm-4 control-label">Artikel</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control input-sm" id="artikel"
-                                           ng-model="artikel" required>
+                                    <input type="text" class="form-control input-sm" id="upd_artikel"
+                                           ng-model="upd_artikel" value="update_ak.naam" required>
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group-sm">
-                                <label for="aantal" class="col-sm-4 control-label">Aantal</label>
+                                <label for="upd_aantal" class="col-sm-4 control-label">Aantal</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="aantal" ng-model="aantal">
+                                    <input type="number" class="form-control input-sm" id="upd_aantal" ng-model="upd_aantal">
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group-sm">
-                                <label for="ehprijs" class="col-sm-4 control-label">Eenheidsprijs</label>
+                                <label for="upd_ehprijs" class="col-sm-4 control-label">Eenheidsprijs</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="ehprijs" min="0" step="0.001"
-                                           ng-model="ehprijs">
+                                    <input type="number" class="form-control input-sm" id="upd_ehprijs" min="0" step="0.001"
+                                           ng-model="upd_ehprijs">
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group-sm">
-                                <label for="bedag" class="col-sm-4 control-label">Totale prijs</label>
+                                <label for="upd_bedag" class="col-sm-4 control-label">Totale prijs</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="bedrag" readonly min="0" step="0.01"
-                                           tabindex="-1" value="{{aantal * ehprijs}}">
+                                    <input type="number" class="form-control input-sm" id="upd_bedrag" readonly min="0" step="0.01"
+                                           tabindex="-1" value="{{upd_aantal * upd_ehprijs}}">
                                 </div>
                             </div>
                         </td>
                         <td class="col-sm-3">
                             <div class="form-group-sm">
-                                <label for="container" class="col-sm-4 control-label">Container</label>
+                                <label for="upd_container" class="col-sm-4 control-label">Container</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="container"
-                                           ng-model="container" min="0" step="1">
+                                    <input type="number" class="form-control input-sm" id="upd_container"
+                                           ng-model="upd_container" min="0" step="1">
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group-sm">
-                                <label for="opzet" class="col-sm-4 control-label">Opzet</label>
+                                <label for="upd_opzet" class="col-sm-4 control-label">Opzet</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="opzet"
-                                           ng-model="opzet" min="0" step="1">
+                                    <input type="number" class="form-control input-sm" id="upd_opzet"
+                                           ng-model="upd_opzet" min="0" step="1">
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group-sm">
-                                <label for="tray" class="col-sm-4 control-label">Bruine tray</label>
+                                <label for="upd_tray" class="col-sm-4 control-label">Bruine tray</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="tray"
-                                           ng-model="tray" min="0" step="1">
+                                    <input type="number" class="form-control input-sm" id="upd_tray"
+                                           ng-model="upd_tray" min="0" step="1">
                                 </div>
                             </div>
                             <br>
 
                             <div class="form-group-sm">
-                                <label for="doos" class="col-sm-4 control-label">Chrysdoos</label>
+                                <label for="upd_doos" class="col-sm-4 control-label">Chrysdoos</label>
 
                                 <div class="col-sm-6">
-                                    <input type="number" class="form-control input-sm" id="doos"
-                                           ng-model="doos" min="0" step="1">
+                                    <input type="number" class="form-control input-sm" id="upd_doos"
+                                           ng-model="upd_doos" min="0" step="1">
                                 </div>
                             </div>
                         </td>
@@ -341,7 +342,7 @@ echo validation_errors(); ?>
 
 
                 </table>
-                <button type="submit" class="btn btn-default btn-xs" style="float: right;">Opslaan</button>
+                <button type="submit" class="btn btn-default btn-xs" style="float: right;" ng-click="showmefn(false, null, 'update')">Opslaan</button>
             </div>
         </div>
     </div>
@@ -350,8 +351,12 @@ echo validation_errors(); ?>
 </form>
 <script>
     $(document).ready(function () {
-        $("#partner").autocomplete({
+        /*$("#partner").autocomplete({
             source: "gebruikers/get_gebruikers_list_autofill"
+        });*/
+
+        $("#upd_artikel").autocomplete({
+            source: "artikels/get_list_autofill"
         });
 
         $('#vandatum').keydown(function(e) {

@@ -373,14 +373,49 @@
     app.controller('OverzichtController', function ($scope, $timeout, $http, primaryUserFactory, partnersFactory) {
         $scope.showme = false;
 
-        $scope.showmefn = function($bool){
+        $scope.showmefn = function($bool, $aankoop, $actie){
             console.log('in showme');
             $scope.showme = $bool;
+            $scope.update_ak = $aankoop;
+           // console.log($scope.update_ak.id);
+            console.log($scope);
+
 
             if ($bool == true){
                 console.log('true');
+                $scope.upd_id = $scope.update_ak.id;
+                $scope.upd_artikel = $scope.update_ak.naam;
+                $scope.upd_aantal = parseInt($scope.update_ak.aantal);
+                $scope.upd_ehprijs = parseFloat($scope.update_ak.eenheidsprijs);
+                $scope.upd_container = parseInt($scope.update_ak.aantal_container);
+                $scope.upd_opzet = parseInt($scope.update_ak.aantal_opzet);
+                $scope.upd_tray = parseInt($scope.update_ak.aantal_tray);
+                $scope.upd_doos = parseInt($scope.update_ak.aantal_doos);
+
             } else {
                 console.log('false');
+                if ($actie == 'update'){
+                    $http({
+                        url: 'aankopen/update_aankoop',
+                        method: "POST",
+                        data: JSON.stringify({
+                            id: $scope.upd_id, artikel: $scope.upd_artikel, aantal: $scope.upd_aantal, ehprijs: $scope.upd_ehprijs, container: $scope.upd_container,
+                            opzet: $scope.upd_opzet, tray: $scope.upd_tray, doos: $scope.upd_doos})
+                    }).success(function (data) {
+                        //$scope.ak_gedaan = data;
+                        //console.log('aankopen gedaan');
+                        $scope.aankopen_gedaan();
+                        $scope.delta_aankopen_fn();
+                        $timeout(diff_delta_fn, 1000);
+
+                        console.log($scope);
+                    }).error(function (err, status) {
+                        alert('Er is een fout opgetreden bij ophalen van de gedane aankopen');
+                        console.log(err);
+                        console.log(status);
+
+                    });
+                }
             }
         }
 
@@ -424,7 +459,7 @@
             if ($scope.partner && $scope.totdatum && $scope.vandatum) {
                 $scope.aankopen_gedaan();
                 $scope.aankopen_ontvangen();
-                $scope.store_sessionvars();
+               // $scope.store_sessionvars();
 
             }
         });
@@ -433,7 +468,7 @@
             if ($scope.partner && $scope.totdatum && $scope.vandatum) {
                 $scope.aankopen_gedaan();
                 $scope.aankopen_ontvangen();
-                $scope.store_sessionvars();
+                //$scope.store_sessionvars();
             }
         });
 
@@ -444,7 +479,7 @@
                 $scope.aankopen_ontvangen();
                 $scope.delta_aankopen_fn();
                 $scope.delta_ontvangen_fn();
-                $scope.store_sessionvars();
+               // $scope.store_sessionvars();
                 $timeout(diff_delta_fn, 1000);
             }
         });
@@ -712,7 +747,7 @@
                 });
         };
 
-        $scope.store_sessionvars = function(){
+        /*$scope.store_sessionvars = function(){
             console.log('in store session vars');
             console.log($scope.vandatum);
             console.log($scope.totdatum);
@@ -721,7 +756,7 @@
             sessionStorage.overzicht_partners = JSON.stringify($scope.partner);
             sessionStorage.overzicht_vandatum = JSON.stringify(new Date($scope.vandatum));
             sessionStorage.overzicht_totdatum = JSON.stringify(new Date($scope.totdatum));
-        }
+        }*/
 
         /*Editeren van een aankooplijn*/
        /* $scope.load_edit = function($id){
