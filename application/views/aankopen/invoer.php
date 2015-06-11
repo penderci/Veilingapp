@@ -175,10 +175,11 @@
                         <td align="right">{{aankoop.aantal_opzet}}</td>
                         <td align="right">{{aankoop.aantal_tray}}</td>
                         <td align="right">{{aankoop.aantal_doos}}</td>
-<!--                        <td>
-                            <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>
-                            <a href="#" class="btn-sm glyphicon glyphicon-trash"></a>
-                        </td>-->
+                        <td align="right">{{$index}}</td>
+                       <td>
+                           <!--    <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>-->
+                              <a href="#" ng-click="delete(index)" class="btn-sm glyphicon glyphicon-trash"></a>
+                          </td>
                     </tr>
                 </table>
 

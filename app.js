@@ -280,6 +280,7 @@
 
         $scope.loadData = function () {
             $scope.aankopen = JSON.parse(localStorage.getItem("aankopen"));
+            console.log($scope);
         };
 
         $scope.getTotalPrice = function () {
@@ -367,6 +368,11 @@
 
         }
 
+        $scope.delete = function($index){
+            localStorage.removeItem(aankopen[$index]);
+            $scope.loadData();
+        }
+
     }); //einde AANKOOP CONTROLLER
 
     /*OVERZICHT CONTROLLER*/
@@ -384,6 +390,7 @@
             if ($bool == true){
                 console.log('true');
                 $scope.upd_id = $scope.update_ak.id;
+                $scope.upd_datum = $scope.update_ak.datum;
                 $scope.upd_artikel = $scope.update_ak.naam;
                 $scope.upd_aantal = parseInt($scope.update_ak.aantal);
                 $scope.upd_ehprijs = parseFloat($scope.update_ak.eenheidsprijs);
@@ -410,7 +417,7 @@
 
                         console.log($scope);
                     }).error(function (err, status) {
-                        alert('Er is een fout opgetreden bij ophalen van de gedane aankopen');
+                        alert('Er is een fout opgetreden bij het updaten van de aankooplijn.');
                         console.log(err);
                         console.log(status);
 
@@ -791,6 +798,52 @@
 
     /*OVERDRACHT CONTROLLER*/
     app.controller('OverdrachtController', function ($scope, $http, $timeout, partnersFactory, primaryUserFactory) {
+        $scope.showme = false;
+
+        $scope.showmefn = function($bool, $overdracht, $actie){
+           // $event.preventDefault();
+            console.log('in showme');
+            $scope.showme = $bool;
+            $scope.update_overdracht = $overdracht;
+            // console.log($scope.update_ak.id);
+            console.log($scope);
+
+
+            if ($bool == true){
+                console.log('true');
+                $scope.upd_id = $scope.update_overdracht.id;
+                $scope.upd_betaaldatum = new Date($scope.update_overdracht.datum).toLocaleDateString();
+                $scope.upd_bedrag = parseInt($scope.update_overdracht.bedrag);
+                $scope.upd_container = parseInt($scope.update_overdracht.aantal_container);
+                $scope.upd_opzet = parseInt($scope.update_overdracht.aantal_opzet);
+                $scope.upd_tray = parseInt($scope.update_overdracht.aantal_tray);
+                $scope.upd_doos = parseInt($scope.update_overdracht.aantal_doos);
+
+            } else {
+                console.log('false');
+                if ($actie == 'update'){
+                    $http({
+                        url: 'overdrachten/update_overdracht',
+                        method: "POST",
+                        data: JSON.stringify({
+                            id: $scope.upd_id, datum: new Date($scope.upd_betaaldatum), bedrag: $scope.upd_bedrag, container: $scope.upd_container,
+                            opzet: $scope.upd_opzet, tray: $scope.upd_tray, doos: $scope.upd_doos})
+                    }).success(function (data) {
+                        //$scope.ak_gedaan = data;
+                        //console.log('aankopen gedaan');
+                        $scope.loadData();
+
+                        console.log($scope);
+                    }).error(function (err, status) {
+                        alert('Er is een fout opgetreden bij het updaten van de overdracht');
+                        console.log(err);
+                        console.log(status);
+
+                    });
+                }
+            }
+        }
+
         primaryUserFactory.primaryUser()
             .success(function (data) {
                 $scope.betaaldAan = data;

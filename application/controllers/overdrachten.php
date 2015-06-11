@@ -101,6 +101,30 @@ class Overdrachten extends CI_Controller
 
     }
 
+    public function update_overdracht(){
+        $postdata = file_get_contents('php://input');
+        $overdracht = json_decode($postdata);
+
+       // print_r($overdracht);
+
+        $myDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $overdracht->datum);
+        $myDateTime->modify('+1 day');
+        $datum = $myDateTime->format('Y-m-d');
+
+        $data['id'] = $overdracht->id;
+        $data['datum'] = $datum;
+        $data['bedrag'] = $overdracht->bedrag;
+        $data['aantal_container'] = $overdracht->container;
+        $data['aantal_doos'] = $overdracht->doos;
+        $data['aantal_opzet'] = $overdracht->opzet;
+        $data['aantal_tray'] = $overdracht->tray;
+
+        //print_r($data);
+        //die();
+
+        $this->Overdracht_model->update_overdracht($data);
+    }
+
     public function get_betalingen(){
         $postdata = file_get_contents('php://input');
         $request = json_decode($postdata);
