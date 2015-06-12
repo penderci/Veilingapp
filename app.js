@@ -369,8 +369,67 @@
         }
 
         $scope.delete = function($index){
-            localStorage.removeItem(aankopen[$index]);
+            console.log('index1 = ' + $index);
+            //localStorage.removeItem(localStorage.aankopen[$index]);
+            var json = JSON.parse(localStorage["aankopen"]);
+            $.each(json, function(index, obj){
+                console.log('index = ' + $index);
+                console.log(index);
+                if (index == $index) {
+                    json.splice(index,1);
+                    console.log(json);
+                    localStorage["aankopen"] = JSON.stringify(json);
+                    //return false;
+                }
+            });
             $scope.loadData();
+        }
+
+        $scope.showmefn = function($bool, $aankoop, $actie, $index){
+            console.log('in showme. index = ' + $index);
+            $scope.showme = $bool;
+
+            $scope.update_ak = $aankoop;
+            // console.log($scope.update_ak.id);
+            console.log($scope);
+
+
+            if ($bool == true){
+                console.log('true');
+                $scope.upd_index = $index;
+                $scope.upd_artikel = $scope.update_ak.artikel;
+                $scope.upd_aantal = parseInt($scope.update_ak.aantal);
+                $scope.upd_ehprijs = parseFloat($scope.update_ak.eenheidsprijs);
+                $scope.upd_container = parseInt($scope.update_ak.aantal_container);
+                $scope.upd_opzet = parseInt($scope.update_ak.aantal_opzet);
+                $scope.upd_tray = parseInt($scope.update_ak.aantal_tray);
+                $scope.upd_doos = parseInt($scope.update_ak.aantal_doos);
+
+            } else {
+                console.log('false');
+                if ($actie == 'update'){
+                    var json = JSON.parse(localStorage["aankopen"]);
+                    $.each(json, function(index, obj){
+                        console.log('index = ' + $scope.upd_index);
+                        console.log(index);
+                        if (index == $scope.upd_index) {
+                            //json.splice(index,1);
+                            console.log(json);
+                            obj.artikel = $scope.upd_artikel;
+                            obj.aantal = $scope.upd_aantal;
+                            obj.eenheidsprijs = $scope.upd_ehprijs;
+                            obj.totale_prijs = $scope.upd_aantal * $scope.upd_ehprijs;
+                            obj.aantal_container = $scope.upd_container;
+                            obj.aantal_opzet = $scope.upd_opzet;
+                            obj.aantal_tray = $scope.upd_tray;
+                            obj.aantal_doos = $scope.upd_doos;
+                            //return false;
+                        }
+                    });
+                    localStorage["aankopen"] = JSON.stringify(json);
+                    $scope.loadData();
+                }
+            }
         }
 
     }); //einde AANKOOP CONTROLLER

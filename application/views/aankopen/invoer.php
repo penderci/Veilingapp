@@ -1,6 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
  echo validation_errors(); ?>
 <form ng-controller="AankoopController" role="form" ng-submit="submitForm()">
+    <div ng-show="!showme">
     <div class="col-sm-11" style="position: absolute;left: 5%;">
         <div class="well bs-component">
             <div class="container">
@@ -154,6 +155,7 @@
                         <th style="text-align:right">Bruine Tray</th>
                         <th style="text-align:right">Chrysdoos</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     <tr>
                         <th>Totalen</th>
@@ -165,6 +167,7 @@
                         <th style="text-align:right">{{getTotalTray()}}</th>
                         <th style="text-align:right">{{getTotalDoos()}}</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     <tr ng-repeat="aankoop in aankopen">
                         <td><b>{{aankoop.artikel}}</b></td>
@@ -175,10 +178,11 @@
                         <td align="right">{{aankoop.aantal_opzet}}</td>
                         <td align="right">{{aankoop.aantal_tray}}</td>
                         <td align="right">{{aankoop.aantal_doos}}</td>
-                        <td align="right">{{$index}}</td>
+<!--                        <td align="right">{{$index}}</td>-->
                        <td>
-                           <!--    <a href="#" class="btn-sm glyphicon glyphicon-pencil"></a>-->
-                              <a href="#" ng-click="delete(index)" class="btn-sm glyphicon glyphicon-trash"></a>
+                              <a href="#" ng-click="showmefn(true, aankoop, null, $index)" class="btn-sm glyphicon glyphicon-pencil"></a>
+                           </td><td>
+                              <a href="#" ng-click="delete($index)" class="btn-sm glyphicon glyphicon-trash"></a>
                           </td>
                     </tr>
                 </table>
@@ -190,6 +194,106 @@
 <!--            </div>-->
 <!--        </div>-->
     </div>
+        </div>
+    <div ng-show="showme">
+
+        <div class="col-sm-11" style="position: absolute;left: 5%;top: 25%">
+            <div class="well bs-component">
+                <a href="#" ng-click="showmefn(false,null,'terug',null)" class="btn-sm btn-default btn-xs">Terug</a>
+                <div class="container">
+
+                    <table class="table">
+                        <tr>
+                            <td class="col-sm-3">
+
+                                <div class="form-group-sm"> <!--ui-widget-->
+                                    <label for="upd_artikel" class="col-sm-4 control-label">Artikel</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control input-sm" id="upd_artikel"
+                                               ng-model="upd_artikel">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group-sm">
+                                    <label for="upd_aantal" class="col-sm-4 control-label">Aantal</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control input-sm" id="upd_aantal" ng-model="upd_aantal">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group-sm">
+                                    <label for="upd_ehprijs" class="col-sm-4 control-label">Eenheidsprijs</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control input-sm" id="upd_ehprijs" min="0" step="0.001"
+                                               ng-model="upd_ehprijs">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group-sm">
+                                    <label for="upd_bedag" class="col-sm-4 control-label">Totale prijs</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control input-sm" id="upd_bedrag" readonly min="0" step="0.01"
+                                               tabindex="-1" value="{{upd_aantal * upd_ehprijs}}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="col-sm-3">
+                                <div class="form-group-sm">
+                                    <label for="upd_container" class="col-sm-4 control-label">Container</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control input-sm" id="upd_container"
+                                               ng-model="upd_container" min="0" step="1">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group-sm">
+                                    <label for="upd_opzet" class="col-sm-4 control-label">Opzet</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control input-sm" id="upd_opzet"
+                                               ng-model="upd_opzet" min="0" step="1">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group-sm">
+                                    <label for="upd_tray" class="col-sm-4 control-label">Bruine tray</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control input-sm" id="upd_tray"
+                                               ng-model="upd_tray" min="0" step="1">
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="form-group-sm">
+                                    <label for="upd_doos" class="col-sm-4 control-label">Chrysdoos</label>
+
+                                    <div class="col-sm-6">
+                                        <input type="number" class="form-control input-sm" id="upd_doos"
+                                               ng-model="upd_doos" min="0" step="1">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                    <button type="submit" id="update" name="update" ng-click="showmefn(false, null, 'update', null)" class="btn btn-default btn-xs" style="float: right;">Opslaan</button>
+                </div>
+            </div>
+        </div>
+
+        </div>
 </form>
 <script>
     $( document ).ready(function(){
@@ -274,6 +378,14 @@
             source: artikellijst /*"artikels/get_list_autofill"*/
         });
 
+        $("#upd_artikel").autocomplete({
+            source: artikellijst /*"artikels/get_list_autofill"*/
+        });
+
+        $('#update').click(function (e) {
+            e.preventDefault();
+            return false;
+        });
 
         //********** Onderstaaande code werkt****************************/
         /*$.ajax({
