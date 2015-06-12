@@ -5,7 +5,7 @@ if(!isset($active)){
 } else {
     $this->load->view('header',$active);
 }
-//$this->load->view('header',$active);
+
 $this->load->view($middle);
 $this->load->view('footer');
 ?>

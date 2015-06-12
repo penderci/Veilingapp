@@ -33,14 +33,14 @@
         <div class="well bs-component">
             <div class="container"><b>
                     <?php echo 'Wijzig het paswoord voor ' . $naam ?>
-                    <a href="<?php echo base_url(); ?>gebruikers" class="btn-sm btn-default btn-xs" >Terug</a>
+                    <a href="<?php echo base_url(); ?>gebruikers" class="btn-sm btn-default btn-xs">Terug</a>
                 </b></div>
             <div class="container">
                 <div class="form-group-sm row">
                     <label for="pw1" class="col-sm-4 control-label">Nieuw paswoord</label>
 
                     <div class="col-sm-3">
-                        <input  class="form-control input-sm" id="pw1" name="pw1"
+                        <input class="form-control input-sm" id="pw1" name="pw1"
                                ng-model="pw1" required>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <label for="pw2" class="col-sm-4 control-label">Herhaal nieuw paswoord</label>
 
                     <div class="col-sm-3">
-                        <input  class="form-control input-sm" id="pw2" name="pw2"
+                        <input class="form-control input-sm" id="pw2" name="pw2"
                                ng-model="pw2" pw-check="pw1" required>
                     </div>
                 </div>

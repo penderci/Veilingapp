@@ -13,7 +13,8 @@ class Artikel_model extends CI_Model
         return $table;
     }
 
-    public function get_artikels(){
+    public function get_artikels()
+    {
         $query = $this->db->query("SELECT * FROM artikels ORDER BY naam asc");
         return $query->result();
     }
@@ -64,8 +65,9 @@ class Artikel_model extends CI_Model
         $this->db->update('artikels', $data);
     }
 
-    public function get_artikel_id($artikel){
-        $query = $this->db->query("SELECT id FROM artikels WHERE lower(naam) = lower('" . $artikel ."')");
+    public function get_artikel_id($artikel)
+    {
+        $query = $this->db->query("SELECT id FROM artikels WHERE lower(naam) = lower('" . $artikel . "')");
         $aantal = $query->num_rows();
 
         if ($aantal == 0) {

@@ -6,21 +6,23 @@ echo $this->input->post('inputPassword');
 <div class="row">
     <div class="col-sm-6" style="position: absolute;left: 25%;">
         <div class="well bs-component">
-            <form class="form-horizontal" action="<?php echo base_url(). 'login/login_validation' ?>" method="post">
+            <form class="form-horizontal" action="<?php echo base_url() . 'login/login_validation' ?>" method="post">
                 <fieldset>
                     <legend>Log in</legend>
                     <div class="form-group">
                         <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                         <div class="col-sm-6">
-                            <input class="form-control" id="inputEmail" name="inputEmail" placeholder="Email" type="text" value="erwin@hotmail.com">
+                            <input class="form-control" id="inputEmail" name="inputEmail" placeholder="Email"
+                                   type="text">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">Paswoord</label>
 
                         <div class="col-sm-6">
-                            <input class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" type="password" value="cindy">
+                            <input class="form-control" id="inputPassword" name="inputPassword" placeholder="Password"
+                                   type="password">
                         </div>
                     </div>
                     <div class="form-group">

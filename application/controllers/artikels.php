@@ -37,6 +37,7 @@ class Artikels extends CI_Controller
         $postdata = file_get_contents('php://input');
         $request = json_decode($postdata);
         $naam = $request->naam;
+
         //doe de feitelijke insert in het model
         $id = $this->Artikel_model->insert($naam);
 
@@ -75,20 +76,15 @@ class Artikels extends CI_Controller
         $this->form_validation->set_rules("naam", "Naam", "required|xss_clean");
 
         if ($this->form_validation->run() == FALSE) {
-            //echo('valid false');
-            //die();
             $this->edit($id);
-
         } else {
             if ($this->input->post('naam') != null) {
-
                 $data = $this->get_data_from_post();
                 $data['id'] = $id;
             } else {
                 $data['id'] = $id;
                 $data['naam'] = $this->input->post('naam', TRUE);
             }
-
 
             $this->Artikel_model->update_artikel($data);
             redirect(base_url() . 'artikels');

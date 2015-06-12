@@ -20,16 +20,18 @@ class Overdracht_model extends CI_Model
         return $insert_id;
     }
 
-    public function update_overdracht($data){
+    public function update_overdracht($data)
+    {
         $this->db->where('id', $data['id']);
         $this->db->update('overdrachten', $data);
     }
 
-    public function get_overdrachten($koppeling_id){
+    public function get_overdrachten($koppeling_id)
+    {
         $query = $this->db->query("SELECT *
                                     FROM overdrachten
                                     WHERE koppeling_id = " . $koppeling_id .
-                                    " ORDER BY datum desc");
+            " ORDER BY datum desc");
 
         return $query->result();
     }

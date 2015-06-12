@@ -1,26 +1,31 @@
-<?php echo validation_errors();?>
+<?php echo validation_errors(); ?>
 <style>
     * {
-        margin:0;
-        padding:0;
+        margin: 0;
+        padding: 0;
     }
+
     body {
-        padding:10px;
+        padding: 10px;
     }
+
     label {
-        display:block;
-        font-size:14px;
-        margin:10px 0 2px;
+        display: block;
+        font-size: 14px;
+        margin: 10px 0 2px;
     }
+
     input {
-        padding:1px 3px;
+        padding: 1px 3px;
     }
+
     .msg-block {
-        margin-top:45px;
+        margin-top: 45px;
     }
+
     .msg-error {
-        color:#F00;
-        font-size:14px;
+        color: #F00;
+        font-size: 14px;
     }
 </style>
 <form ng-controller="ResetPwdController" ng-submit="submitForm()" name="myForm">
@@ -29,13 +34,14 @@
             <div class="container">
                 <div class="form-group-sm row">
                     <label for="oudpwd" class="col-sm-4 control-label">Oud paswoord</label>
-<!--type="password" -->
+
                     <div class="col-sm-3">
                         <input class="form-control input-sm" id="oudpwd"
                                ng-model="oudpwd" required>
                     </div>
                 </div>
                 <br>
+
                 <div class="form-group-sm row">
                     <label for="pw1" class="col-sm-4 control-label">Nieuw paswoord</label>
 
@@ -58,10 +64,13 @@
                     </span>
                 </div>
                 <br>
+
                 <div class="form-group-sm row">
                     <label class="col-sm-4 control-label"></label>
+
                     <div class="col-sm-3">
-                        <button ng-disabled="myForm.$invalid || pw1 != pw2"  type="submit" class="btn btn-default btn-xs" style="float: right;">Opslaan
+                        <button ng-disabled="myForm.$invalid || pw1 != pw2" type="submit" class="btn btn-default btn-xs"
+                                style="float: right;">Opslaan
                         </button>
                     </div>
                 </div>

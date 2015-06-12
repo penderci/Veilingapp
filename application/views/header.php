@@ -6,11 +6,8 @@
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/checknet/css/checknet.css" media="all">
-    <!--    <link href="-->
-    <?php //echo base_url(); ?><!--assets/css/ui-bootstrap-0.13.0-csp.css" rel="stylesheet" type="text/css">-->
 
     <!--Credits for the checknet plugin : http://tomriley.net/blog/archives/tomriley.net-->
-
 
 </head>
 <body>

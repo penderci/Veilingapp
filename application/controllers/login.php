@@ -5,22 +5,12 @@ class Login extends CI_Controller
 
     public function index()
     {
-        //$this->load->view('welcome_message');
-//Hier nog controleren of je al ingelogd bent. Zo ja door gaan naar applicatie
 
         $data['middle'] = '/login/login';
 
         $this->load->view('template', $data);
 
     }
-
-    /*function supports_html5_storage() {
-        try {
-            return 'localStorage' in window && window['localStorage'] !== null;
-  } catch (e) {
-            return false;
-        }
-    }*/
 
     //controleer of de velden ingevuld zijn, en zo ja, of ze matchen met de database
     public function login_validation()
@@ -30,11 +20,8 @@ class Login extends CI_Controller
         $this->form_validation->set_rules('inputPassword', 'Password', 'required|trim|md5');
 
         if ($this->form_validation->run()) {
-            //$this->load->view('/todo/todo_view');
-
             redirect(base_url() . 'aankopen');
         } else {
-            //redirect(base_url().'login');
             $data['middle'] = '/login/login';
             $this->load->view('template', $data);
 
