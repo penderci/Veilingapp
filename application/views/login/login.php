@@ -1,7 +1,4 @@
 <?php echo validation_errors();
-echo $this->input->post('inputEmail');
-echo '<br>';
-echo $this->input->post('inputPassword');
 ?>
 <div class="row">
     <div class="col-sm-6" style="position: absolute;left: 25%;">

@@ -53,6 +53,5 @@ $route['gebruikers/koppeling/(:num)/(:any)/gebruikers/koppel_gebruikers'] = "geb
 $route['gebruikers/koppeling/(:num)/(:any)/gebruikers/update_primair'] = "gebruikers/update_primair";
 $route['gebruikers/koppeling/(:num)/(:any)/gebruikers/delete_koppeling/(:num)/(:num)'] = "gebruikers/delete_koppeling/(:num)/(:num)";
 
-
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

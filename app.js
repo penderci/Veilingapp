@@ -812,20 +812,24 @@
 
 
         $scope.loadData = function () {
-            $http({
-                url: 'overdrachten/get_betalingen',
-                method: "POST",
-                data: JSON.stringify({betaaldAan: $scope.betaaldAan})
-            }).success(function (data) {
-                $scope.betalingen = data;
-                $timeout(delta_aankopen_fn, 500);
-                $timeout(delta_ontvangen_fn, 500);
-                $timeout(diff_delta_fn, 1000);
-            }).error(function (err, status) {
-                alert('Er is een fout opgetreden bij ophalen van de betalingen');
-                console.log(err);
-                console.log(status);
-            });
+            if ($scope.betaaldAan != null) {
+                $http({
+                    url: 'overdrachten/get_betalingen',
+                    method: "POST",
+                    data: JSON.stringify({betaaldAan: $scope.betaaldAan})
+                }).success(function (data) {
+
+                    $scope.betalingen = data;
+                    $timeout(delta_aankopen_fn, 500);
+                    $timeout(delta_ontvangen_fn, 500);
+                    $timeout(diff_delta_fn, 1000);
+
+                }).error(function (err, status) {
+                    alert('Er is een fout opgetreden bij ophalen van de betalingen');
+                    console.log(err);
+                    console.log(status);
+                });
+            }
         };
 
         $scope.$watch('betaaldAan', function () {
@@ -1021,7 +1025,7 @@
     //einde RESETPWD CONTROLLER
 
     /*ADMINRESETPWD CONTROLLER*/
-    app.controller('AdminResetPwdController', function ($scope, $http) {
+    app.controller('AdminResetPwdController', function ($scope, $http, $location) {
         $scope.submitForm = function (id) {
             $http({
                 method: 'POST',
@@ -1031,6 +1035,8 @@
             }).success(function (data) {
                 if (data == 'ok') {
                     alert('De wijziging van het paswoord is opgeslagen');
+                    $scope.pw1 = '';
+                    $scope.pw2 = '';
                 } else {
                     alert('De gebruiker werd niet gevonden. Probeer nog eens.');
                 }
