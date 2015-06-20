@@ -28,21 +28,74 @@
         }
     }]);
 
+    /*Deze directive was nodig omdat Safari de HTML step en min en max niet kent bij het number field, dit zorgde voor problemen */
+    /*Voor gehele getallen*/
+    app.directive('validNumber0', function() {
+        return {
+            require: '?ngModel',
+            link: function(scope, element, attrs, ngModelCtrl) {
+                if(!ngModelCtrl) {
+                    return;
+                }
 
-    /*FACTORY voor het ophalen van de primaire gebruiker waarvoor gekocht wordt. Deze selectie is op meerdere plaatsen nodig*/
-    app.factory('primaryUserFactory', function ($http) {
-        var factory = {};
+                ngModelCtrl.$parsers.push(function(val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace( /[^0-9]+/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
 
-        factory.primaryUser = function () {
-            return $http({
-                url: 'gebruikers/get_primary_user',
-                method: "POST"
-            })
-        }
-
-        return factory;
-
+                element.bind('keypress', function(event) {
+                    if(event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
     });
+
+    //*Voor getallen met 2 decimalen*/
+    app.directive('validNumber', function() {
+        return {
+            require: '?ngModel',
+            link: function(scope, element, attrs, ngModelCtrl) {
+                if(!ngModelCtrl) {
+                    return;
+                }
+
+                ngModelCtrl.$parsers.push(function(val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9\.]/g, '');
+                    var decimalCheck = clean.split('.');
+
+                    if(!angular.isUndefined(decimalCheck[1])) {
+                        decimalCheck[1] = decimalCheck[1].slice(0,3);
+                        clean =decimalCheck[0] + '.' + decimalCheck[1];
+                    }
+
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+
+                element.bind('keypress', function(event) {
+                    if(event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
 
     /*FACTORY voor het ophalen van alle partners waarvoor de ingelogde gebruiker kan kopen*/
     app.factory('partnersFactory', function ($http) {
@@ -159,7 +212,7 @@
 
 
     /*AANKOOP CONTROLLER*/
-    app.controller('AankoopController', function ($scope, $http, primaryUserFactory, partnersFactory) {
+    app.controller('AankoopController', function ($scope, $http, partnersFactory) {
 
         var aankoop = {};
 
@@ -171,20 +224,11 @@
 
         $scope.aankoopdatum = new Date().toLocaleDateString();
 
-        primaryUserFactory.primaryUser()
-            .success(function (data) {
-                $scope.gekochtvoor = data;
-            })
-            .error(function (err, status) {
-                alert('Er is een fout opgetreden bij het ophalen van de primary user');
-                console.log(err);
-                console.log(status);
-            });
-
         partnersFactory.partners()
             .success(function (data) {
                 $scope.partners = jQuery.makeArray(data);
-                $scope.selectPrimary();
+                $scope.gekochtvoor = $scope.partners[0];
+                //$scope.selectPrimary();
             })
             .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
@@ -192,16 +236,6 @@
                 console.log(status);
             });
 
-        $scope.selectPrimary = function () {
-
-            for (var i = 0; i < $scope.partners.length; i++) {
-
-                if ($scope.partners[i].naam == $scope.gekochtvoor) {
-                    $scope.gekochtvoor = $scope.partners[i].naam;
-                }
-
-            }
-        }
 
         $scope.submitForm = function () {
             /*controleer of het object aankopen al bestaat in de localstorage*/
@@ -215,7 +249,7 @@
 
             var aankoop = {
                 'datum': datum,
-                'gekocht_voor': $scope.gekochtvoor,
+                'gekocht_voor': $scope.gekochtvoor.naam,
                 'artikel': $scope.artikel,
                 'aantal': $scope.aantal,
                 'eenheidsprijs': $scope.ehprijs,
@@ -377,7 +411,7 @@
     }); //einde AANKOOP CONTROLLER
 
     /*OVERZICHT CONTROLLER*/
-    app.controller('OverzichtController', function ($scope, $timeout, $http, primaryUserFactory, partnersFactory) {
+    app.controller('OverzichtController', function ($scope, $timeout, $http, partnersFactory) {
         $scope.showme = false;
 
         $scope.showmefn = function ($bool, $aankoop, $actie) {
@@ -422,20 +456,11 @@
             }
         }
 
-        primaryUserFactory.primaryUser()
-            .success(function (data) {
-                $scope.partner = data;
-            })
-            .error(function (err, status) {
-                alert('Er is een fout opgetreden bij het ophalen van de primary user');
-                console.log(err);
-                console.log(status);
-            });
-
         partnersFactory.partners()
             .success(function (data) {
                 $scope.partners = jQuery.makeArray(data);
-                $scope.selectPrimary();
+                $scope.partner = $scope.partners[0];
+                //$scope.selectPrimary();
             })
             .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
@@ -485,21 +510,13 @@
         //voer deze functie 1 sec na het laden van de pagina uit. Deze maakt gebruik van dom velden. Zonder timeout zijn de variabelen nog niet gekend.
         $timeout(diff_delta_fn, 1000);
 
-        $scope.selectPrimary = function () {
-            for (var i = 0; i < $scope.partners.length; i++) {
-                if ($scope.partners[i].naam == $scope.partner) {
-                    $scope.betaaldAan = $scope.partners[i].naam;
-                }
-            }
-        }
-
         //haal de aankopen op van de persoon die ingelogd is, en die hij deed voor de gekozen partner
         $scope.aankopen_gedaan = function () {
             $http({
                 url: 'aankopen/aankopen_gedaan',
                 method: "POST",
                 data: JSON.stringify({
-                    partner: $scope.partner, vandatum: new Date($scope.vandatum),
+                    partner: $scope.partner.naam, vandatum: new Date($scope.vandatum),
                     totdatum: new Date($scope.totdatum)
                 })
             }).success(function (data) {
@@ -577,7 +594,7 @@
                 url: 'aankopen/aankopen_ontvangen',
                 method: "POST",
                 data: JSON.stringify({
-                    partner: $scope.partner, vandatum: new Date($scope.vandatum),
+                    partner: $scope.partner.naam, vandatum: new Date($scope.vandatum),
                     totdatum: new Date($scope.totdatum)
                 })
             }).success(function (data) {
@@ -653,7 +670,7 @@
             $http({
                 url: 'aankopen/totaal_delta_ak_gedaan',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.partner})
+                data: JSON.stringify({partner: $scope.partner.naam})
             }).success(function (data) {
                 $scope.delta_aankopen = data;
             }).error(function (err, status) {
@@ -667,7 +684,7 @@
             $http({
                 url: 'aankopen/totaal_delta_ak_ontvangen',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.partner})
+                data: JSON.stringify({partner: $scope.partner.naam})
             }).success(function (data) {
                 $scope.delta_ontvangen = data;
             }).error(function (err, status) {
@@ -735,7 +752,7 @@
     }); //einde OVERZICHT CONTROLLER
 
     /*OVERDRACHT CONTROLLER*/
-    app.controller('OverdrachtController', function ($scope, $http, $timeout, partnersFactory, primaryUserFactory) {
+    app.controller('OverdrachtController', function ($scope, $http, $timeout, partnersFactory) {
         $scope.showme = false;
 
         $scope.showmefn = function ($bool, $overdracht, $actie) {
@@ -775,20 +792,12 @@
             }
         }
 
-        primaryUserFactory.primaryUser()
-            .success(function (data) {
-                $scope.betaaldAan = data;
-            })
-            .error(function (err, status) {
-                alert('Er is een fout opgetreden bij het ophalen van de primaire partner');
-                console.log(err);
-                console.log(status);
-            });
-
         partnersFactory.partners()
             .success(function (data) {
                 $scope.partners = jQuery.makeArray(data);
-                $scope.selectPrimary();
+                console.log($scope.partners);
+                $scope.betaaldAan = $scope.partners[0];
+               // $scope.selectPrimary();
             })
             .error(function (err, status) {
                 alert('Er is een fout opgetreden bij het ophalen van de partners');
@@ -802,21 +811,12 @@
 
         $scope.betaaldatum = new Date().toLocaleDateString();
 
-        $scope.selectPrimary = function () {
-            for (var i = 0; i < $scope.partners.length; i++) {
-                if ($scope.partners[i].naam == $scope.betaaldAan) {
-                    $scope.betaaldAan = $scope.partners[i].naam;
-                }
-            }
-        }
-
-
         $scope.loadData = function () {
             if ($scope.betaaldAan != null) {
                 $http({
                     url: 'overdrachten/get_betalingen',
                     method: "POST",
-                    data: JSON.stringify({betaaldAan: $scope.betaaldAan})
+                    data: JSON.stringify({betaaldAan: $scope.betaaldAan.naam})
                 }).success(function (data) {
 
                     $scope.betalingen = data;
@@ -842,7 +842,7 @@
                 url: 'overdrachten/insert_overdracht',
                 method: "POST",
                 data: JSON.stringify({
-                    partner: $scope.betaaldAan,
+                    partner: $scope.betaaldAan.naam,
                     bedrag: $scope.bedrag,
                     aantal_container: $scope.container,
                     aantal_opzet: $scope.opzet,
@@ -928,7 +928,7 @@
             $http({
                 url: 'aankopen/totaal_delta_ak_gedaan',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.betaaldAan})
+                data: JSON.stringify({partner: $scope.betaaldAan.naam})
             }).success(function (data) {
                 $scope.delta_aankopen = data;
             }).error(function (err, status) {
@@ -942,7 +942,7 @@
             $http({
                 url: 'aankopen/totaal_delta_ak_ontvangen',
                 method: "POST",
-                data: JSON.stringify({partner: $scope.betaaldAan})
+                data: JSON.stringify({partner: $scope.betaaldAan.naam})
             }).success(function (data) {
                 $scope.delta_ontvangen = data;
             }).error(function (err, status) {

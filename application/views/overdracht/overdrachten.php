@@ -29,11 +29,7 @@ echo validation_errors();
                         <label for="betaaldAan" class="col-sm-4 control-label">Betaald aan</label>
 
                         <div class="col-sm-3">
-                            <select name="betaaldAan" ng-model="betaaldAan" class="form-control">
-                                <option ng-repeat="partner in partners" value="{{partner.naam}}">{{partner.naam}}
-                                </option>
-                            </select>
-
+                            <select class="form-control" ng-model="betaaldAan" ng-options="partner.naam for partner in partners"></select>
                         </div>
                     </div>
 
@@ -41,8 +37,7 @@ echo validation_errors();
                         <label for="bedrag" class="col-sm-4 control-label">Bedrag</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="bedrag" ng-model="bedrag" min="0"
-                                   step="1">
+                            <input type="text" class="form-control input-sm" id="bedrag" ng-model="bedrag" valid-number0>
                         </div>
                     </div>
 
@@ -50,8 +45,7 @@ echo validation_errors();
                         <label for="container" class="col-sm-4 control-label">Container</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="container"
-                                   ng-model="container" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="container" ng-model="container" valid-number0>
                         </div>
                     </div>
 
@@ -59,8 +53,7 @@ echo validation_errors();
                         <label for="opzet" class="col-sm-4 control-label">Opzet</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="opzet"
-                                   ng-model="opzet" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="opzet" ng-model="opzet" valid-number0>
                         </div>
                     </div>
 
@@ -68,8 +61,7 @@ echo validation_errors();
                         <label for="tray" class="col-sm-4 control-label">Bruine tray</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="tray"
-                                   ng-model="tray" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="tray" ng-model="tray" valid-number0>
                         </div>
                     </div>
 
@@ -77,8 +69,7 @@ echo validation_errors();
                         <label for="doos" class="col-sm-4 control-label">Chrysdoos</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="doos"
-                                   ng-model="doos" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="doos" ng-model="doos" valid-number0>
                         </div>
                     </div>
 
@@ -171,7 +162,7 @@ echo validation_errors();
                 <a href="#" ng-click="showmefn(false,null,'terug')" class="btn-sm btn-default btn-xs">Terug</a>
 
                 <div class="container">
-                    <b>Wijzig betaling aan {{betaaldAan}}</b>
+                    <b>Wijzig betaling aan {{betaaldAan.naam}}</b>
 
                     <div class="form-group-sm row">
                         <label for="upd_betaaldatum" class="col-sm-4 control-label">Datum</label>
@@ -186,9 +177,7 @@ echo validation_errors();
                         <label for="upd_bedrag" class="col-sm-4 control-label">Bedrag</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="upd_bedrag" ng-model="upd_bedrag"
-                                   min="0"
-                                   step="1">
+                            <input type="text" class="form-control input-sm" id="upd_bedrag" ng-model="upd_bedrag" valid-number0>
                         </div>
                     </div>
 
@@ -196,8 +185,7 @@ echo validation_errors();
                         <label for="upd_container" class="col-sm-4 control-label">Container</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="upd_container"
-                                   ng-model="upd_container" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="upd_container" ng-model="upd_container" valid-number0>
                         </div>
                     </div>
 
@@ -205,8 +193,7 @@ echo validation_errors();
                         <label for="upd_opzet" class="col-sm-4 control-label">Opzet</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="upd_opzet"
-                                   ng-model="upd_opzet" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="upd_opzet" ng-model="upd_opzet" valid-number0>
                         </div>
                     </div>
 
@@ -214,8 +201,7 @@ echo validation_errors();
                         <label for="upd_tray" class="col-sm-4 control-label">Bruine tray</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="upd_tray"
-                                   ng-model="upd_tray" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="upd_tray" ng-model="upd_tray" valid-number0>
                         </div>
                     </div>
 
@@ -223,8 +209,7 @@ echo validation_errors();
                         <label for="upd_doos" class="col-sm-4 control-label">Chrysdoos</label>
 
                         <div class="col-sm-3">
-                            <input type="number" class="form-control input-sm" id="upd_doos"
-                                   ng-model="upd_doos" min="0" step="1">
+                            <input type="text" class="form-control input-sm" id="upd_doos" ng-model="upd_doos" valid-number0>
                         </div>
                     </div>
 

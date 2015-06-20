@@ -111,8 +111,13 @@ class Gebruiker_model extends CI_Model
         $user = $this->get_ingelogde_gebruiker_id();
         $id = $user->id;
 
-        $query = $this->db->query("SELECT id, CONCAT(`voornaam`, ' ', `naam`) naam FROM gebruikers WHERE email != '" . $this->session->userdata('email') . "'"
-            . " AND id IN (SELECT koopt_voor_gebruiker_id FROM koppelingen WHERE gebruiker_id = " . $id . ")");
+        $query = $this->db->query("SELECT g.id , CONCAT(`voornaam`, ' ', `naam`) naam, k.primair FROM gebruikers g, koppelingen k WHERE
+             g.id = k.koopt_voor_gebruiker_id AND gebruiker_id = " . $id . "
+            order by primair desc");
+
+/*        $query = $this->db->query("SELECT distinct g.id, CONCAT(`voornaam`, ' ', `naam`) naam, primair FROM gebruikers g, koppelingen k WHERE email != '" . $this->session->userdata('email') . "'"
+            . " AND g.id = gebruiker_id "
+            . " AND g.id IN (SELECT koopt_voor_gebruiker_id FROM koppelingen WHERE gebruiker_id = " . $id . ") ORDER BY primair desc ");*/
         return $query->result();
     }
 

@@ -22,13 +22,7 @@ echo validation_errors(); ?>
                                     <label for="bestemmeling" class="col-sm-6 control-label">Gekocht voor</label>
 
                                     <div class="col-sm-6">
-                                        <select name="bestemmeling" ng-model="gekochtvoor" class="form-control input-sm"
-                                                required>
-                                            <option ng-repeat="partner in partners" value="{{partner.naam}}">
-                                                {{partner.naam}}
-                                            </option>
-                                        </select>
-
+                                        <select class="form-control input-sm" class="form-control" ng-model="gekochtvoor" ng-options="partner.naam for partner in partners"></select>
                                     </div>
                                 </div>
                             </td>
@@ -60,8 +54,7 @@ echo validation_errors(); ?>
                                     <label for="aantal" class="col-sm-4 control-label">Aantal</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="aantal"
-                                               ng-model="aantal">
+                                        <input type="text" class="form-control input-sm" id="aantal" ng-model="aantal" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -70,9 +63,7 @@ echo validation_errors(); ?>
                                     <label for="ehprijs" class="col-sm-4 control-label">Eenheidsprijs</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="ehprijs" min="0"
-                                               step="0.001"
-                                               ng-model="ehprijs">
+                                        <input type="text" class="form-control input-sm" id="ehprijs" ng-model="ehprijs" valid-number>
                                     </div>
                                 </div>
                                 <br>
@@ -81,9 +72,7 @@ echo validation_errors(); ?>
                                     <label for="bedag" class="col-sm-4 control-label">Totale prijs</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="bedrag" readonly min="0"
-                                               step="0.01"
-                                               tabindex="-1" value="{{aantal * ehprijs}}">
+                                        {{aantal * ehprijs | number : 2}}
                                     </div>
                                 </div>
                             </td>
@@ -92,8 +81,7 @@ echo validation_errors(); ?>
                                     <label for="container" class="col-sm-4 control-label">Container</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="container"
-                                               ng-model="container" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="container" ng-model="container" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -102,8 +90,7 @@ echo validation_errors(); ?>
                                     <label for="opzet" class="col-sm-4 control-label">Opzet</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="opzet"
-                                               ng-model="opzet" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="opzet" ng-model="opzet" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -112,8 +99,7 @@ echo validation_errors(); ?>
                                     <label for="tray" class="col-sm-4 control-label">Bruine tray</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="tray"
-                                               ng-model="tray" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="tray" ng-model="tray" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -122,8 +108,7 @@ echo validation_errors(); ?>
                                     <label for="doos" class="col-sm-4 control-label">Chrysdoos</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="doos"
-                                               ng-model="doos" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="doos" ng-model="doos" valid-number0>
                                     </div>
                                 </div>
                             </td>
@@ -215,8 +200,7 @@ echo validation_errors(); ?>
                                     <label for="upd_aantal" class="col-sm-4 control-label">Aantal</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="upd_aantal"
-                                               ng-model="upd_aantal">
+                                        <input type="text" class="form-control input-sm" id="upd_aantal" ng-model="upd_aantal" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -225,9 +209,7 @@ echo validation_errors(); ?>
                                     <label for="upd_ehprijs" class="col-sm-4 control-label">Eenheidsprijs</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="upd_ehprijs" min="0"
-                                               step="0.001"
-                                               ng-model="upd_ehprijs">
+                                        <input type="text" class="form-control input-sm" id="upd_ehprijs" ng-model="upd_ehprijs" valid-number>
                                     </div>
                                 </div>
                                 <br>
@@ -236,9 +218,7 @@ echo validation_errors(); ?>
                                     <label for="upd_bedag" class="col-sm-4 control-label">Totale prijs</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="upd_bedrag" readonly
-                                               min="0" step="0.01"
-                                               tabindex="-1" value="{{upd_aantal * upd_ehprijs}}">
+                                        {{upd_aantal * upd_ehprijs | number : 2}}
                                     </div>
                                 </div>
                             </td>
@@ -247,8 +227,7 @@ echo validation_errors(); ?>
                                     <label for="upd_container" class="col-sm-4 control-label">Container</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="upd_container"
-                                               ng-model="upd_container" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="upd_container" ng-model="upd_container" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -257,8 +236,7 @@ echo validation_errors(); ?>
                                     <label for="upd_opzet" class="col-sm-4 control-label">Opzet</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="upd_opzet"
-                                               ng-model="upd_opzet" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="upd_container" ng-model="upd_opzet" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -267,8 +245,7 @@ echo validation_errors(); ?>
                                     <label for="upd_tray" class="col-sm-4 control-label">Bruine tray</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="upd_tray"
-                                               ng-model="upd_tray" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="upd_tray" ng-model="upd_tray" valid-number0>
                                     </div>
                                 </div>
                                 <br>
@@ -277,8 +254,7 @@ echo validation_errors(); ?>
                                     <label for="upd_doos" class="col-sm-4 control-label">Chrysdoos</label>
 
                                     <div class="col-sm-6">
-                                        <input type="number" class="form-control input-sm" id="upd_doos"
-                                               ng-model="upd_doos" min="0" step="1">
+                                        <input type="text" class="form-control input-sm" id="upd_doos" ng-model="upd_doos" valid-number0>
                                     </div>
                                 </div>
                             </td>
